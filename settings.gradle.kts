@@ -1,0 +1,1 @@
+rootProject.name = "ru.penzgtu.web-app-2.0"
