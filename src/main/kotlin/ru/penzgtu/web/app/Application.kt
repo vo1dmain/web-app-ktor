@@ -10,5 +10,6 @@ fun main() {
         configureSerialization()
         configureMonitoring()
         configureHTTP()
+        configureStatusPages()
     }.start(wait = true)
 }
