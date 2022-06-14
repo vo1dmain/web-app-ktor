@@ -1,4 +1,4 @@
-package ru.penzgtu.plugins
+package ru.penzgtu.web.app.plugins
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

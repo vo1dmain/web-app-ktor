@@ -1,4 +1,4 @@
-package ru.penzgtu
+package ru.penzgtu.web.app
 
 import io.ktor.http.*
 import io.ktor.client.request.*

@@ -1,11 +1,8 @@
-package ru.penzgtu
+package ru.penzgtu.web.app
 
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import ru.penzgtu.plugins.configureHTTP
-import ru.penzgtu.plugins.configureMonitoring
-import ru.penzgtu.plugins.configureRouting
-import ru.penzgtu.plugins.configureSerialization
+import ru.penzgtu.web.app.plugins.*
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost") {

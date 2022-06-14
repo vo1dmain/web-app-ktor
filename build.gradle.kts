@@ -5,21 +5,20 @@ val logbackVersion: String by project
 plugins {
     application
     kotlin("jvm") version "1.7.0"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
 }
 
-group = "ru.penzgtu"
+group = "ru.penzgtu.web.app"
 version = "0.0.1"
 application {
-    mainClass.set("ru.penzgtu.ApplicationKt")
+    mainClass.set("ru.penzgtu.web.app.ApplicationKt")
 
-    val isDevelopment: Boolean = project.ext.has("development")
+    val isDevelopment = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
 dependencies {
