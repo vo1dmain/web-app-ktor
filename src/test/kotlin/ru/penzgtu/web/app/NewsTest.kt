@@ -22,9 +22,9 @@ import ru.penzgtu.web.app.routing.newsRouting
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ApplicationTest {
+class NewsTest {
     @Test
-    fun testNews() = testApplication {
+    fun testList() = testApplication {
         application {
             configureTest()
         }
@@ -46,7 +46,7 @@ class ApplicationTest {
     }
 
     @Test
-    fun testNewsItem() = testApplication {
+    fun testItem() = testApplication {
         application {
             configureTest()
         }
@@ -86,6 +86,28 @@ class ApplicationTest {
 
         client.get("/api/v1/news/categories?parent_id=-1").apply {
             assertEquals(HttpStatusCode.NotFound, call.response.status)
+        }
+    }
+
+    @Test
+    fun testCategory() = testApplication {
+        application {
+            configureTest()
+        }
+
+        val client = createClient {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+
+        client.get("/api/v1/news/categories/a").apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
+        }
+
+        client.get("/api/v1/news/categories/0").apply {
+            val item = body<Category>()
+            assertEquals(0, item.id)
         }
     }
 
