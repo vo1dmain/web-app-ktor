@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 data class Group(
     val id: Int,
     val code: String,
-    val typeId: Int
+    val levelId: Int,
+    val formId: Int,
+    val tableTypes: List<Int>
 )

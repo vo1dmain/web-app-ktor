@@ -6,8 +6,10 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.getOrDefault
 import ru.penzgtu.web.app.extensions.getOrNull
+import ru.penzgtu.web.app.extensions.orFail
 import ru.penzgtu.web.app.repos.NewsRepo
 
 fun Route.newsRouting() {
@@ -21,7 +23,7 @@ fun Route.newsRouting() {
             val offset = queryParams.getOrDefault("offset", NewsRepo.defaultOffset)
             val limit = queryParams.getOrDefault("limit", NewsRepo.defaultLimit)
 
-            val list = repo.list(categoryId, offset, limit)
+            val list = repo.list(categoryId, offset, limit).failIfEmpty()
             call.respond(list)
         }
 
@@ -29,8 +31,9 @@ fun Route.newsRouting() {
             val pathParams = call.parameters
             val articleId = pathParams.getOrFail<Int>("id")
 
-            val article = repo.article(articleId)
-            call.respond(article)
+            val item = repo.item(articleId).orFail()
+
+            call.respond(item)
         }
 
         route("/categories") {
@@ -39,7 +42,8 @@ fun Route.newsRouting() {
 
                 val parentId = queryParams.getOrNull<Int>("parent_id")
 
-                val list = repo.listCategories(parentId)
+                val list = repo.categories(parentId).failIfEmpty()
+
                 call.respond(list)
             }
         }

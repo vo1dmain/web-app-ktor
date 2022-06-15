@@ -1,4 +1,4 @@
-package ru.penzgtu.web.app.data.news.repo
+package ru.penzgtu.web.app.repos.impl
 
 import ru.penzgtu.web.app.repos.NewsRepo
 

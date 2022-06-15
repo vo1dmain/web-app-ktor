@@ -11,9 +11,9 @@ interface NewsRepo {
         limit: Int = defaultLimit
     ): List<ArticleView>
 
-    suspend fun article(id: Int): Article
+    suspend fun item(id: Int): Article?
 
-    suspend fun listCategories(parentId: Int?): List<Category>
+    suspend fun categories(parentId: Int?): List<Category>
 
     companion object {
         const val defaultOffset = 0

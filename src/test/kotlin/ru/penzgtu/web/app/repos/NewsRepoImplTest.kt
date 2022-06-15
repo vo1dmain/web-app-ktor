@@ -6,20 +6,37 @@ import kotlinx.serialization.json.decodeFromStream
 import ru.penzgtu.web.app.data.news.Article
 import ru.penzgtu.web.app.data.news.ArticleView
 import ru.penzgtu.web.app.data.news.categories.Category
+import ru.penzgtu.web.app.extensions.open
 
+@OptIn(ExperimentalSerializationApi::class)
 class NewsRepoImplTest : NewsRepo {
+    private val newsList = this.javaClass.getResource("/news_list.json")!!
+    private val categories = this.javaClass.getResource("/categories.json")!!
 
-    @OptIn(ExperimentalSerializationApi::class)
+    private val serializer = Json { ignoreUnknownKeys = true }
+
     override suspend fun list(categoryId: Int?, offset: Int, limit: Int): List<ArticleView> {
-        val inputStream = this.javaClass.getResourceAsStream("/news_list.json")!!
-        return Json.decodeFromStream(inputStream) ?: emptyList()
+        return newsList.open {
+            serializer.decodeFromStream<List<ArticleView>>(this)
+                .filter { view ->
+                    categoryId?.let { view.categories.contains(it) } ?: true
+                }
+        }
     }
 
-    override suspend fun article(id: Int): Article {
-        TODO("Not yet implemented")
+    override suspend fun item(id: Int): Article {
+        return newsList.open {
+            serializer.decodeFromStream<List<Article>>(this)
+                .first { it.id == id }
+        }
     }
 
-    override suspend fun listCategories(parentId: Int?): List<Category> {
-        TODO("Not yet implemented")
+    override suspend fun categories(parentId: Int?): List<Category> {
+        return categories.open {
+            serializer.decodeFromStream<List<Category>>(this)
+                .filter { category ->
+                    parentId?.let { it == category.parentId } ?: true
+                }
+        }
     }
 }
