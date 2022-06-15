@@ -6,44 +6,68 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.penzgtu.web.app.data.timetables.entities.Timetable
 import ru.penzgtu.web.app.extensions.failIfEmpty
+import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
 import ru.penzgtu.web.app.repos.TimetablesRepo
 
-fun Route.timetablesRouting() {
-    route("/timetables") {
-        val repo by closestDI().instance<TimetablesRepo>()
+fun Route.timetablesRouting() = route("/timetables") {
+    val repo by closestDI().instance<TimetablesRepo>()
 
-        get("/{id}") {
-            val id = call.parameters.getOrFail<Int>("id")
+    metaRouting(repo)
 
-            val queryParams = call.request.queryParameters
-            val tableTypeId = queryParams.getOrFail<Int>("table_type")
+    get {
+        val queryParams = call.request.queryParameters
 
-            val item = repo.item(id, tableTypeId).orFail()
-            call.respond(item)
-        }
+        val groupCode = queryParams.getOrNull<String>("group_code")
+        val typeId = queryParams.getOrNull<Int>("type_id")
 
-        route("/meta") {
-            get {
-                call.respond(repo.meta().orFail())
-            }
+        val list = repo.list(groupCode, typeId).failIfEmpty()
+        call.respond(list)
+    }
 
-            get("/levels") {
-                call.respond(repo.meta().levels.failIfEmpty())
-            }
+    get("/{id}") {
+        val id = call.parameters.getOrFail<Int>("id")
+        call.respond(repo.item(id).orFail())
+    }
 
-            get("/forms") {
-                call.respond(repo.meta().forms.failIfEmpty())
-            }
+    get("/week") {
+        call.respond(repo.week().orFail())
+    }
+}
 
-            get("/types") {
-                call.respond(repo.meta().types.failIfEmpty())
-            }
 
-            get("/groups") {
-                call.respond(repo.meta().groups.failIfEmpty())
-            }
-        }
+private fun Route.metaRouting(repo: TimetablesRepo) = route("/meta") {
+    get {
+        call.respond(repo.meta().orFail())
+    }
+
+    get("/levels") {
+        call.respond(repo.meta().levels.failIfEmpty())
+    }
+
+    get("/forms") {
+        call.respond(repo.meta().forms.failIfEmpty())
+    }
+
+    get("/table-types") {
+        call.respond(repo.meta().tableTypes.failIfEmpty())
+    }
+
+    get("/groups") {
+        call.respond(repo.meta().groups.failIfEmpty())
+    }
+
+    get("/periods") {
+        call.respond(repo.meta().periods.failIfEmpty())
+    }
+
+    get("/session-types") {
+        call.respond(repo.meta().sessionTypes.failIfEmpty())
+    }
+
+    get("/week-options") {
+        call.respond(repo.meta().weekOptions.failIfEmpty())
     }
 }

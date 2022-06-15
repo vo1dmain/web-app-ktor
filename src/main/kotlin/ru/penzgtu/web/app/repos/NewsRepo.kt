@@ -15,6 +15,8 @@ interface NewsRepo {
 
     suspend fun categories(parentId: Int?): List<Category>
 
+    suspend fun category(id: Int): Category?
+
     companion object {
         const val defaultOffset = 0
         const val defaultLimit = 10

@@ -22,9 +22,5 @@ fun Application.configureStatusPages() {
                 status = HttpStatusCode.BadRequest
             )
         }
-
-        status(HttpStatusCode.BadRequest) { call, status ->
-            call.respondText("400: Bad request.", status = status)
-        }
     }
 }

@@ -12,41 +12,45 @@ import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
 import ru.penzgtu.web.app.repos.NewsRepo
 
-fun Route.newsRouting() {
-    route("/news") {
-        val repo by closestDI().instance<NewsRepo>()
+fun Route.newsRouting() = route("/news") {
+    val repo by closestDI().instance<NewsRepo>()
 
-        get {
-            val queryParams = call.request.queryParameters
+    categoriesRouting(repo)
 
-            val categoryId = queryParams.getOrNull<Int>("category_id")
-            val offset = queryParams.getOrDefault("offset", NewsRepo.defaultOffset)
-            val limit = queryParams.getOrDefault("limit", NewsRepo.defaultLimit)
+    get {
+        val queryParams = call.request.queryParameters
 
-            val list = repo.list(categoryId, offset, limit).failIfEmpty()
-            call.respond(list)
-        }
+        val categoryId = queryParams.getOrNull<Int>("category_id")
+        val offset = queryParams.getOrDefault("offset", NewsRepo.defaultOffset)
+        val limit = queryParams.getOrDefault("limit", NewsRepo.defaultLimit)
 
-        get("/{id}") {
-            val pathParams = call.parameters
-            val articleId = pathParams.getOrFail<Int>("id")
+        val list = repo.list(categoryId, offset, limit).failIfEmpty()
+        call.respond(list)
+    }
 
-            val item = repo.item(articleId).orFail()
+    get("/{id}") {
+        val pathParams = call.parameters
+        val id = pathParams.getOrFail<Int>("id")
 
-            call.respond(item)
-        }
-
-        route("/categories") {
-            get {
-                val queryParams = call.request.queryParameters
-
-                val parentId = queryParams.getOrNull<Int>("parent_id")
-
-                val list = repo.categories(parentId).failIfEmpty()
-
-                call.respond(list)
-            }
-        }
+        val item = repo.item(id).orFail()
+        call.respond(item)
     }
 }
 
+private fun Route.categoriesRouting(repo: NewsRepo) = route("/categories") {
+    get {
+        val queryParams = call.request.queryParameters
+        val parentId = queryParams.getOrNull<Int>("parent_id")
+
+        val list = repo.categories(parentId).failIfEmpty()
+        call.respond(list)
+    }
+
+    get("/{id}") {
+        val pathParams = call.parameters
+        val id = pathParams.getOrFail<Int>("id")
+
+        val item = repo.category(id).orFail()
+        call.respond(item)
+    }
+}

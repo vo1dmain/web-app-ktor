@@ -13,30 +13,37 @@ class NewsRepoImplTest : NewsRepo {
     private val newsList = this.javaClass.getResource("/news_list.json")!!
     private val categories = this.javaClass.getResource("/categories.json")!!
 
-    private val serializer = Json { ignoreUnknownKeys = true }
+    private val json = Json { ignoreUnknownKeys = true }
 
     override suspend fun list(categoryId: Int?, offset: Int, limit: Int): List<ArticleView> {
         return newsList.open {
-            serializer.decodeFromStream<List<ArticleView>>(this)
+            json.decodeFromStream<List<ArticleView>>(this)
                 .filter { view ->
                     categoryId?.let { view.categories.contains(it) } ?: true
                 }
         }
     }
 
-    override suspend fun item(id: Int): Article {
+    override suspend fun item(id: Int): Article? {
         return newsList.open {
-            serializer.decodeFromStream<List<Article>>(this)
-                .first { it.id == id }
+            json.decodeFromStream<List<Article>>(this)
+                .firstOrNull { it.id == id }
         }
     }
 
     override suspend fun categories(parentId: Int?): List<Category> {
         return categories.open {
-            serializer.decodeFromStream<List<Category>>(this)
+            json.decodeFromStream<List<Category>>(this)
                 .filter { category ->
                     parentId?.let { it == category.parentId } ?: true
                 }
+        }
+    }
+
+    override suspend fun category(id: Int): Category? {
+        return categories.open {
+            json.decodeFromStream<List<Category>>(this)
+                .firstOrNull { it.id == id }
         }
     }
 }

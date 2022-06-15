@@ -1,4 +1,4 @@
-package ru.penzgtu.web.app.data.timetables.meta
+package ru.penzgtu.web.app.data.timetables.meta.parts
 
 import kotlinx.serialization.Serializable
 
