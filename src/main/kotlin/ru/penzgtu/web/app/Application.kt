@@ -11,5 +11,6 @@ fun main() {
         configureMonitoring()
         configureHTTP()
         configureStatusPages()
+        configureDI()
     }.start(wait = true)
 }
