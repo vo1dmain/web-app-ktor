@@ -1,20 +1,17 @@
 package ru.penzgtu.web.app.plugins
 
 import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import ru.penzgtu.web.app.routing.NewsRouting.newsRouting
-import ru.penzgtu.web.app.routing.QnaRouting.qnaRouting
+import ru.penzgtu.web.app.routing.newsRouting
+import ru.penzgtu.web.app.routing.qnaRouting
+import ru.penzgtu.web.app.routing.timetablesRouting
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
-
-        route("/api") {
+        route("/api/v1") {
             newsRouting()
             qnaRouting()
+            timetablesRouting()
         }
     }
 }
