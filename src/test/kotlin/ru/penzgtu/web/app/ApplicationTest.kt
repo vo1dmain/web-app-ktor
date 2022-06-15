@@ -5,6 +5,8 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.application.*
+import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
@@ -12,11 +14,11 @@ import org.kodein.di.singleton
 import ru.penzgtu.web.app.data.news.Article
 import ru.penzgtu.web.app.data.news.ArticleView
 import ru.penzgtu.web.app.data.news.categories.Category
-import ru.penzgtu.web.app.plugins.configureRouting
 import ru.penzgtu.web.app.plugins.configureSerialization
 import ru.penzgtu.web.app.plugins.configureStatusPages
 import ru.penzgtu.web.app.repos.NewsRepo
 import ru.penzgtu.web.app.repos.NewsRepoImplTest
+import ru.penzgtu.web.app.routing.newsRouting
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -24,11 +26,7 @@ class ApplicationTest {
     @Test
     fun testNews() = testApplication {
         application {
-            configureSerialization()
-            configureRouting()
-            di {
-                bind<NewsRepo> { singleton { NewsRepoImplTest() } }
-            }
+            configureTest()
         }
 
         val client = createClient {
@@ -50,12 +48,7 @@ class ApplicationTest {
     @Test
     fun testNewsItem() = testApplication {
         application {
-            configureSerialization()
-            configureRouting()
-            configureStatusPages()
-            di {
-                bind<NewsRepo> { singleton { NewsRepoImplTest() } }
-            }
+            configureTest()
         }
 
         val client = createClient {
@@ -77,12 +70,7 @@ class ApplicationTest {
     @Test
     fun testCategories() = testApplication {
         application {
-            configureSerialization()
-            configureRouting()
-            configureStatusPages()
-            di {
-                bind<NewsRepo> { singleton { NewsRepoImplTest() } }
-            }
+            configureTest()
         }
 
         val client = createClient {
@@ -98,6 +86,21 @@ class ApplicationTest {
 
         client.get("/api/v1/news/categories?parent_id=-1").apply {
             assertEquals(HttpStatusCode.NotFound, call.response.status)
+        }
+    }
+
+    private fun Application.configureTest() {
+        configureSerialization()
+        configureStatusPages()
+
+        di {
+            bind<NewsRepo> { singleton { NewsRepoImplTest() } }
+        }
+
+        routing {
+            route("/api/v1") {
+                newsRouting()
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ import ru.penzgtu.web.app.plugins.*
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost") {
+        configureDI()
         configureRouting()
         configureSerialization()
         configureMonitoring()
         configureHTTP()
         configureStatusPages()
-        configureDI()
     }.start(wait = true)
 }
