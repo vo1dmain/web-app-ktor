@@ -1,10 +1,8 @@
 package ru.penzgtu.web.app
 
 import io.ktor.client.call.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
@@ -26,14 +24,10 @@ class NewsTest {
     @Test
     fun testList() = testApplication {
         application {
-            configureTest()
+            newsTest()
         }
 
-        val client = createClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val client = jsonClient()
 
         client.get("/api/v1/news").apply {
             val list = body<List<ArticleView>>()
@@ -48,14 +42,10 @@ class NewsTest {
     @Test
     fun testItem() = testApplication {
         application {
-            configureTest()
+            newsTest()
         }
 
-        val client = createClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val client = jsonClient()
 
         client.get("/api/v1/news/a").apply {
             assertEquals(HttpStatusCode.BadRequest, status)
@@ -70,14 +60,10 @@ class NewsTest {
     @Test
     fun testCategories() = testApplication {
         application {
-            configureTest()
+            newsTest()
         }
 
-        val client = createClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val client = jsonClient()
 
         client.get("/api/v1/news/categories").apply {
             val categories = body<List<Category>>()
@@ -92,14 +78,10 @@ class NewsTest {
     @Test
     fun testCategory() = testApplication {
         application {
-            configureTest()
+            newsTest()
         }
 
-        val client = createClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+        val client = jsonClient()
 
         client.get("/api/v1/news/categories/a").apply {
             assertEquals(HttpStatusCode.BadRequest, status)
@@ -111,7 +93,8 @@ class NewsTest {
         }
     }
 
-    private fun Application.configureTest() {
+
+    private fun Application.newsTest() {
         configureSerialization()
         configureStatusPages()
 
