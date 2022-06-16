@@ -4,9 +4,9 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
 import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.ArticleDao
-import ru.penzgtu.web.app.data.entities.news.Article
-import ru.penzgtu.web.app.data.entities.news.ArticleView
-import ru.penzgtu.web.app.data.util.Filters
+import ru.penzgtu.web.app.data.entities.news.articles.Article
+import ru.penzgtu.web.app.data.entities.news.articles.ArticleFilters
+import ru.penzgtu.web.app.data.entities.news.articles.ArticleView
 import ru.penzgtu.web.app.extensions.open
 
 
@@ -42,8 +42,8 @@ class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<Article> {
         }
     }
 
-    override suspend fun filter(filters: Filters, offset: Int, limit: Int): List<ArticleView> {
-        val categoryId = filters.int("category_id")
+    override suspend fun filter(filters: ArticleFilters, offset: Int, limit: Int): List<ArticleView> {
+        val categoryId = filters.categoryId
         return list(offset, limit).filter { view ->
             categoryId?.let { view.categories.contains(it) } ?: true
         }

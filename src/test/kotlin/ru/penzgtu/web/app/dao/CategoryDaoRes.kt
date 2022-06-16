@@ -5,7 +5,7 @@ import kotlinx.serialization.json.decodeFromStream
 import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.CategoryDao
 import ru.penzgtu.web.app.data.entities.news.categories.Category
-import ru.penzgtu.web.app.data.util.Filters
+import ru.penzgtu.web.app.data.entities.news.categories.CategoryFilters
 import ru.penzgtu.web.app.extensions.open
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -32,8 +32,8 @@ class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<Category> {
         return all().clampedSubList(offset, limit)
     }
 
-    override suspend fun filter(filters: Filters, offset: Int, limit: Int): List<Category> {
-        val parentId = filters.int("parent_id")
+    override suspend fun filter(filters: CategoryFilters, offset: Int, limit: Int): List<Category> {
+        val parentId = filters.parentId
         return list(offset, limit).filter { category ->
             parentId?.let { it == category.parentId } ?: true
         }

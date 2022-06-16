@@ -11,9 +11,9 @@ import org.junit.Test
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.penzgtu.web.app.data.entities.qna.Question
-import ru.penzgtu.web.app.data.entities.qna.post.PostDto
-import ru.penzgtu.web.app.data.entities.qna.post.PostView
+import ru.penzgtu.web.app.data.entities.qna.questions.Question
+import ru.penzgtu.web.app.data.entities.qna.posts.PostDto
+import ru.penzgtu.web.app.data.entities.qna.posts.PostView
 import ru.penzgtu.web.app.data.repos.QnaRepo
 import ru.penzgtu.web.app.plugins.configureSerialization
 import ru.penzgtu.web.app.plugins.configureStatusPages

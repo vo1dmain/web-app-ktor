@@ -8,7 +8,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.penzgtu.web.app.data.entities.qna.Question
+import ru.penzgtu.web.app.data.entities.qna.questions.Question
 import ru.penzgtu.web.app.data.repos.QnaRepo
 import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.failIfNegative

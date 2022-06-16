@@ -6,8 +6,9 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.penzgtu.web.app.data.entities.news.articles.articleFilters
+import ru.penzgtu.web.app.data.entities.news.categories.categoryFilters
 import ru.penzgtu.web.app.data.repos.NewsRepo
-import ru.penzgtu.web.app.data.util.filtersOf
 import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.failIfNegative
 import ru.penzgtu.web.app.extensions.getOrNull
@@ -31,7 +32,9 @@ private fun Route.articlesRouting(repo: NewsRepo) {
             val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
             val list = repo.articles(
-                filtersOf("category_id" to categoryId),
+                articleFilters {
+                    categoryId(categoryId)
+                },
                 page
             )
             call.respond(list.failIfEmpty())
@@ -51,11 +54,14 @@ private fun Route.categoriesRouting(repo: NewsRepo) {
     route("/categories") {
         get {
             val queryParams = call.request.queryParameters
+
             val parentId = queryParams.getOrNull<Int>("parent_id")
             val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
             val list = repo.categories(
-                filtersOf("parent_id" to parentId),
+                categoryFilters {
+                    parentId(parentId)
+                },
                 page
             )
             call.respond(list.failIfEmpty())

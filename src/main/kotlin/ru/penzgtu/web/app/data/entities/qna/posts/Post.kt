@@ -1,4 +1,4 @@
-package ru.penzgtu.web.app.data.entities.qna.post
+package ru.penzgtu.web.app.data.entities.qna.posts
 
 import kotlinx.serialization.Serializable
 

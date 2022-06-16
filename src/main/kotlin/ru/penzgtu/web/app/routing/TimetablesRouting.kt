@@ -6,8 +6,8 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.penzgtu.web.app.data.entities.timetables.list.timetableFilters
 import ru.penzgtu.web.app.data.repos.TimetablesRepo
-import ru.penzgtu.web.app.data.util.filtersOf
 import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.failIfNegative
 import ru.penzgtu.web.app.extensions.getOrNull
@@ -26,10 +26,13 @@ fun Route.timetablesRouting() {
             val typeId = queryParams.getOrNull<Int>("type_id")
             val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
-            val list = repo.list(filtersOf(
-                "group_code" to groupCode,
-                "type_id" to typeId
-            ), page)
+            val list = repo.list(
+                timetableFilters {
+                    groupCode(groupCode)
+                    typeId(typeId)
+                },
+                page
+            )
             call.respond(list.failIfEmpty())
         }
 

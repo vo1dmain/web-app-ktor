@@ -1,11 +1,11 @@
 package ru.penzgtu.web.app.data.repos
 
 import ru.penzgtu.web.app.data.dao.*
-import ru.penzgtu.web.app.data.entities.timetables.main.Timetable
-import ru.penzgtu.web.app.data.entities.timetables.main.TimetableView
+import ru.penzgtu.web.app.data.entities.timetables.list.Timetable
+import ru.penzgtu.web.app.data.entities.timetables.list.TimetableFilters
+import ru.penzgtu.web.app.data.entities.timetables.list.TimetableView
 import ru.penzgtu.web.app.data.entities.timetables.meta.Meta
 import ru.penzgtu.web.app.data.entities.timetables.meta.Week
-import ru.penzgtu.web.app.data.util.Filters
 
 abstract class TimetablesRepo : ListRepo {
     protected abstract val timetableDao: TimetableDao
@@ -32,9 +32,11 @@ abstract class TimetablesRepo : ListRepo {
         )
     }
 
-    suspend fun list(filters: Filters?, page: Int?): List<TimetableView> {
+    suspend fun list(filters: TimetableFilters?, page: Int?): List<TimetableView> {
         val offset = offset(page)
-        return filters?.let { timetableDao.filter(filters, offset, limit) } ?: timetableDao.list(offset, limit)
+
+        if (filters == null) return timetableDao.list(offset, limit)
+        return timetableDao.filter(filters, offset, limit)
     }
 
     suspend fun item(id: Int): Timetable? {

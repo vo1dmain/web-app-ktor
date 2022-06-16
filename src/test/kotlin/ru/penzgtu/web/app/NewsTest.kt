@@ -10,8 +10,8 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.penzgtu.web.app.data.entities.news.Article
-import ru.penzgtu.web.app.data.entities.news.ArticleView
+import ru.penzgtu.web.app.data.entities.news.articles.Article
+import ru.penzgtu.web.app.data.entities.news.articles.ArticleView
 import ru.penzgtu.web.app.data.entities.news.categories.Category
 import ru.penzgtu.web.app.data.repos.NewsRepo
 import ru.penzgtu.web.app.plugins.configureSerialization
