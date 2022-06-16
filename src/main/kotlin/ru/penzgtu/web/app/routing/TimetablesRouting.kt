@@ -6,10 +6,11 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.penzgtu.web.app.data.repos.TimetablesRepo
+import ru.penzgtu.web.app.data.util.filterParamsOf
 import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
-import ru.penzgtu.web.app.repos.TimetablesRepo
 
 fun Route.timetablesRouting() {
     route("/timetables") {
@@ -22,9 +23,13 @@ fun Route.timetablesRouting() {
 
             val groupCode = queryParams.getOrNull<String>("group_code")
             val typeId = queryParams.getOrNull<Int>("type_id")
+            val page = queryParams.getOrNull<Int>("page")
 
-            val list = repo.list(groupCode, typeId).failIfEmpty()
-            call.respond(list)
+            val list = repo.list(filterParamsOf(
+                "group_code" to groupCode,
+                "type_id" to typeId
+            ), page)
+            call.respond(list.failIfEmpty())
         }
 
         get("/{id}") {

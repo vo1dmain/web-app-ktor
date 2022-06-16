@@ -11,13 +11,13 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.penzgtu.web.app.data.news.Article
-import ru.penzgtu.web.app.data.news.ArticleView
-import ru.penzgtu.web.app.data.news.categories.Category
+import ru.penzgtu.web.app.data.entities.news.Article
+import ru.penzgtu.web.app.data.entities.news.ArticleView
+import ru.penzgtu.web.app.data.entities.news.categories.Category
+import ru.penzgtu.web.app.data.repos.NewsRepo
 import ru.penzgtu.web.app.plugins.configureSerialization
 import ru.penzgtu.web.app.plugins.configureStatusPages
-import ru.penzgtu.web.app.repos.NewsRepo
-import ru.penzgtu.web.app.repos.NewsRepoImplTest
+import ru.penzgtu.web.app.repos.NewsRepoTest
 import ru.penzgtu.web.app.routing.newsRouting
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -116,7 +116,7 @@ class NewsTest {
         configureStatusPages()
 
         di {
-            bind<NewsRepo> { singleton { NewsRepoImplTest() } }
+            bind<NewsRepo> { singleton { NewsRepoTest() } }
         }
 
         routing {
