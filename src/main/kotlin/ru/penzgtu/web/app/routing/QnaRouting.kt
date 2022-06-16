@@ -11,6 +11,7 @@ import org.kodein.di.ktor.closestDI
 import ru.penzgtu.web.app.data.entities.qna.Question
 import ru.penzgtu.web.app.data.repos.QnaRepo
 import ru.penzgtu.web.app.extensions.failIfEmpty
+import ru.penzgtu.web.app.extensions.failIfNegative
 import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
 
@@ -18,25 +19,42 @@ fun Route.qnaRouting() {
     route("/qna") {
         val repo by closestDI().instance<QnaRepo>()
 
-        route("/posts") {
-            get {
-                val queryParams = call.request.queryParameters
-                val page = queryParams.getOrNull<Int>("page")
+        postsRouting(repo)
+        questionsRouting(repo)
+    }
+}
 
-                val list = repo.posts(page)
-                call.respond(list.failIfEmpty())
-            }
+private fun Route.postsRouting(repo: QnaRepo) {
+    route("/posts") {
+        get {
+            val queryParams = call.request.queryParameters
+            val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
-            get("/{id}") {
-                val params = call.parameters
-                val id = params.getOrFail<Int>("id")
-
-                val item = repo.post(id).orFail()
-                call.respond(item)
-            }
+            val list = repo.posts(page)
+            call.respond(list.failIfEmpty())
         }
 
-        post("/questions") {
+        get("/{id}") {
+            val params = call.parameters
+            val id = params.getOrFail<Int>("id")
+
+            val item = repo.post(id).orFail()
+            call.respond(item)
+        }
+    }
+}
+
+private fun Route.questionsRouting(repo: QnaRepo) {
+    route("/questions") {
+        get {
+            val queryParams = call.request.queryParameters
+            val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
+
+            val list = repo.questions(page)
+            call.respond(list.failIfEmpty())
+        }
+
+        post {
             val question = call.receive<Question>()
             repo.newQuestion(question)
             call.respond(HttpStatusCode.Created)
