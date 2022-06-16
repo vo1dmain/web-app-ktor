@@ -1,6 +1,6 @@
 package ru.penzgtu.web.app.data.dao
 
-import ru.penzgtu.web.app.data.util.FilterParams
+import ru.penzgtu.web.app.data.util.Filters
 
 sealed interface CrudDao<I, PK> {
     suspend fun create(item: I): PK
@@ -18,7 +18,7 @@ sealed interface AllDao<I> {
 }
 
 sealed interface FilterDao<I> {
-    suspend fun filter(params: FilterParams, offset: Int, limit: Int): List<I>
+    suspend fun filter(filters: Filters, offset: Int, limit: Int): List<I>
 }
 
 

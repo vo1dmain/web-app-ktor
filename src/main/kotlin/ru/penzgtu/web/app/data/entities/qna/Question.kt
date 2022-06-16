@@ -8,6 +8,6 @@ data class Question(
     val theme: String,
     val text: String,
     val acceptorId: Int,
-    val email: String,
-    val datetime: Long
+    val email: String?,
+    val dateTime: Long
 )

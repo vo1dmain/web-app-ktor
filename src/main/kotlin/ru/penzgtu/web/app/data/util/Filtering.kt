@@ -1,6 +1,6 @@
 package ru.penzgtu.web.app.data.util
 
-class FilterParams internal constructor() {
+class Filters internal constructor() {
     private val map = mutableMapOf<String, Any?>()
 
     operator fun get(key: String): Any? {
@@ -8,6 +8,8 @@ class FilterParams internal constructor() {
     }
 
     internal fun put(key: String, value: Any?) {
+        if ((value != null) && supportedTypes.any { it.isInstance(value) }.not())
+            throw IllegalArgumentException()
         map[key] = value
     }
 
@@ -26,9 +28,27 @@ class FilterParams internal constructor() {
     fun float(key: String): Float? {
         return get(key) as? Float
     }
+
+    fun intArray(key: String): IntArray? {
+        return get(key) as? IntArray
+    }
+
+    fun floatArray(key: String): FloatArray? {
+        return get(key) as? FloatArray
+    }
+
+    companion object {
+        private val supportedTypes = listOf(
+            String::class,
+            Number::class,
+            Boolean::class,
+            IntArray::class,
+            FloatArray::class
+        )
+    }
 }
 
-fun filterParamsOf(vararg params: Pair<String, Any?>) = FilterParams().apply {
+fun filtersOf(vararg params: Pair<String, Any?>) = Filters().apply {
     for ((key, value) in params) {
         put(key, value)
     }

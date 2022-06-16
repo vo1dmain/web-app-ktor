@@ -1,25 +1,22 @@
 package ru.penzgtu.web.app.dao
 
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
+import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.PostDao
 import ru.penzgtu.web.app.data.entities.qna.post.Post
-import ru.penzgtu.web.app.data.entities.qna.post.PostView
 import ru.penzgtu.web.app.extensions.open
 
 @OptIn(ExperimentalSerializationApi::class)
-class PostDaoResourceImpl: PostDao {
-    private val posts = this.javaClass.getResource("/post_views.json")!!
-
-    private val json = Json { ignoreUnknownKeys = true }
+class PostDaoRes : PostDao, JsonDao, AllDaoTest<Post> {
+    private val posts = this.javaClass.getResource("/posts_list.json")!!
 
     override suspend fun create(item: Post): Int {
         TODO("Not yet implemented")
     }
 
     override suspend fun read(id: Int): Post? {
-        TODO("Not yet implemented")
+        return all().firstOrNull { it.id == id }
     }
 
     override suspend fun update(item: Post) {
@@ -30,7 +27,11 @@ class PostDaoResourceImpl: PostDao {
         TODO("Not yet implemented")
     }
 
-    override suspend fun list(offset: Int, limit: Int): List<PostView> {
+    override suspend fun list(offset: Int, limit: Int): List<Post> {
+        return all().clampedSubList(offset, limit)
+    }
+
+    override suspend fun all(): List<Post> {
         return posts.open {
             json.decodeFromStream(this)
         }

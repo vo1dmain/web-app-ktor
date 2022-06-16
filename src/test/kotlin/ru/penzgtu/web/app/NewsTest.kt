@@ -2,6 +2,7 @@ package ru.penzgtu.web.app
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
@@ -29,12 +30,13 @@ class NewsTest {
 
         val client = jsonClient()
 
-        client.get("/api/v1/news").apply {
+        client.get("/news/articles").apply {
+            println(bodyAsText())
             val list = body<List<ArticleView>>()
             assertEquals(0, list[0].id)
         }
 
-        client.get("api/v1/news?category_id=-1").apply {
+        client.get("/news/articles?category_id=-1").apply {
             assertEquals(HttpStatusCode.NotFound, call.response.status)
         }
     }
@@ -47,13 +49,14 @@ class NewsTest {
 
         val client = jsonClient()
 
-        client.get("/api/v1/news/a").apply {
-            assertEquals(HttpStatusCode.BadRequest, status)
-        }
-
-        client.get("/api/v1/news/0").apply {
+        client.get("/news/articles/0").apply {
+            println(bodyAsText())
             val item = body<Article>()
             assertEquals(0, item.id)
+        }
+
+        client.get("/news/articles/a").apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
         }
     }
 
@@ -65,12 +68,13 @@ class NewsTest {
 
         val client = jsonClient()
 
-        client.get("/api/v1/news/categories").apply {
+        client.get("/news/categories").apply {
+            println(bodyAsText())
             val categories = body<List<Category>>()
             assertEquals(0, categories[0].id)
         }
 
-        client.get("/api/v1/news/categories?parent_id=-1").apply {
+        client.get("/news/categories?parent_id=-1").apply {
             assertEquals(HttpStatusCode.NotFound, call.response.status)
         }
     }
@@ -83,13 +87,14 @@ class NewsTest {
 
         val client = jsonClient()
 
-        client.get("/api/v1/news/categories/a").apply {
-            assertEquals(HttpStatusCode.BadRequest, status)
-        }
-
-        client.get("/api/v1/news/categories/0").apply {
+        client.get("/news/categories/0").apply {
+            println(bodyAsText())
             val item = body<Category>()
             assertEquals(0, item.id)
+        }
+
+        client.get("/news/categories/a").apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
         }
     }
 
@@ -103,9 +108,7 @@ class NewsTest {
         }
 
         routing {
-            route("/api/v1") {
-                newsRouting()
-            }
+            newsRouting()
         }
     }
 }

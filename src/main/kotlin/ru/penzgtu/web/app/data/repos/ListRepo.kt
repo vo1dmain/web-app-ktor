@@ -6,7 +6,7 @@ interface ListRepo {
 
     fun offset(page: Int?): Int {
         val p = page ?: startPage
-        return p - 1 * limit
+        return (p - 1) * limit
     }
 
     companion object {

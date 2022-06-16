@@ -7,8 +7,9 @@ import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.penzgtu.web.app.data.repos.NewsRepo
-import ru.penzgtu.web.app.data.util.filterParamsOf
+import ru.penzgtu.web.app.data.util.filtersOf
 import ru.penzgtu.web.app.extensions.failIfEmpty
+import ru.penzgtu.web.app.extensions.failIfNegative
 import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
 
@@ -16,18 +17,21 @@ fun Route.newsRouting() {
     route("/news") {
         val repo by closestDI().instance<NewsRepo>()
 
-        categoriesRouting()
+        articlesRouting(repo)
+        categoriesRouting(repo)
+    }
+}
 
+private fun Route.articlesRouting(repo: NewsRepo) {
+    route("/articles") {
         get {
             val queryParams = call.request.queryParameters
 
             val categoryId = queryParams.getOrNull<Int>("category_id")
-            val page = queryParams.getOrNull<Int>("page")
+            val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
             val list = repo.articles(
-                filterParamsOf(
-                    "category_id" to categoryId
-                ),
+                filtersOf("category_id" to categoryId),
                 page
             )
             call.respond(list.failIfEmpty())
@@ -43,19 +47,15 @@ fun Route.newsRouting() {
     }
 }
 
-private fun Route.categoriesRouting() {
+private fun Route.categoriesRouting(repo: NewsRepo) {
     route("/categories") {
-        val repo by closestDI().instance<NewsRepo>()
-
         get {
             val queryParams = call.request.queryParameters
             val parentId = queryParams.getOrNull<Int>("parent_id")
-            val page = queryParams.getOrNull<Int>("page")
+            val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
             val list = repo.categories(
-                filterParamsOf(
-                    "parent_id" to parentId
-                ),
+                filtersOf("parent_id" to parentId),
                 page
             )
             call.respond(list.failIfEmpty())
