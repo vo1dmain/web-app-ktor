@@ -13,6 +13,10 @@ sealed interface ListDao<I> {
     suspend fun list(offset: Int, limit: Int): List<I>
 }
 
+sealed interface AllDao<I> {
+    suspend fun all(): List<I>
+}
+
 sealed interface FilterDao<I> {
     suspend fun filter(params: FilterParams, offset: Int, limit: Int): List<I>
 }
