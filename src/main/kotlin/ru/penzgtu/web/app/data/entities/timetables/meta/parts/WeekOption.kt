@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeekOption(
-    val id: Int,
+    val id: Int?,
     val description: String
 )

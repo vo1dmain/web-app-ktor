@@ -3,15 +3,18 @@ package ru.penzgtu.web.app.data.dao
 import ru.penzgtu.web.app.data.entities.news.Article
 import ru.penzgtu.web.app.data.entities.news.ArticleView
 import ru.penzgtu.web.app.data.entities.news.categories.Category
-import ru.penzgtu.web.app.data.entities.qna.Post
+import ru.penzgtu.web.app.data.entities.qna.Answer
 import ru.penzgtu.web.app.data.entities.qna.Question
+import ru.penzgtu.web.app.data.entities.qna.post.Post
+import ru.penzgtu.web.app.data.entities.qna.post.PostView
 import ru.penzgtu.web.app.data.entities.timetables.main.Timetable
 import ru.penzgtu.web.app.data.entities.timetables.main.TimetableView
 import ru.penzgtu.web.app.data.entities.timetables.meta.parts.*
 
 //Qna
-interface QuestionDao : CrudDao<Question, Int>
-interface PostDao : CrudDao<Post, Int>, ListDao<Post>
+interface QuestionDao : CrudDao<Question, Int>, FilterDao<Question>
+interface AnswerDao : CrudDao<Answer, Int>
+interface PostDao : CrudDao<Post, Int>, ListDao<PostView>
 
 
 //Timetables

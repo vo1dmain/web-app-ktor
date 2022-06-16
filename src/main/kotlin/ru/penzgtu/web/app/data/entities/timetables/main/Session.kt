@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Session(
+    val id: Int?,
     val subject: String,
     val instructor: String,
     val place: String,

@@ -3,11 +3,9 @@ package ru.penzgtu.web.app.data.entities.qna
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Question(
+data class Answer(
     val id: Int?,
-    val theme: String,
+    val questionId: Int,
     val text: String,
-    val acceptorId: Int,
-    val email: String,
-    val datetime: Long
+    val dateTime: Long
 )

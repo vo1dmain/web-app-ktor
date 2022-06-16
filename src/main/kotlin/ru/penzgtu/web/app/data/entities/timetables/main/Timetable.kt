@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Timetable(
-    val id: Int,
+    val id: Int?,
     val groupCode: String,
     val typeId: Int,
     val days: List<Day>,
