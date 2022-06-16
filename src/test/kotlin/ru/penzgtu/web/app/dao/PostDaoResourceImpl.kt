@@ -10,7 +10,7 @@ import ru.penzgtu.web.app.extensions.open
 
 @OptIn(ExperimentalSerializationApi::class)
 class PostDaoResourceImpl: PostDao {
-    private val posts = this.javaClass.getResource("/posts.json")!!
+    private val posts = this.javaClass.getResource("/post_views.json")!!
 
     private val json = Json { ignoreUnknownKeys = true }
 
