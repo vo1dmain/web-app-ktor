@@ -11,11 +11,3 @@ inline fun <reified R : Any> Parameters.getOrNull(name: String): R? {
         null
     }
 }
-
-inline fun <reified R : Any> Parameters.getOrDefault(name: String, default: R): R {
-    return try {
-        getOrFail<R>(name)
-    } catch (e: BadRequestException) {
-        default
-    }
-}
