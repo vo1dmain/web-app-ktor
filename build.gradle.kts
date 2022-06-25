@@ -5,12 +5,13 @@ val kodeinVersion: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.7.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
+    kotlin("jvm")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 group = "ru.penzgtu.web.app"
 version = "0.0.1"
+
 application {
     mainClass.set("ru.penzgtu.web.app.ApplicationKt")
 
