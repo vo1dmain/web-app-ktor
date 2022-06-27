@@ -7,6 +7,7 @@ import org.kodein.di.singleton
 import ru.penzgtu.web.app.data.repos.DaybookRepo
 import ru.penzgtu.web.app.data.repos.NewsRepo
 import ru.penzgtu.web.app.data.repos.QnaRepo
+import ru.penzgtu.web.app.exposed.orm.db.DbManager
 import ru.penzgtu.web.app.exposed.orm.db.H2Manager
 import ru.penzgtu.web.app.exposed.repos.DaybookRepoXp
 import ru.penzgtu.web.app.exposed.repos.NewsRepoXp
@@ -17,5 +18,6 @@ fun Application.configureDI() {
         bind<NewsRepo> { singleton { NewsRepoXp(H2Manager) } }
         bind<QnaRepo> { singleton { QnaRepoXp(H2Manager) } }
         bind<DaybookRepo> { singleton { DaybookRepoXp(H2Manager) } }
+        bind<DbManager> { singleton { H2Manager } }
     }
 }
