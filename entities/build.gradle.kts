@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "ru.vo1d.web.entities"
-version = "0.0.1"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
