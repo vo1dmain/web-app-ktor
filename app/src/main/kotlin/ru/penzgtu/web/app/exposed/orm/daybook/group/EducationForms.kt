@@ -17,5 +17,5 @@ class EducationForm(id: EntityID<String>) : Entity<String>(id), HasModel<Educati
 
     val title by EducationForms.title
 
-    override fun model() = EducationFormModel(id.value, title)
+    override fun toModel() = EducationFormModel(id.value, title)
 }

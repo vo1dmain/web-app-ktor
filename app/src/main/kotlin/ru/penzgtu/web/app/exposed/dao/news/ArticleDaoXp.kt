@@ -28,7 +28,7 @@ class ArticleDaoXp : ArticleDao {
     }
 
     override suspend fun read(id: Int): ArticleModel? {
-        return Article.findById(id)?.model()
+        return Article.findById(id)?.toModel()
     }
 
     override suspend fun update(item: ArticleModel): Int {

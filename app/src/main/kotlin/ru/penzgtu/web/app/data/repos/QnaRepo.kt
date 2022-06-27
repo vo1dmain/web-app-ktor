@@ -13,19 +13,19 @@ abstract class QnaRepo : ListRepo {
     protected abstract val answerDao: AnswerDao
     protected abstract val postDao: PostDao
 
-    suspend fun posts(page: Int?): List<PostView> {
+    open suspend fun posts(page: Int?): List<PostView> {
         return postDao.list(offset(page), limit).failIfEmpty()
     }
 
-    suspend fun post(id: Int): PostModel? {
+    open suspend fun post(id: Int): PostModel? {
         return postDao.read(id)
     }
 
-    suspend fun newQuestion(question: QuestionModel) {
-        questionDao.create(question)
+    open suspend fun newQuestion(question: QuestionModel): Int {
+        return questionDao.create(question)
     }
 
-    suspend fun questions(page: Int?): List<QuestionModel> {
+    open suspend fun questions(page: Int?): List<QuestionModel> {
         return questionDao.list(offset(page), limit)
     }
 }

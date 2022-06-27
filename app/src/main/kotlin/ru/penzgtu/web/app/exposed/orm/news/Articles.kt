@@ -27,7 +27,7 @@ class Article(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel>, HasVie
     val dateTime by Articles.dateTime
     val categories by Category via ArticleCategories
 
-    override fun model() = ArticleModel(
+    override fun toModel() = ArticleModel(
         id.value,
         title,
         body,

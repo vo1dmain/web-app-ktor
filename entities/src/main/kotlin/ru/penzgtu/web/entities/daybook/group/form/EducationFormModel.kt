@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EducationFormModel(
-    val id: String?,
+    val id: String,
     val title: String
 )

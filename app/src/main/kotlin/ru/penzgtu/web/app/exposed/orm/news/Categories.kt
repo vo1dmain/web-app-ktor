@@ -19,5 +19,5 @@ class Category(id: EntityID<Int>) : IntEntity(id), HasModel<CategoryModel> {
     val title by Categories.title
     val parentId by Categories.parentId
 
-    override fun model() = CategoryModel(id.value, title, parentId?.value)
+    override fun toModel() = CategoryModel(id.value, title, parentId?.value)
 }

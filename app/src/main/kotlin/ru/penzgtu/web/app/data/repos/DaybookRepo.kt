@@ -5,22 +5,21 @@ import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
 import ru.penzgtu.web.entities.daybook.Meta
 import ru.penzgtu.web.entities.daybook.timetable.TimetableModel
 import ru.penzgtu.web.entities.daybook.timetable.TimetableView
-import ru.penzgtu.web.entities.daybook.timetable.week.WeekModel
 
 abstract class DaybookRepo : ListRepo {
     protected abstract val timetableDao: TimetableDao
 
     //Meta
-    protected abstract val graduationLevelDao: GraduationLevelDao
-    protected abstract val educationFormDao: EducationFormDao
-    protected abstract val groupDao: GroupDao
     protected abstract val sessionTypeDao: SessionTypeDao
     protected abstract val tableTypeDao: TableTypeDao
     protected abstract val timePeriodDao: TimePeriodDao
     protected abstract val weekOptionDao: WeekOptionDao
+    protected abstract val graduationLevelDao: GraduationLevelDao
+    protected abstract val educationFormDao: EducationFormDao
+    protected abstract val groupDao: GroupDao
 
 
-    suspend fun meta(): Meta {
+    open suspend fun meta(): Meta {
         return Meta(
             graduationLevelDao.all(),
             educationFormDao.all(),
@@ -32,18 +31,14 @@ abstract class DaybookRepo : ListRepo {
         )
     }
 
-    suspend fun timetables(filters: TimetableFilters?, page: Int?): List<TimetableView> {
+    open suspend fun timetables(filters: TimetableFilters?, page: Int?): List<TimetableView> {
         val offset = offset(page)
 
         if (filters == null) return timetableDao.list(offset, limit)
         return timetableDao.filter(filters, offset, limit)
     }
 
-    suspend fun timetable(id: Int): TimetableModel? {
+    open suspend fun timetable(id: Int): TimetableModel? {
         return timetableDao.read(id)
-    }
-
-    suspend fun week(): WeekModel? {
-        TODO()
     }
 }

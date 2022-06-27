@@ -9,7 +9,7 @@ fun timetableFilters(block: TimetableFilters.Companion.() -> Unit): TimetableFil
 
 interface TimetableFilters : Filters {
     val groupCode: String?
-    val typeId: Int?
+    val typeId: String?
 
     override fun areEmpty(): Boolean {
         return groupCode == null || typeId == null
@@ -17,13 +17,13 @@ interface TimetableFilters : Filters {
 
     companion object : FiltersBuilder<TimetableFilters> {
         private var groupCode: String? = null
-        private var typeId: Int? = null
+        private var typeId: String? = null
 
         fun groupCode(value: String?) {
             groupCode = value
         }
 
-        fun typeId(value: Int?) {
+        fun typeId(value: String?) {
             typeId = value
         }
 

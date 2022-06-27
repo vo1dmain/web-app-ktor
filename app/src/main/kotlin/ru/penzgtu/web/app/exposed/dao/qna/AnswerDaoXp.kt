@@ -18,7 +18,7 @@ class AnswerDaoXp : AnswerDao {
     }
 
     override suspend fun read(id: Int): AnswerModel? {
-        return Answer.findById(id)?.model()
+        return Answer.findById(id)?.toModel()
     }
 
     override suspend fun update(item: AnswerModel): Int {
@@ -36,6 +36,6 @@ class AnswerDaoXp : AnswerDao {
     }
 
     override suspend fun list(offset: Long, limit: Int): List<AnswerModel> {
-        return Answer.all().limit(limit, offset).map(Answer::model)
+        return Answer.all().limit(limit, offset).map(Answer::toModel)
     }
 }

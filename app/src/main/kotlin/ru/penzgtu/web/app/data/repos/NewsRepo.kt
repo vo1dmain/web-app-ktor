@@ -12,25 +12,25 @@ abstract class NewsRepo : ListRepo {
     protected abstract val articleDao: ArticleDao
     protected abstract val categoryDao: CategoryDao
 
-    suspend fun articles(filters: ArticleFilters, page: Int?): List<ArticleView> {
+    open suspend fun articles(filters: ArticleFilters, page: Int?): List<ArticleView> {
         val offset = offset(page)
 
         if (filters.areEmpty()) return articleDao.list(offset, limit)
         return articleDao.filter(filters, offset, limit)
     }
 
-    suspend fun article(id: Int): ArticleModel? {
+    open suspend fun article(id: Int): ArticleModel? {
         return articleDao.read(id)
     }
 
-    suspend fun categories(filters: CategoryFilters, page: Int?): List<CategoryModel> {
+    open suspend fun categories(filters: CategoryFilters, page: Int?): List<CategoryModel> {
         val offset = offset(page)
 
         if (filters.areEmpty()) return categoryDao.list(offset, limit)
         return categoryDao.filter(filters, offset, limit)
     }
 
-    suspend fun category(id: Int): CategoryModel? {
+    open suspend fun category(id: Int): CategoryModel? {
         return categoryDao.read(id)
     }
 }

@@ -18,5 +18,5 @@ class TimePeriod(id: EntityID<Int>) : IntEntity(id), HasModel<TimePeriodModel> {
     val start by TimePeriods.start
     val end by TimePeriods.end
 
-    override fun model() = TimePeriodModel(id.value, start, end)
+    override fun toModel() = TimePeriodModel(id.value, start, end)
 }

@@ -17,5 +17,5 @@ class GraduationLevel(id: EntityID<String>) : Entity<String>(id), HasModel<Gradu
 
     val title by GraduationLevels.title
 
-    override fun model() = GraduationLevelModel(id.value, title)
+    override fun toModel() = GraduationLevelModel(id.value, title)
 }

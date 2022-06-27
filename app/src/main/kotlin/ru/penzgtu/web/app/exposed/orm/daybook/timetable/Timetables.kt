@@ -25,12 +25,12 @@ class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel>, Ha
     val sessions by Session via TimetableSessions
     val days by Day referrersOn Sessions.dayId
 
-    override fun model() = TimetableModel(
+    override fun toModel() = TimetableModel(
         id.value,
         groupCode.value,
         typeId.value,
-        days.map(Day::model),
-        sessions.map(Session::model),
+        days.map(Day::toModel),
+        sessions.map(Session::toModel),
     )
 
     override fun toView() = TimetableView(id.value, groupCode.value, typeId.value)

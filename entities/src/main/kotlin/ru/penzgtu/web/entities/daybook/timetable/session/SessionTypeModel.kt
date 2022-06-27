@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SessionTypeModel(
-    val id: Int?,
+    val id: Int? = null,
     val title: String
 )

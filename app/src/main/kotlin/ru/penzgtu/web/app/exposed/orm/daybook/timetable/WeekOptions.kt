@@ -8,13 +8,13 @@ import ru.penzgtu.web.app.exposed.orm.HasModel
 import ru.penzgtu.web.entities.daybook.timetable.week.WeekOptionModel
 
 object WeekOptions : IntIdTable() {
-    val title = varchar("title", 16)
+    val description = varchar("title", 16)
 }
 
 class WeekOption(id: EntityID<Int>) : IntEntity(id), HasModel<WeekOptionModel> {
     companion object : IntEntityClass<WeekOption>(WeekOptions)
 
-    val title by WeekOptions.title
+    val description by WeekOptions.description
 
-    override fun model() = WeekOptionModel(id.value, title)
+    override fun toModel() = WeekOptionModel(id.value, description)
 }

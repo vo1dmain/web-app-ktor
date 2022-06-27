@@ -16,5 +16,5 @@ class SessionType(id: EntityID<Int>) : IntEntity(id), HasModel<SessionTypeModel>
 
     val title by SessionTypes.title
 
-    override fun model() = SessionTypeModel(id.value, title)
+    override fun toModel() = SessionTypeModel(id.value, title)
 }

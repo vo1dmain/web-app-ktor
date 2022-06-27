@@ -37,7 +37,7 @@ class Session(id: EntityID<Int>) : IntEntity(id), HasModel<SessionModel> {
     val periodId by Sessions.periodId
     val weekOptionId by Sessions.weekOptionId
 
-    override fun model() = SessionModel(
+    override fun toModel() = SessionModel(
         id.value, subject, instructor, place, typeId.value, dayId.value, periodId.value, weekOptionId?.value
     )
 

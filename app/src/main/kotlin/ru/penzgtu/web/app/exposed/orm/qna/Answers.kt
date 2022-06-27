@@ -21,5 +21,5 @@ class Answer(id: EntityID<Int>) : IntEntity(id), HasModel<AnswerModel> {
     val body by Answers.body
     val dateTime by Answers.dateTime
 
-    override fun model() = AnswerModel(id.value, questionId.value, body, dateTime)
+    override fun toModel() = AnswerModel(id.value, questionId.value, body, dateTime)
 }

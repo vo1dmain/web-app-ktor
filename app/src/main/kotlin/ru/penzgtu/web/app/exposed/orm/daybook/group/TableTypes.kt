@@ -18,5 +18,5 @@ class TableType(id: EntityID<String>) : Entity<String>(id), HasModel<TableTypeMo
 
     val title by TableTypes.title
 
-    override fun model() = TableTypeModel(id.value, title)
+    override fun toModel() = TableTypeModel(id.value, title)
 }

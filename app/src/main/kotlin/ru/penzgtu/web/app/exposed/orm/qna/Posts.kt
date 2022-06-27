@@ -21,7 +21,7 @@ class Post(id: EntityID<Int>) : IntEntity(id), HasModel<PostModel>, HasView<Post
     val question by Question referencedOn Posts.questionId
     val answer by Answer referencedOn Posts.answerId
 
-    override fun model() = PostModel(id.value, question.model(), answer.model())
+    override fun toModel() = PostModel(id.value, question.toModel(), answer.toModel())
 
     override fun toView() = PostView(
         id.value,

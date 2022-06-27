@@ -24,5 +24,5 @@ class Question(id: EntityID<Int>) : IntEntity(id), HasModel<QuestionModel> {
     val email by Questions.email
     val dateTime by Questions.dateTime
 
-    override fun model() = QuestionModel(id.value, theme, body, acceptorId, email, dateTime)
+    override fun toModel() = QuestionModel(id.value, theme, body, acceptorId, email, dateTime)
 }

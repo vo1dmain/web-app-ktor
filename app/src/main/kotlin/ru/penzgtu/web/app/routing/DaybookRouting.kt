@@ -19,10 +19,6 @@ fun Route.daybookRouting() {
 
         metaRouting(repo)
         timetablesRouting(repo)
-
-        get("/week") {
-            call.respond(repo.week().orFail())
-        }
     }
 }
 
@@ -69,7 +65,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
             val queryParams = call.request.queryParameters
 
             val groupCode = queryParams.getOrNull<String>("group_code")
-            val typeId = queryParams.getOrNull<Int>("type_id")
+            val typeId = queryParams.getOrNull<String>("type_id")
             val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
             val list = repo.timetables(

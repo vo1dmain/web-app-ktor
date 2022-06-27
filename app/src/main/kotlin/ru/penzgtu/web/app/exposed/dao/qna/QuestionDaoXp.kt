@@ -20,7 +20,7 @@ class QuestionDaoXp : QuestionDao {
     }
 
     override suspend fun read(id: Int): QuestionModel? {
-        return Question.findById(id)?.model()
+        return Question.findById(id)?.toModel()
     }
 
     override suspend fun update(item: QuestionModel): Int {
@@ -40,6 +40,6 @@ class QuestionDaoXp : QuestionDao {
     }
 
     override suspend fun list(offset: Long, limit: Int): List<QuestionModel> {
-        return Question.all().limit(limit, offset).map(Question::model)
+        return Question.all().limit(limit, offset).map(Question::toModel)
     }
 }

@@ -18,7 +18,7 @@ class PostDaoXp : PostDao {
     }
 
     override suspend fun read(id: Int): PostModel? {
-        return Post.findById(id)?.model()
+        return Post.findById(id)?.toModel()
     }
 
     override suspend fun update(item: PostModel): Int {

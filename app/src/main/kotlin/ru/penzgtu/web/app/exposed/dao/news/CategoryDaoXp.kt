@@ -18,7 +18,7 @@ class CategoryDaoXp : CategoryDao {
     }
 
     override suspend fun read(id: Int): CategoryModel? {
-        return Category.findById(id)?.model()
+        return Category.findById(id)?.toModel()
     }
 
     override suspend fun update(item: CategoryModel): Int {
@@ -35,13 +35,13 @@ class CategoryDaoXp : CategoryDao {
     }
 
     override suspend fun list(offset: Long, limit: Int): List<CategoryModel> {
-        return Category.all().limit(limit, offset).map(Category::model)
+        return Category.all().limit(limit, offset).map(Category::toModel)
     }
 
     override suspend fun filter(filters: CategoryFilters, offset: Long, limit: Int): List<CategoryModel> {
         if (filters.parentId == null) return list(offset, limit)
 
         return Category.find { Categories.parentId eq filters.parentId }
-            .limit(limit, offset).map(Category::model)
+            .limit(limit, offset).map(Category::toModel)
     }
 }

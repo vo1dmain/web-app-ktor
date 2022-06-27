@@ -1,8 +1,8 @@
 package ru.penzgtu.web.app.data.dao
 
+import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
 import ru.penzgtu.web.app.data.filters.news.ArticleFilters
 import ru.penzgtu.web.app.data.filters.news.CategoryFilters
-import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
 import ru.penzgtu.web.entities.daybook.group.GroupModel
 import ru.penzgtu.web.entities.daybook.group.form.EducationFormModel
 import ru.penzgtu.web.entities.daybook.group.level.GraduationLevelModel
@@ -38,10 +38,10 @@ interface TimePeriodDao : CrudDao<TimePeriodModel, Int>, AllDao<TimePeriodModel>
 interface WeekOptionDao : CrudDao<WeekOptionModel, Int>, AllDao<WeekOptionModel>
 
 //Meta
-interface GraduationLevelDao : CrudDao<GraduationLevelModel, Int>, AllDao<GraduationLevelModel>
-interface EducationFormDao : CrudDao<EducationFormModel, Int>, AllDao<EducationFormModel>
-interface GroupDao : CrudDao<GroupModel, Int>, AllDao<GroupModel>
-interface TableTypeDao : CrudDao<TableTypeModel, Int>, AllDao<TableTypeModel>
+interface GraduationLevelDao : CrudDao<GraduationLevelModel, String>, AllDao<GraduationLevelModel>
+interface EducationFormDao : CrudDao<EducationFormModel, String>, AllDao<EducationFormModel>
+interface GroupDao : CrudDao<GroupModel, String>, AllDao<GroupModel>
+interface TableTypeDao : CrudDao<TableTypeModel, String>, AllDao<TableTypeModel>
 
 
 //News

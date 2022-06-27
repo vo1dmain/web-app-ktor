@@ -23,5 +23,5 @@ class Group(id: EntityID<String>) : Entity<String>(id), HasModel<GroupModel> {
     val formId by Groups.formId
     val types by TableType referrersOn Timetables.typeId
 
-    override fun model() = GroupModel(id.value, levelId.value, formId.value, types.map { it.id.value })
+    override fun toModel() = GroupModel(id.value, levelId.value, formId.value, types.map { it.id.value })
 }

@@ -16,5 +16,5 @@ class Day(id: EntityID<Int>) : IntEntity(id), HasModel<DayModel> {
 
     val title by Days.title
 
-    override fun model() = DayModel(id.value, title)
+    override fun toModel() = DayModel(id.value, title)
 }

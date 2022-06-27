@@ -1,4 +1,4 @@
-package ru.penzgtu.web.app.exposed.orm
+package ru.penzgtu.web.app.exposed.orm.db
 
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -10,10 +10,17 @@ import ru.penzgtu.web.app.exposed.orm.qna.Answers
 import ru.penzgtu.web.app.exposed.orm.qna.Posts
 import ru.penzgtu.web.app.exposed.orm.qna.Questions
 
-object H2Factory {
-    fun init() {
-        val newsDb = Database.connect("jdbc:h2:file:./build/newsDb", "org.h2.Driver")
-        val qnaDb = Database.connect("jdbc:h2:file:./build/qnaDb", "org.h2.Driver")
+object H2Manager : DbManager {
+    private lateinit var newsDatabase: Database
+    private lateinit var qnaDatabase: Database
+
+    override val newsDb get() = newsDatabase
+    override val qnaDb get() = qnaDatabase
+    override val timetableDb: Database? = null
+
+    override fun init() {
+        newsDatabase = Database.connect("jdbc:h2:mem:newsDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
+        qnaDatabase = Database.connect("jdbc:h2:mem:qnaDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
 
         transaction(newsDb) {
             SchemaUtils.create(
