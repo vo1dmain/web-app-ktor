@@ -6,8 +6,8 @@ import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.ArticleDao
 import ru.penzgtu.web.app.data.filters.news.ArticleFilters
 import ru.penzgtu.web.app.extensions.open
-import ru.penzgtu.web.entities.news.articles.ArticleModel
-import ru.penzgtu.web.entities.news.articles.ArticleView
+import ru.penzgtu.web.entities.news.article.ArticleModel
+import ru.penzgtu.web.entities.news.article.ArticleView
 
 
 @OptIn(ExperimentalSerializationApi::class)

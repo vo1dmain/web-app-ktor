@@ -15,9 +15,9 @@ import ru.penzgtu.web.app.plugins.configureSerialization
 import ru.penzgtu.web.app.plugins.configureStatusPages
 import ru.penzgtu.web.app.repos.NewsRepoTest
 import ru.penzgtu.web.app.routing.newsRouting
-import ru.penzgtu.web.entities.news.articles.ArticleModel
-import ru.penzgtu.web.entities.news.articles.ArticleView
-import ru.penzgtu.web.entities.news.categories.CategoryModel
+import ru.penzgtu.web.entities.news.article.ArticleModel
+import ru.penzgtu.web.entities.news.article.ArticleView
+import ru.penzgtu.web.entities.news.category.CategoryModel
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

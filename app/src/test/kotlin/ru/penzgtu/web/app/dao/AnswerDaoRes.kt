@@ -5,7 +5,7 @@ import kotlinx.serialization.json.decodeFromStream
 import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.AnswerDao
 import ru.penzgtu.web.app.extensions.open
-import ru.penzgtu.web.entities.qna.answers.AnswerModel
+import ru.penzgtu.web.entities.qna.answer.AnswerModel
 
 @OptIn(ExperimentalSerializationApi::class)
 class AnswerDaoRes : AnswerDao, JsonDao, AllDaoTest<AnswerModel> {

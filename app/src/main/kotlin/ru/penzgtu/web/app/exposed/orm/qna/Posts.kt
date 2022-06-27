@@ -7,8 +7,8 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import ru.penzgtu.web.app.exposed.orm.HasModel
 import ru.penzgtu.web.app.exposed.orm.HasView
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
 
 object Posts : IntIdTable() {
     val questionId = reference("questionId", Questions, CASCADE, CASCADE)

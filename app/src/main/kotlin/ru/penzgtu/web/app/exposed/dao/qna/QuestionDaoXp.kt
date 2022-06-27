@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.update
 import ru.penzgtu.web.app.data.dao.QuestionDao
 import ru.penzgtu.web.app.exposed.orm.qna.Question
 import ru.penzgtu.web.app.exposed.orm.qna.Questions
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 class QuestionDaoXp : QuestionDao {
     override suspend fun create(item: QuestionModel): Int {

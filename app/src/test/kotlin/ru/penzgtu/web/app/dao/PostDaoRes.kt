@@ -6,10 +6,10 @@ import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.PostDao
 import ru.penzgtu.web.app.entities.PostRaw
 import ru.penzgtu.web.app.extensions.open
-import ru.penzgtu.web.entities.qna.answers.AnswerModel
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.answer.AnswerModel
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 @OptIn(ExperimentalSerializationApi::class)
 class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {

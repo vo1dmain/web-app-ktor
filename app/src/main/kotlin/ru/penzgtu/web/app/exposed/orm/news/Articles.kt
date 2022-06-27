@@ -6,8 +6,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import ru.penzgtu.web.app.exposed.orm.HasModel
 import ru.penzgtu.web.app.exposed.orm.HasView
-import ru.penzgtu.web.entities.news.articles.ArticleModel
-import ru.penzgtu.web.entities.news.articles.ArticleView
+import ru.penzgtu.web.entities.news.article.ArticleModel
+import ru.penzgtu.web.entities.news.article.ArticleView
 
 object Articles : IntIdTable() {
     val title = varchar("title", 256)

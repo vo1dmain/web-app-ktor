@@ -4,9 +4,9 @@ import ru.penzgtu.web.app.data.dao.AnswerDao
 import ru.penzgtu.web.app.data.dao.PostDao
 import ru.penzgtu.web.app.data.dao.QuestionDao
 import ru.penzgtu.web.app.extensions.failIfEmpty
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 abstract class QnaRepo : ListRepo {
     protected abstract val questionDao: QuestionDao

@@ -13,7 +13,7 @@ import ru.penzgtu.web.app.extensions.failIfEmpty
 import ru.penzgtu.web.app.extensions.failIfNegative
 import ru.penzgtu.web.app.extensions.getOrNull
 import ru.penzgtu.web.app.extensions.orFail
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 fun Route.qnaRouting() {
     route("/qna") {

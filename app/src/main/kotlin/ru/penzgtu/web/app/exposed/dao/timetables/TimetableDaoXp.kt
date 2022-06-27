@@ -1,9 +1,9 @@
 package ru.penzgtu.web.app.exposed.dao.timetables
 
 import ru.penzgtu.web.app.data.dao.TimetableDao
-import ru.penzgtu.web.app.data.filters.timetables.TimetableFilters
-import ru.penzgtu.web.entities.timetables.list.TimetableModel
-import ru.penzgtu.web.entities.timetables.list.TimetableView
+import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
+import ru.penzgtu.web.entities.daybook.timetable.TimetableModel
+import ru.penzgtu.web.entities.daybook.timetable.TimetableView
 
 class TimetableDaoXp : TimetableDao {
     override suspend fun create(item: TimetableModel): Int {

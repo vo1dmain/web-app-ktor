@@ -16,9 +16,9 @@ import ru.penzgtu.web.app.plugins.configureSerialization
 import ru.penzgtu.web.app.plugins.configureStatusPages
 import ru.penzgtu.web.app.repos.QnaRepoTest
 import ru.penzgtu.web.app.routing.qnaRouting
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 import kotlin.test.assertEquals
 
 class QnaTest {

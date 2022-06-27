@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import ru.penzgtu.web.app.exposed.orm.HasModel
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 object Questions : IntIdTable() {
     val theme = varchar("theme", 64)

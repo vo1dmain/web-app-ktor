@@ -6,7 +6,7 @@ import ru.penzgtu.web.app.clampedSubList
 import ru.penzgtu.web.app.data.dao.CategoryDao
 import ru.penzgtu.web.app.data.filters.news.CategoryFilters
 import ru.penzgtu.web.app.extensions.open
-import ru.penzgtu.web.entities.news.categories.CategoryModel
+import ru.penzgtu.web.entities.news.category.CategoryModel
 
 @OptIn(ExperimentalSerializationApi::class)
 class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<CategoryModel> {

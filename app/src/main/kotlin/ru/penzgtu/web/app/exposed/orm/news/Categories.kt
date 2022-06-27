@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import ru.penzgtu.web.app.exposed.orm.HasModel
-import ru.penzgtu.web.entities.news.categories.CategoryModel
+import ru.penzgtu.web.entities.news.category.CategoryModel
 
 object Categories : IntIdTable() {
     val title = varchar("title", 128)

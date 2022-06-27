@@ -6,8 +6,8 @@ import org.jetbrains.exposed.sql.update
 import ru.penzgtu.web.app.data.dao.PostDao
 import ru.penzgtu.web.app.exposed.orm.qna.Post
 import ru.penzgtu.web.app.exposed.orm.qna.Posts
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
 
 class PostDaoXp : PostDao {
     override suspend fun create(item: PostModel): Int {

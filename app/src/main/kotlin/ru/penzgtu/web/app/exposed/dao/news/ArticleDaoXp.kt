@@ -6,8 +6,8 @@ import ru.penzgtu.web.app.data.filters.news.ArticleFilters
 import ru.penzgtu.web.app.exposed.orm.news.Article
 import ru.penzgtu.web.app.exposed.orm.news.ArticleCategories
 import ru.penzgtu.web.app.exposed.orm.news.Articles
-import ru.penzgtu.web.entities.news.articles.ArticleModel
-import ru.penzgtu.web.entities.news.articles.ArticleView
+import ru.penzgtu.web.entities.news.article.ArticleModel
+import ru.penzgtu.web.entities.news.article.ArticleView
 
 class ArticleDaoXp : ArticleDao {
     override suspend fun create(item: ArticleModel): Int {

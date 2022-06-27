@@ -2,17 +2,23 @@ package ru.penzgtu.web.app.data.dao
 
 import ru.penzgtu.web.app.data.filters.news.ArticleFilters
 import ru.penzgtu.web.app.data.filters.news.CategoryFilters
-import ru.penzgtu.web.app.data.filters.timetables.TimetableFilters
-import ru.penzgtu.web.entities.news.articles.ArticleModel
-import ru.penzgtu.web.entities.news.articles.ArticleView
-import ru.penzgtu.web.entities.news.categories.CategoryModel
-import ru.penzgtu.web.entities.qna.answers.AnswerModel
-import ru.penzgtu.web.entities.qna.posts.PostModel
-import ru.penzgtu.web.entities.qna.posts.PostView
-import ru.penzgtu.web.entities.qna.questions.QuestionModel
-import ru.penzgtu.web.entities.timetables.list.TimetableModel
-import ru.penzgtu.web.entities.timetables.list.TimetableView
-import ru.penzgtu.web.entities.timetables.meta.parts.*
+import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
+import ru.penzgtu.web.entities.daybook.group.GroupModel
+import ru.penzgtu.web.entities.daybook.group.form.EducationFormModel
+import ru.penzgtu.web.entities.daybook.group.level.GraduationLevelModel
+import ru.penzgtu.web.entities.daybook.group.type.TableTypeModel
+import ru.penzgtu.web.entities.daybook.timetable.TimetableModel
+import ru.penzgtu.web.entities.daybook.timetable.TimetableView
+import ru.penzgtu.web.entities.daybook.timetable.period.TimePeriodModel
+import ru.penzgtu.web.entities.daybook.timetable.session.SessionTypeModel
+import ru.penzgtu.web.entities.daybook.timetable.week.WeekOptionModel
+import ru.penzgtu.web.entities.news.article.ArticleModel
+import ru.penzgtu.web.entities.news.article.ArticleView
+import ru.penzgtu.web.entities.news.category.CategoryModel
+import ru.penzgtu.web.entities.qna.answer.AnswerModel
+import ru.penzgtu.web.entities.qna.post.PostModel
+import ru.penzgtu.web.entities.qna.post.PostView
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 //Qna
 interface QuestionDao : CrudDao<QuestionModel, Int>, ListDao<QuestionModel>
@@ -25,15 +31,17 @@ interface TimetableDao : CrudDao<TimetableModel, Int>,
     ListDao<TimetableView>,
     FilterDao<TimetableView, TimetableFilters>
 
+interface SessionTypeDao : CrudDao<SessionTypeModel, Int>, AllDao<SessionTypeModel>
+
+interface TimePeriodDao : CrudDao<TimePeriodModel, Int>, AllDao<TimePeriodModel>
+
+interface WeekOptionDao : CrudDao<WeekOptionModel, Int>, AllDao<WeekOptionModel>
 
 //Meta
-interface GraduationLevelDao : CrudDao<GraduationLevel, Int>, AllDao<GraduationLevel>
-interface EducationFormDao : CrudDao<EducationForm, Int>, AllDao<EducationForm>
+interface GraduationLevelDao : CrudDao<GraduationLevelModel, Int>, AllDao<GraduationLevelModel>
+interface EducationFormDao : CrudDao<EducationFormModel, Int>, AllDao<EducationFormModel>
 interface GroupDao : CrudDao<GroupModel, Int>, AllDao<GroupModel>
-interface SessionTypeDao : CrudDao<SessionTypeModel, Int>, AllDao<SessionTypeModel>
 interface TableTypeDao : CrudDao<TableTypeModel, Int>, AllDao<TableTypeModel>
-interface TimePeriodDao : CrudDao<TimePeriodModel, Int>, AllDao<TimePeriodModel>
-interface WeekOptionDao : CrudDao<WeekOptionModel, Int>, AllDao<WeekOptionModel>
 
 
 //News

@@ -7,7 +7,7 @@ import ru.penzgtu.web.app.data.dao.CategoryDao
 import ru.penzgtu.web.app.data.filters.news.CategoryFilters
 import ru.penzgtu.web.app.exposed.orm.news.Categories
 import ru.penzgtu.web.app.exposed.orm.news.Category
-import ru.penzgtu.web.entities.news.categories.CategoryModel
+import ru.penzgtu.web.entities.news.category.CategoryModel
 
 class CategoryDaoXp : CategoryDao {
     override suspend fun create(item: CategoryModel): Int {
