@@ -4,7 +4,7 @@ import ru.penzgtu.web.app.data.dao.delegates.dao
 import ru.penzgtu.web.app.data.filters.daybook.TimetableFilters
 import ru.penzgtu.web.app.data.repos.DaybookRepo
 import ru.penzgtu.web.app.exposed.dao.daybook.*
-import ru.penzgtu.web.app.exposed.orm.db.DbManager
+import ru.penzgtu.web.app.exposed.db.DbManager
 
 class DaybookRepoXp(private val dbManager: DbManager) : DaybookRepo() {
     override val timetableDao by dao<TimetableDaoXp>()

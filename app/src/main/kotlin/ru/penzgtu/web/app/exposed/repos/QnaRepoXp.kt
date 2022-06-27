@@ -5,7 +5,7 @@ import ru.penzgtu.web.app.data.repos.QnaRepo
 import ru.penzgtu.web.app.exposed.dao.qna.AnswerDaoXp
 import ru.penzgtu.web.app.exposed.dao.qna.PostDaoXp
 import ru.penzgtu.web.app.exposed.dao.qna.QuestionDaoXp
-import ru.penzgtu.web.app.exposed.orm.db.DbManager
+import ru.penzgtu.web.app.exposed.db.DbManager
 import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 class QnaRepoXp(private val dbManager: DbManager) : QnaRepo() {

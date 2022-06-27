@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "title": "Срочные новости!",
+    "body": "Случилось непоправимое.",
+    "previewImage": null,
+    "gallery": null,
+    "dateTime": 1655233673010,
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Несрочные новости!",
+    "body": "Случилось поправимое.",
+    "previewImage": null,
+    "gallery": null,
+    "dateTime": 1655233673010,
+    "categories": [
+      2
+    ]
+  }
+]

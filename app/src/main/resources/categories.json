@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Все новости",
+    "parentId": null
+  },
+  {
+    "id": 2,
+    "title": "Анонсы",
+    "parentId": null
+  }
+]

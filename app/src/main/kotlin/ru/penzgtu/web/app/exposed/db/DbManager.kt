@@ -1,4 +1,4 @@
-package ru.penzgtu.web.app.exposed.orm.db
+package ru.penzgtu.web.app.exposed.db
 
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database

@@ -6,7 +6,7 @@ import ru.penzgtu.web.app.data.filters.news.CategoryFilters
 import ru.penzgtu.web.app.data.repos.NewsRepo
 import ru.penzgtu.web.app.exposed.dao.news.ArticleDaoXp
 import ru.penzgtu.web.app.exposed.dao.news.CategoryDaoXp
-import ru.penzgtu.web.app.exposed.orm.db.DbManager
+import ru.penzgtu.web.app.exposed.db.DbManager
 
 class NewsRepoXp(private val dbManager: DbManager) : NewsRepo() {
     override val articleDao by dao<ArticleDaoXp>()

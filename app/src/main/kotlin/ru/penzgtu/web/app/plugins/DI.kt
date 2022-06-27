@@ -7,8 +7,8 @@ import org.kodein.di.singleton
 import ru.penzgtu.web.app.data.repos.DaybookRepo
 import ru.penzgtu.web.app.data.repos.NewsRepo
 import ru.penzgtu.web.app.data.repos.QnaRepo
-import ru.penzgtu.web.app.exposed.orm.db.DbManager
-import ru.penzgtu.web.app.exposed.orm.db.H2Manager
+import ru.penzgtu.web.app.exposed.db.DbManager
+import ru.penzgtu.web.app.exposed.db.H2Manager
 import ru.penzgtu.web.app.exposed.repos.DaybookRepoXp
 import ru.penzgtu.web.app.exposed.repos.NewsRepoXp
 import ru.penzgtu.web.app.exposed.repos.QnaRepoXp

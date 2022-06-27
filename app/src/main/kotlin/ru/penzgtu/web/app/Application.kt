@@ -4,7 +4,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.penzgtu.web.app.exposed.orm.db.DbManager
+import ru.penzgtu.web.app.exposed.db.DbManager
 import ru.penzgtu.web.app.plugins.*
 
 fun main() {
