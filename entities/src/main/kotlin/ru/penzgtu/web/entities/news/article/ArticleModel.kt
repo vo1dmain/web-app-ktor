@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ArticleModel(
-    val id: Int?,
+    val id: Int? = null,
     val title: String,
     val body: String,
     val previewImage: String?,
