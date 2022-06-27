@@ -1,4 +1,4 @@
-rootProject.name = "ru.penzgtu.web"
+rootProject.name = "ru.vo1d.web"
 
 pluginManagement {
     val kotlinVersion: String by settings

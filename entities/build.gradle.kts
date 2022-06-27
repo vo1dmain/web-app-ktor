@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "ru.penzgtu.web.entities"
+group = "ru.vo1d.web.entities"
 version = "0.0.1"
 
 repositories {
