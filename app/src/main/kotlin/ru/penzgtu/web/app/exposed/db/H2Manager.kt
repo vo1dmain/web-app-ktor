@@ -4,10 +4,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.penzgtu.web.app.exposed.orm.news.ArticleCategories
 import ru.penzgtu.web.app.exposed.orm.news.Articles
@@ -18,6 +15,8 @@ import ru.penzgtu.web.app.exposed.orm.qna.Questions
 import ru.penzgtu.web.app.extensions.open
 import ru.penzgtu.web.entities.news.article.ArticleModel
 import ru.penzgtu.web.entities.news.category.CategoryModel
+import ru.penzgtu.web.entities.qna.answer.AnswerModel
+import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 @OptIn(ExperimentalSerializationApi::class)
 object H2Manager : DbManager {
@@ -51,6 +50,7 @@ object H2Manager : DbManager {
                 Answers,
                 Posts
             )
+            prefetchQna()
         }
     }
 
@@ -86,6 +86,45 @@ object H2Manager : DbManager {
             ArticleCategories.batchInsert(item.categories, shouldReturnGeneratedValues = false) { id ->
                 this[ArticleCategories.articleId] = itemId
                 this[ArticleCategories.categoryId] = id
+            }
+        }
+    }
+
+    private fun prefetchQna() {
+        val questionsFile = this.javaClass.getResource("/questions.json")!!
+        val questions = runBlocking {
+            questionsFile.open {
+                json.decodeFromStream<List<QuestionModel>>(this@open)
+            }
+        }
+
+        val answersFile = this.javaClass.getResource("/answers.json")!!
+        val answers = runBlocking {
+            answersFile.open {
+                json.decodeFromStream<List<AnswerModel>>(this@open)
+            }
+        }
+
+        questions.forEach { item ->
+            val qId = Questions.insertAndGetId {
+                it[theme] = item.theme
+                it[body] = item.body
+                it[acceptorId] = item.acceptorId
+                it[email] = item.email
+                it[dateTime] = item.dateTime
+            }.value
+
+            answers.firstOrNull { it.questionId == qId }?.let { answer ->
+                val aId = Answers.insertAndGetId {
+                    it[body] = answer.body
+                    it[questionId] = qId
+                    it[dateTime] = answer.dateTime
+                }.value
+
+                Posts.insert {
+                    it[answerId] = aId
+                    it[questionId] = qId
+                }
             }
         }
     }

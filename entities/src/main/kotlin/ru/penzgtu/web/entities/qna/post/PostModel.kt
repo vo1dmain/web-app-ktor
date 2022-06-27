@@ -6,7 +6,7 @@ import ru.penzgtu.web.entities.qna.question.QuestionModel
 
 @Serializable
 data class PostModel(
-    val id: Int?,
+    val id: Int? = null,
     val question: QuestionModel,
     val answer: AnswerModel
 )

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TimePeriodModel(
-    val id: Int?,
+    val id: Int? = null,
     val start: String,
     val end: String,
 )

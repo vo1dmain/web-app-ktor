@@ -6,7 +6,7 @@ import ru.penzgtu.web.entities.daybook.timetable.session.SessionModel
 
 @Serializable
 data class TimetableModel(
-    val id: Int?,
+    val id: Int? = null,
     val groupCode: String,
     val typeId: String,
     val days: List<DayModel>,
