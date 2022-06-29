@@ -1,31 +1,21 @@
 package ru.vo1d.web.app.data.filters.news
 
-import ru.vo1d.web.app.data.dao.Filters
-import ru.vo1d.web.app.data.dao.FiltersBuilder
+import ru.vo1d.web.app.data.dao.filters.Filters
+import ru.vo1d.web.app.data.dao.filters.FiltersBuilder
+import ru.vo1d.web.app.data.dao.filters.FiltersCreator
 
 interface ArticleFilters : Filters {
+    companion object : FiltersCreator<ArticleFilters, Builder>(Builder::class)
+
     val categoryId: Int?
 
-    override fun areEmpty(): Boolean {
-        return categoryId == null
-    }
+    override fun areEmpty() = categoryId == null
 
-    companion object : FiltersBuilder<ArticleFilters> {
-        private var categoryId: Int? = null
+    class Builder internal constructor() : FiltersBuilder<ArticleFilters> {
+        var categoryId: Int? = null
 
-        fun categoryId(id: Int?) {
-            categoryId = id
-        }
-
-        override fun build(): ArticleFilters {
-            return object : ArticleFilters {
-                override val categoryId = this@Companion.categoryId
-            }
+        override fun build() = object : ArticleFilters {
+            override val categoryId = this@Builder.categoryId
         }
     }
-}
-
-
-fun articleFilters(block: ArticleFilters.Companion.() -> Unit): ArticleFilters {
-    return ArticleFilters.apply(block).build()
 }

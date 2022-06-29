@@ -1,7 +1,7 @@
 package ru.vo1d.web.app.data.filters.news
 
-import ru.vo1d.web.app.data.dao.Filters
-import ru.vo1d.web.app.data.dao.FiltersBuilder
+import ru.vo1d.web.app.data.dao.filters.Filters
+import ru.vo1d.web.app.data.dao.filters.FiltersBuilder
 
 interface CategoryFilters : Filters {
     val parentId: Int?

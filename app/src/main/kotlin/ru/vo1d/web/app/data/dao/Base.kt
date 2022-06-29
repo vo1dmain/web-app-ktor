@@ -1,5 +1,7 @@
 package ru.vo1d.web.app.data.dao
 
+import ru.vo1d.web.app.data.dao.filters.Filters
+
 sealed interface CreateDao<PK, I> {
     suspend fun create(item: I): PK
 }

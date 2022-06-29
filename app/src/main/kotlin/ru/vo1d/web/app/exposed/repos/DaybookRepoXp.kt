@@ -1,11 +1,14 @@
 package ru.vo1d.web.app.exposed.repos
 
 import ru.vo1d.web.app.data.dao.delegates.dao
+import ru.vo1d.web.app.data.filters.daybook.SessionFilters
 import ru.vo1d.web.app.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.app.data.repos.impl.DaybookRepoImpl
 import ru.vo1d.web.app.exposed.dao.daybook.group.*
 import ru.vo1d.web.app.exposed.dao.daybook.timetable.*
 import ru.vo1d.web.app.exposed.db.DbManager
+import ru.vo1d.web.entities.daybook.timetable.TimetableModel
+import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 
 class DaybookRepoXp(private val dbManager: DbManager) : DaybookRepoImpl() {
     override val timetableDao by dao<TimetableDaoXp>()
@@ -26,11 +29,23 @@ class DaybookRepoXp(private val dbManager: DbManager) : DaybookRepoImpl() {
         query(daybookDb) { super.meta() }
     }
 
-    override suspend fun timetables(filters: TimetableFilters?, page: Int?) = with(dbManager) {
+    override suspend fun timetables(filters: TimetableFilters, page: Int?) = with(dbManager) {
         query(daybookDb) { super.timetables(filters, page) }
     }
 
     override suspend fun timetable(id: Int) = with(dbManager) {
         query(daybookDb) { super.timetable(id) }
+    }
+
+    override suspend fun addTimetable(item: TimetableModel) = with(dbManager) {
+        query(daybookDb) { super.addTimetable(item) }
+    }
+
+    override suspend fun sessions(filters: SessionFilters, page: Int?) = with(dbManager) {
+        query(daybookDb) { super.sessions(filters, page) }
+    }
+
+    override suspend fun addSession(item: SessionModel) = with(dbManager) {
+        query(daybookDb) { super.addSession(item) }
     }
 }

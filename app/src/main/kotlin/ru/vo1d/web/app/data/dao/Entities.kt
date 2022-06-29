@@ -1,5 +1,6 @@
 package ru.vo1d.web.app.data.dao
 
+import ru.vo1d.web.app.data.filters.daybook.SessionFilters
 import ru.vo1d.web.app.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.app.data.filters.news.ArticleFilters
 import ru.vo1d.web.app.data.filters.news.CategoryFilters
@@ -35,7 +36,7 @@ interface PostDao : CudDao<Int, PostModel>, ReadDao<Int, PostDto>, ListDao<PostV
 interface TimetableDao : CudDao<Int, TimetableModel>, ReadDao<Int, TimetableDto>, ListDao<TimetableModel>,
     FilterDao<TimetableModel, TimetableFilters>
 
-interface SessionDao : CrudDao<Int, SessionModel>
+interface SessionDao : CrudDao<Int, SessionModel>, ListDao<SessionModel>, FilterDao<SessionModel, SessionFilters>
 
 interface DayDao : CrudDao<Int, DayModel>
 

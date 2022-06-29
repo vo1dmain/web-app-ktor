@@ -1,37 +1,24 @@
 package ru.vo1d.web.app.data.filters.daybook
 
-import ru.vo1d.web.app.data.dao.Filters
-import ru.vo1d.web.app.data.dao.FiltersBuilder
-
-fun timetableFilters(block: TimetableFilters.Companion.() -> Unit): TimetableFilters {
-    return TimetableFilters.apply(block).build()
-}
+import ru.vo1d.web.app.data.dao.filters.Filters
+import ru.vo1d.web.app.data.dao.filters.FiltersBuilder
+import ru.vo1d.web.app.data.dao.filters.FiltersCreator
 
 interface TimetableFilters : Filters {
+    companion object : FiltersCreator<TimetableFilters, Builder>(Builder::class)
+
     val groupCode: String?
     val typeId: String?
 
-    override fun areEmpty(): Boolean {
-        return groupCode == null || typeId == null
-    }
+    override fun areEmpty() = listOf(groupCode, typeId).all { it == null }
 
-    companion object : FiltersBuilder<TimetableFilters> {
-        private var groupCode: String? = null
-        private var typeId: String? = null
+    class Builder internal constructor() : FiltersBuilder<TimetableFilters> {
+        var groupCode: String? = null
+        var typeId: String? = null
 
-        fun groupCode(value: String?) {
-            groupCode = value
-        }
-
-        fun typeId(value: String?) {
-            typeId = value
-        }
-
-        override fun build(): TimetableFilters {
-            return object : TimetableFilters {
-                override val groupCode = this@Companion.groupCode
-                override val typeId = this@Companion.typeId
-            }
+        override fun build() = object : TimetableFilters {
+            override val groupCode = this@Builder.groupCode
+            override val typeId = this@Builder.typeId
         }
     }
 }
