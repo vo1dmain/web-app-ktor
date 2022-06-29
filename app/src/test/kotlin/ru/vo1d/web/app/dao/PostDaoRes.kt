@@ -4,15 +4,15 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.app.clampedSubList
 import ru.vo1d.web.app.data.dao.PostDao
-import ru.vo1d.web.app.entities.PostRaw
 import ru.vo1d.web.app.extensions.open
 import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.post.PostDto
+import ru.vo1d.web.entities.qna.post.PostModel
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
 @OptIn(ExperimentalSerializationApi::class)
-class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
+class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
     private val posts = this.javaClass.getResource("/posts_list.json")!!
     private val questions = this.javaClass.getResource("/questions.json")!!
     private val answers = this.javaClass.getResource("/answers.json")!!
@@ -29,7 +29,7 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
         }
     }
 
-    override suspend fun create(item: PostDto): Int {
+    override suspend fun create(item: PostModel): Int {
         TODO("Not yet implemented")
     }
 
@@ -37,11 +37,11 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
         return all().map { post ->
             val question = allQuestions().first { it.id == post.questionId }
             val answer = allAnswers().first { it.id == post.answerId }
-            PostDto(post.id, question, answer)
+            PostDto(post.id!!, question, answer)
         }.firstOrNull { it.id == id }
     }
 
-    override suspend fun update(item: PostDto): Int {
+    override suspend fun update(item: PostModel): Int {
         TODO("Not yet implemented")
     }
 
@@ -54,7 +54,7 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
             val question = allQuestions().first { it.id == post.questionId }
             val answer = allAnswers().first { it.id == post.answerId }
             PostView(
-                post.id,
+                post.id!!,
                 question.id!!,
                 question.dateTime,
                 question.theme,
@@ -63,7 +63,7 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
         }
     }
 
-    override suspend fun all(): List<PostRaw> {
+    override suspend fun all(): List<PostModel> {
         return posts.open {
             json.decodeFromStream(this)
         }

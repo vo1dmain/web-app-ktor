@@ -21,7 +21,7 @@ abstract class QnaRepo : ListRepo {
         return postDao.read(id)
     }
 
-    open suspend fun newQuestion(question: QuestionModel): Int {
+    open suspend fun addQuestion(question: QuestionModel): Int {
         return questionDao.create(question)
     }
 

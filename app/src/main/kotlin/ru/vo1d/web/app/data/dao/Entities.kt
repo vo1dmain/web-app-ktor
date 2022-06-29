@@ -18,39 +18,40 @@ import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.post.PostDto
+import ru.vo1d.web.entities.qna.post.PostModel
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
 //Qna
-interface QuestionDao : CrudDao<QuestionModel, Int>, ListDao<QuestionModel>
-interface AnswerDao : CrudDao<AnswerModel, Int>, ListDao<AnswerModel>
-interface PostDao : CrudDao<PostDto, Int>, ListDao<PostView>
+interface QuestionDao : CrudDao<Int, QuestionModel>, ListDao<QuestionModel>
+interface AnswerDao : CrudDao<Int, AnswerModel>, ListDao<AnswerModel>
+interface PostDao : CudDao<Int, PostModel>, ReadDao<Int, PostDto>, ListDao<PostView>
 
 
 //Timetables
-interface TimetableDao : CrudDao<TimetableModel, Int>, ListDao<TimetableView>,
+interface TimetableDao : CrudDao<Int, TimetableModel>, ListDao<TimetableView>,
     FilterDao<TimetableView, TimetableFilters>
 
-interface SessionTypeDao : CrudDao<SessionTypeModel, Int>, AllDao<SessionTypeModel>
+interface SessionTypeDao : CrudDao<Int, SessionTypeModel>, AllDao<SessionTypeModel>
 
-interface TimePeriodDao : CrudDao<TimePeriodModel, Int>, AllDao<TimePeriodModel>
+interface TimePeriodDao : CrudDao<Int, TimePeriodModel>, AllDao<TimePeriodModel>
 
-interface WeekOptionDao : CrudDao<WeekOptionModel, Int>, AllDao<WeekOptionModel>
+interface WeekOptionDao : CrudDao<Int, WeekOptionModel>, AllDao<WeekOptionModel>
 
 
 //Meta
-interface GradLevelDao : CrudDao<GradLevelModel, String>, AllDao<GradLevelModel>
+interface GradLevelDao : CrudDao<String, GradLevelModel>, AllDao<GradLevelModel>
 
-interface GradDegreeDao : CrudDao<GradDegreeModel, String>, AllDao<GradDegreeModel>
+interface GradDegreeDao : CrudDao<String, GradDegreeModel>, AllDao<GradDegreeModel>
 
-interface EduFormDao : CrudDao<EduFormModel, String>, AllDao<EduFormModel>
+interface EduFormDao : CrudDao<String, EduFormModel>, AllDao<EduFormModel>
 
-interface GroupDao : CrudDao<GroupModel, String>, AllDao<GroupModel>
+interface GroupDao : CrudDao<String, GroupModel>, AllDao<GroupModel>
 
-interface TableTypeDao : CrudDao<TableTypeModel, String>, AllDao<TableTypeModel>
+interface TableTypeDao : CrudDao<String, TableTypeModel>, AllDao<TableTypeModel>
 
 
 //News
-interface ArticleDao : CrudDao<ArticleModel, Int>, ListDao<ArticleView>, FilterDao<ArticleView, ArticleFilters>
+interface ArticleDao : CrudDao<Int, ArticleModel>, ListDao<ArticleView>, FilterDao<ArticleView, ArticleFilters>
 
-interface CategoryDao : CrudDao<CategoryModel, Int>, ListDao<CategoryModel>, FilterDao<CategoryModel, CategoryFilters>
+interface CategoryDao : CrudDao<Int, CategoryModel>, ListDao<CategoryModel>, FilterDao<CategoryModel, CategoryFilters>

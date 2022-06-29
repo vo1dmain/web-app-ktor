@@ -21,8 +21,8 @@ class QnaRepoXp(private val dbManager: DbManager) : QnaRepo() {
         query(qnaDb) { super.post(id) }
     }
 
-    override suspend fun newQuestion(question: QuestionModel) = with(dbManager) {
-        query(qnaDb) { super.newQuestion(question) }
+    override suspend fun addQuestion(question: QuestionModel) = with(dbManager) {
+        query(qnaDb) { super.addQuestion(question) }
     }
 
     override suspend fun questions(page: Int?) = with(dbManager) {
