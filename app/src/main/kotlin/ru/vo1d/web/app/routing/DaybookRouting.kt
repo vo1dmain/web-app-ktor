@@ -66,8 +66,8 @@ private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
     get {
         val queryParams = call.request.queryParameters
 
-        val groupCode = queryParams.getOrNull<String>("group_code")
-        val typeId = queryParams.getOrNull<String>("type_id")
+        val groupCode = queryParams.getOrNull<String>("group")
+        val typeId = queryParams.getOrNull<String>("type")
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.timetables(
