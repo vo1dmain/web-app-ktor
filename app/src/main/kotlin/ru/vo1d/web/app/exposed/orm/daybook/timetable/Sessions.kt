@@ -19,13 +19,6 @@ object Sessions : IntIdTable() {
     val weekOptionId = optReference("weekOption", WeekOptions, CASCADE, CASCADE)
 }
 
-object TimetableSessions : Table() {
-    val timetableId = reference("timetableId", Timetables)
-    val sessionId = reference("sessionId", Sessions)
-
-    override val primaryKey = PrimaryKey(timetableId, sessionId)
-}
-
 class Session(id: EntityID<Int>) : IntEntity(id), HasModel<SessionModel> {
     companion object : IntEntityClass<Session>(Sessions)
 
@@ -40,5 +33,11 @@ class Session(id: EntityID<Int>) : IntEntity(id), HasModel<SessionModel> {
     override fun toModel() = SessionModel(
         id.value, subject, instructor, place, typeId.value, dayId.value, periodId.value, weekOptionId?.value
     )
+}
 
+object TimetableSessions : Table() {
+    val timetableId = reference("timetableId", Timetables)
+    val sessionId = reference("sessionId", Sessions)
+
+    override val primaryKey = PrimaryKey(timetableId, sessionId)
 }

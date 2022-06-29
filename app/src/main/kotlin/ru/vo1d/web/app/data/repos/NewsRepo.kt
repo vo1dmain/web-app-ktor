@@ -1,36 +1,17 @@
 package ru.vo1d.web.app.data.repos
 
-import ru.vo1d.web.app.data.dao.ArticleDao
-import ru.vo1d.web.app.data.dao.CategoryDao
 import ru.vo1d.web.app.data.filters.news.ArticleFilters
 import ru.vo1d.web.app.data.filters.news.CategoryFilters
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.CategoryModel
 
-abstract class NewsRepo : ListRepo {
-    protected abstract val articleDao: ArticleDao
-    protected abstract val categoryDao: CategoryDao
+interface NewsRepo : ListRepo {
+    suspend fun articles(filters: ArticleFilters, page: Int?): List<ArticleView>
 
-    open suspend fun articles(filters: ArticleFilters, page: Int?): List<ArticleView> {
-        val offset = offset(page)
+    suspend fun article(id: Int): ArticleModel?
 
-        if (filters.areEmpty()) return articleDao.list(offset, limit)
-        return articleDao.filter(filters, offset, limit)
-    }
+    suspend fun categories(filters: CategoryFilters, page: Int?): List<CategoryModel>
 
-    open suspend fun article(id: Int): ArticleModel? {
-        return articleDao.read(id)
-    }
-
-    open suspend fun categories(filters: CategoryFilters, page: Int?): List<CategoryModel> {
-        val offset = offset(page)
-
-        if (filters.areEmpty()) return categoryDao.list(offset, limit)
-        return categoryDao.filter(filters, offset, limit)
-    }
-
-    open suspend fun category(id: Int): CategoryModel? {
-        return categoryDao.read(id)
-    }
+    suspend fun category(id: Int): CategoryModel?
 }

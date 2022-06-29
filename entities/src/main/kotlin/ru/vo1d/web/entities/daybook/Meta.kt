@@ -1,7 +1,7 @@
 package ru.vo1d.web.entities.daybook
 
 import kotlinx.serialization.Serializable
-import ru.vo1d.web.entities.daybook.group.GroupModel
+import ru.vo1d.web.entities.daybook.group.GroupDto
 import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
 import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
@@ -16,7 +16,7 @@ data class Meta(
     val degrees: List<GradDegreeModel>,
     val forms: List<EduFormModel>,
     val tableTypes: List<TableTypeModel>,
-    val groups: List<GroupModel>,
+    val groups: List<GroupDto>,
     val periods: List<TimePeriodModel>,
     val sessionTypes: List<SessionTypeModel>,
     val weekOptions: List<WeekOptionModel>

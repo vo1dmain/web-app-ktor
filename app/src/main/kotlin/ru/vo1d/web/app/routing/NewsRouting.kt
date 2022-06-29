@@ -8,7 +8,7 @@ import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.app.data.filters.news.articleFilters
 import ru.vo1d.web.app.data.filters.news.categoryFilters
-import ru.vo1d.web.app.data.repos.NewsRepo
+import ru.vo1d.web.app.data.repos.impl.NewsRepoImpl
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
@@ -16,14 +16,14 @@ import ru.vo1d.web.app.extensions.orFail
 
 fun Route.newsRouting() {
     route("/news") {
-        val repo by closestDI().instance<NewsRepo>()
+        val repo by closestDI().instance<NewsRepoImpl>()
 
         articlesRouting(repo)
         categoriesRouting(repo)
     }
 }
 
-private fun Route.articlesRouting(repo: NewsRepo) {
+private fun Route.articlesRouting(repo: NewsRepoImpl) {
     route("/articles") {
         get {
             val queryParams = call.request.queryParameters
@@ -47,7 +47,7 @@ private fun Route.articlesRouting(repo: NewsRepo) {
     }
 }
 
-private fun Route.categoriesRouting(repo: NewsRepo) {
+private fun Route.categoriesRouting(repo: NewsRepoImpl) {
     route("/categories") {
         get {
             val queryParams = call.request.queryParameters

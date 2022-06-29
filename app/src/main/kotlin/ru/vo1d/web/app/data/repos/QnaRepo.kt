@@ -1,31 +1,15 @@
 package ru.vo1d.web.app.data.repos
 
-import ru.vo1d.web.app.data.dao.AnswerDao
-import ru.vo1d.web.app.data.dao.PostDao
-import ru.vo1d.web.app.data.dao.QuestionDao
-import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.entities.qna.post.PostDto
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
-abstract class QnaRepo : ListRepo {
-    protected abstract val questionDao: QuestionDao
-    protected abstract val answerDao: AnswerDao
-    protected abstract val postDao: PostDao
+interface QnaRepo : ListRepo {
+    suspend fun posts(page: Int?): List<PostView>
 
-    open suspend fun posts(page: Int?): List<PostView> {
-        return postDao.list(offset(page), limit).failIfEmpty()
-    }
+    suspend fun post(id: Int): PostDto?
 
-    open suspend fun post(id: Int): PostDto? {
-        return postDao.read(id)
-    }
+    suspend fun addQuestion(question: QuestionModel): Int
 
-    open suspend fun addQuestion(question: QuestionModel): Int {
-        return questionDao.create(question)
-    }
-
-    open suspend fun questions(page: Int?): List<QuestionModel> {
-        return questionDao.list(offset(page), limit)
-    }
+    suspend fun questions(page: Int?): List<QuestionModel>
 }

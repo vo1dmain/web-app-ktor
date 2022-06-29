@@ -14,7 +14,7 @@ import ru.vo1d.web.app.exposed.orm.news.Categories
 import ru.vo1d.web.app.exposed.orm.qna.Answers
 import ru.vo1d.web.app.exposed.orm.qna.Posts
 import ru.vo1d.web.app.exposed.orm.qna.Questions
-import ru.vo1d.web.app.exposed.utils.ResFetcher
+import ru.vo1d.web.app.exposed.utils.DataFetcherRes
 
 
 object H2Manager : DbManager {
@@ -33,12 +33,12 @@ object H2Manager : DbManager {
 
         transaction(newsDb) {
             SchemaUtils.create(Articles, Categories, ArticleCategories)
-            ResFetcher.fetchNews()
+            DataFetcherRes.fetchNews()
         }
 
         transaction(qnaDb) {
             SchemaUtils.create(Questions, Answers, Posts)
-            ResFetcher.fetchQna()
+            DataFetcherRes.fetchQna()
         }
 
         transaction(daybookDb) {
@@ -49,7 +49,7 @@ object H2Manager : DbManager {
                 WeekOptions,
                 Groups
             )
-            ResFetcher.fetchDaybook()
+            DataFetcherRes.fetchDaybook()
         }
     }
 }

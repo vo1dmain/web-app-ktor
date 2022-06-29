@@ -16,8 +16,12 @@ sealed interface DeleteDao<PK> {
     suspend fun delete(id: PK): Int
 }
 
+
+
 sealed interface CudDao<PK, I> : CreateDao<PK, I>, UpdateDao<I>, DeleteDao<PK>
 sealed interface CrudDao<PK, I> : CreateDao<PK, I>, ReadDao<PK, I>, UpdateDao<I>, DeleteDao<PK>
+
+
 
 sealed interface ListDao<I> {
     suspend fun list(offset: Long, limit: Int): List<I>

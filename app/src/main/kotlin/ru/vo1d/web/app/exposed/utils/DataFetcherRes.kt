@@ -31,7 +31,7 @@ import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
 @OptIn(ExperimentalSerializationApi::class)
-object ResFetcher {
+object DataFetcherRes {
     private val json = Json { ignoreUnknownKeys = true }
 
     fun fetchNews() {

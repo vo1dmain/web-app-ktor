@@ -1,14 +1,14 @@
 package ru.vo1d.web.app.exposed.repos
 
 import ru.vo1d.web.app.data.dao.delegates.dao
-import ru.vo1d.web.app.data.repos.QnaRepo
+import ru.vo1d.web.app.data.repos.impl.QnaRepoImpl
 import ru.vo1d.web.app.exposed.dao.qna.AnswerDaoXp
 import ru.vo1d.web.app.exposed.dao.qna.PostDaoXp
 import ru.vo1d.web.app.exposed.dao.qna.QuestionDaoXp
 import ru.vo1d.web.app.exposed.db.DbManager
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
-class QnaRepoXp(private val dbManager: DbManager) : QnaRepo() {
+class QnaRepoXp(private val dbManager: DbManager) : QnaRepoImpl() {
     override val postDao by dao<PostDaoXp>()
     override val questionDao by dao<QuestionDaoXp>()
     override val answerDao by dao<AnswerDaoXp>()

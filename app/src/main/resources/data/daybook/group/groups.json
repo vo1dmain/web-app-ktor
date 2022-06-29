@@ -3,28 +3,24 @@
     "code": "18ИВ1бп",
     "levelId": "high",
     "degreeId": "bachelor",
-    "formId": "fulltime",
-    "tableTypes": []
+    "formId": "fulltime"
   },
   {
     "code": "18ТП1бпв",
     "levelId": "high",
     "degreeId": "bachelor",
-    "formId": "halftime",
-    "tableTypes": []
+    "formId": "halftime"
   },
   {
     "code": "19ЭК1тз",
     "levelId": "mid",
     "degreeId": null,
-    "formId": "extramural",
-    "tableTypes": []
+    "formId": "extramural"
   },
   {
     "code": "20ПБ1т",
     "levelId": "mid",
     "degreeId": null,
-    "formId": "fulltime",
-    "tableTypes": []
+    "formId": "fulltime"
   }
 ]

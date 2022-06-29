@@ -3,12 +3,12 @@ package ru.vo1d.web.app.exposed.repos
 import ru.vo1d.web.app.data.dao.delegates.dao
 import ru.vo1d.web.app.data.filters.news.ArticleFilters
 import ru.vo1d.web.app.data.filters.news.CategoryFilters
-import ru.vo1d.web.app.data.repos.NewsRepo
+import ru.vo1d.web.app.data.repos.impl.NewsRepoImpl
 import ru.vo1d.web.app.exposed.dao.news.ArticleDaoXp
 import ru.vo1d.web.app.exposed.dao.news.CategoryDaoXp
 import ru.vo1d.web.app.exposed.db.DbManager
 
-class NewsRepoXp(private val dbManager: DbManager) : NewsRepo() {
+class NewsRepoXp(private val dbManager: DbManager) : NewsRepoImpl() {
     override val articleDao by dao<ArticleDaoXp>()
     override val categoryDao by dao<CategoryDaoXp>()
 

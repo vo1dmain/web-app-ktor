@@ -10,7 +10,7 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.app.data.repos.NewsRepo
+import ru.vo1d.web.app.data.repos.impl.NewsRepoImpl
 import ru.vo1d.web.app.plugins.configureSerialization
 import ru.vo1d.web.app.plugins.configureStatusPages
 import ru.vo1d.web.app.repos.NewsRepoTest
@@ -104,7 +104,7 @@ class NewsTest {
         configureStatusPages()
 
         di {
-            bind<NewsRepo> { singleton { NewsRepoTest() } }
+            bind<NewsRepoImpl> { singleton { NewsRepoTest() } }
         }
 
         routing {
