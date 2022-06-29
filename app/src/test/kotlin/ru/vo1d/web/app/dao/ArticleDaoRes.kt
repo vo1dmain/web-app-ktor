@@ -12,7 +12,7 @@ import ru.vo1d.web.entities.news.article.ArticleView
 
 @OptIn(ExperimentalSerializationApi::class)
 class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<ArticleModel> {
-    private val newsList = this.javaClass.getResource("/news_list.json")!!
+    private val newsList = this.javaClass.getResource("/articles.json")!!
 
     override suspend fun create(item: ArticleModel): Int {
         TODO("Not yet implemented")

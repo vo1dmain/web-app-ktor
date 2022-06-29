@@ -13,7 +13,7 @@ import ru.vo1d.web.entities.qna.question.QuestionModel
 
 @OptIn(ExperimentalSerializationApi::class)
 class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
-    private val posts = this.javaClass.getResource("/posts_list.json")!!
+    private val posts = this.javaClass.getResource("/posts.json")!!
     private val questions = this.javaClass.getResource("/questions.json")!!
     private val answers = this.javaClass.getResource("/answers.json")!!
 
