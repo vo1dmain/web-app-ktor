@@ -17,7 +17,7 @@ object Timetables : IntIdTable() {
     val typeId = reference("typeId", TableTypes, CASCADE, CASCADE)
 }
 
-sealed class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel> {
+open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel> {
     companion object : IntEntityClass<Timetable>(Timetables)
 
     val groupCode by Timetables.groupCode

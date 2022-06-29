@@ -17,7 +17,7 @@ object Groups : IdTable<String>() {
     val formId = reference("formId", EducationForms, CASCADE, CASCADE)
 }
 
-sealed class Group(id: EntityID<String>) : Entity<String>(id) {
+open class Group(id: EntityID<String>) : Entity<String>(id) {
     companion object : EntityClass<String, Group>(Groups)
 
     val levelId by Groups.levelId
