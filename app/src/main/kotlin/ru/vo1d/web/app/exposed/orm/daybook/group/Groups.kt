@@ -28,7 +28,7 @@ sealed class Group(id: EntityID<String>) : Entity<String>(id) {
 class GroupWithTypes(id: EntityID<String>) : Group(id), HasDto<GroupDto> {
     companion object : EntityClass<String, GroupWithTypes>(Groups)
 
-    val types by TableType referrersOn Timetables.typeId
+    val types by TableType via Timetables
 
     override fun toDto() =
         GroupDto(id.value, levelId.value, degreeId?.value, formId.value, types.map { it.id.value })

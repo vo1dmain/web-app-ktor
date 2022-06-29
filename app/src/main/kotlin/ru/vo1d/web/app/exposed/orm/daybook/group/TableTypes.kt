@@ -8,7 +8,7 @@ import ru.vo1d.web.app.exposed.orm.HasModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 
 object TableTypes : IdTable<String>() {
-    override val id = varchar("id", 8).entityId()
+    override val id = varchar("id", 8).uniqueIndex().entityId()
 
     val title = varchar("title", 32)
 }

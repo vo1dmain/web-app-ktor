@@ -8,7 +8,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.app.data.repos.impl.QnaRepoImpl
+import ru.vo1d.web.app.data.repos.QnaRepo
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
@@ -17,14 +17,14 @@ import ru.vo1d.web.entities.qna.question.QuestionModel
 
 fun Route.qnaRouting() {
     route("/qna") {
-        val repo by closestDI().instance<QnaRepoImpl>()
+        val repo by closestDI().instance<QnaRepo>()
 
         postsRouting(repo)
         questionsRouting(repo)
     }
 }
 
-private fun Route.postsRouting(repo: QnaRepoImpl) {
+private fun Route.postsRouting(repo: QnaRepo) {
     route("/posts") {
         get {
             val queryParams = call.request.queryParameters
@@ -44,7 +44,7 @@ private fun Route.postsRouting(repo: QnaRepoImpl) {
     }
 }
 
-private fun Route.questionsRouting(repo: QnaRepoImpl) {
+private fun Route.questionsRouting(repo: QnaRepo) {
     route("/questions") {
         get {
             val queryParams = call.request.queryParameters

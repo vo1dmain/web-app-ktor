@@ -7,7 +7,7 @@ import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.app.data.filters.daybook.timetableFilters
-import ru.vo1d.web.app.data.repos.impl.DaybookRepoImpl
+import ru.vo1d.web.app.data.repos.DaybookRepo
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
@@ -15,14 +15,14 @@ import ru.vo1d.web.app.extensions.orFail
 
 fun Route.daybookRouting() {
     route("/daybook") {
-        val repo by closestDI().instance<DaybookRepoImpl>()
+        val repo by closestDI().instance<DaybookRepo>()
 
         metaRouting(repo)
         timetablesRouting(repo)
     }
 }
 
-private fun Route.metaRouting(repo: DaybookRepoImpl) {
+private fun Route.metaRouting(repo: DaybookRepo) {
     route("/meta") {
 
         get {
@@ -63,7 +63,7 @@ private fun Route.metaRouting(repo: DaybookRepoImpl) {
     }
 }
 
-private fun Route.timetablesRouting(repo: DaybookRepoImpl) {
+private fun Route.timetablesRouting(repo: DaybookRepo) {
     route("/timetables") {
         get {
             val queryParams = call.request.queryParameters

@@ -26,11 +26,11 @@ sealed class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableMod
     override fun toModel() = TimetableModel(id.value, groupCode.value, typeId.value)
 }
 
-class TimetableWithData(id: EntityID<Int>): Timetable(id), HasDto<TimetableDto> {
+class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto> {
     companion object : IntEntityClass<TimetableWithData>(Timetables)
 
     val sessions by Session via TimetableSessions
-    val days by Day referrersOn Sessions.dayId
+    val days by Day via Sessions
 
     override fun toDto() = TimetableDto(
         id.value,
