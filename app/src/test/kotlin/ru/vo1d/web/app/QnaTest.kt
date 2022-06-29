@@ -16,7 +16,7 @@ import ru.vo1d.web.app.plugins.configureSerialization
 import ru.vo1d.web.app.plugins.configureStatusPages
 import ru.vo1d.web.app.repos.QnaRepoTest
 import ru.vo1d.web.app.routing.qnaRouting
-import ru.vo1d.web.entities.qna.post.PostModel
+import ru.vo1d.web.entities.qna.post.PostDto
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 import kotlin.test.assertEquals
@@ -51,7 +51,7 @@ class QnaTest {
 
         client.get("/qna/posts/0").apply {
             println(bodyAsText())
-            val item = body<PostModel>()
+            val item = body<PostDto>()
             assertEquals(0, item.id)
         }
 

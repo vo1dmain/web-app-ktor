@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 interface DbManager {
     val newsDb: Database?
     val qnaDb: Database?
-    val timetableDb: Database?
+    val daybookDb: Database?
 
     fun init()
 

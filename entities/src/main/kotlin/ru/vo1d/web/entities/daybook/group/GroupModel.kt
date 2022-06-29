@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class GroupModel(
     val code: String,
     val levelId: String,
+    val degreeId: String?,
     val formId: String,
     val tableTypes: List<String>
 )

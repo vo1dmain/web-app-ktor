@@ -1,4 +1,4 @@
-package ru.vo1d.web.app.exposed.dao.daybook
+package ru.vo1d.web.app.exposed.dao.daybook.timetable
 
 import org.jetbrains.exposed.sql.*
 import ru.vo1d.web.app.data.dao.TimetableDao
@@ -38,24 +38,16 @@ class TimetableDaoXp : TimetableDao {
         return id
     }
 
-    override suspend fun read(id: Int): TimetableModel? {
-        return Timetable.findById(id)?.toModel()
+    override suspend fun read(id: Int) = Timetable.findById(id)?.toModel()
+
+    override suspend fun update(item: TimetableModel) = Timetables.update({ Timetables.id eq item.id }) {
+        it[groupCode] = item.groupCode
+        it[typeId] = item.typeId
     }
 
-    override suspend fun update(item: TimetableModel): Int {
-        return Timetables.update({ Timetables.id eq item.id }) {
-            it[groupCode] = item.groupCode
-            it[typeId] = item.typeId
-        }
-    }
+    override suspend fun delete(id: Int) = Timetables.deleteWhere { Timetables.id eq id }
 
-    override suspend fun delete(id: Int): Int {
-        return Timetables.deleteWhere { Timetables.id eq id }
-    }
-
-    override suspend fun list(offset: Long, limit: Int): List<TimetableView> {
-        return Timetable.all().limit(limit, offset).map(Timetable::toView)
-    }
+    override suspend fun list(offset: Long, limit: Int) = Timetable.all().limit(limit, offset).map(Timetable::toView)
 
     override suspend fun filter(filters: TimetableFilters, offset: Long, limit: Int): List<TimetableView> {
         if (filters.areEmpty()) return list(offset, limit)

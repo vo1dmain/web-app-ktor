@@ -7,6 +7,7 @@ import ru.vo1d.web.app.routing.newsRouting
 import ru.vo1d.web.app.routing.qnaRouting
 
 fun Application.configureRouting() {
+    install(IgnoreTrailingSlash)
     routing {
         route("/api/v1") {
             newsRouting()

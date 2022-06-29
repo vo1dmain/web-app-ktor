@@ -1,0 +1,18 @@
+[
+  {
+    "id": "fulltime",
+    "title": "Очная"
+  },
+  {
+    "id": "halftime",
+    "title": "Очно-заочная"
+  },
+  {
+    "id": "extramural",
+    "title": "Заочная"
+  },
+  {
+    "id": "forced",
+    "title": "Заочная ускоренная"
+  }
+]

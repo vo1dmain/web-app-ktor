@@ -1,0 +1,14 @@
+[
+  {
+    "id": "bachelor",
+    "title": "Бакалавриат"
+  },
+  {
+    "id": "magistracy",
+    "title": "Магистратура"
+  },
+  {
+    "id": "postgraduate",
+    "title": "Аспирантура"
+  }
+]

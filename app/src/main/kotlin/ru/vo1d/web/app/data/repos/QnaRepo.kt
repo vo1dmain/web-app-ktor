@@ -4,7 +4,7 @@ import ru.vo1d.web.app.data.dao.AnswerDao
 import ru.vo1d.web.app.data.dao.PostDao
 import ru.vo1d.web.app.data.dao.QuestionDao
 import ru.vo1d.web.app.extensions.failIfEmpty
-import ru.vo1d.web.entities.qna.post.PostModel
+import ru.vo1d.web.entities.qna.post.PostDto
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
@@ -17,7 +17,7 @@ abstract class QnaRepo : ListRepo {
         return postDao.list(offset(page), limit).failIfEmpty()
     }
 
-    open suspend fun post(id: Int): PostModel? {
+    open suspend fun post(id: Int): PostDto? {
         return postDao.read(id)
     }
 

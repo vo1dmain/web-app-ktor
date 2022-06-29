@@ -27,29 +27,19 @@ class ArticleDaoXp : ArticleDao {
         return articleId
     }
 
-    override suspend fun read(id: Int): ArticleModel? {
-        return Article.findById(id)?.toModel()
+    override suspend fun read(id: Int) = Article.findById(id)?.toModel()
+
+    override suspend fun update(item: ArticleModel) = Articles.update({ Articles.id eq item.id }) {
+        it[title] = item.title
+        it[body] = item.body
+        it[preview] = item.previewImage
+        it[gallery] = item.gallery?.joinToString(",")
+        it[dateTime] = item.dateTime
     }
 
-    override suspend fun update(item: ArticleModel): Int {
-        return Articles.update({ Articles.id eq item.id }) {
-            it[title] = item.title
-            it[body] = item.body
-            it[preview] = item.previewImage
-            it[gallery] = item.gallery?.joinToString(",")
-            it[dateTime] = item.dateTime
-        }
-    }
+    override suspend fun delete(id: Int) = Articles.deleteWhere { Articles.id eq id }
 
-    override suspend fun delete(id: Int): Int {
-        return Articles.deleteWhere {
-            Articles.id eq id
-        }
-    }
-
-    override suspend fun list(offset: Long, limit: Int): List<ArticleView> {
-        return Article.all().limit(limit, offset).map(Article::toView)
-    }
+    override suspend fun list(offset: Long, limit: Int) = Article.all().limit(limit, offset).map(Article::toView)
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int): List<ArticleView> {
         if (filters.categoryId == null) return list(offset, limit)

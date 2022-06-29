@@ -33,6 +33,10 @@ private fun Route.metaRouting(repo: DaybookRepo) {
             call.respond(repo.meta().levels.failIfEmpty())
         }
 
+        get("/degrees") {
+            call.respond(repo.meta().degrees.failIfEmpty())
+        }
+
         get("/forms") {
             call.respond(repo.meta().forms.failIfEmpty())
         }

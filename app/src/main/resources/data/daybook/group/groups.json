@@ -1,0 +1,30 @@
+[
+  {
+    "code": "18ИВ1бп",
+    "levelId": "high",
+    "degreeId": "bachelor",
+    "formId": "fulltime",
+    "tableTypes": []
+  },
+  {
+    "code": "18ТП1бпв",
+    "levelId": "high",
+    "degreeId": "bachelor",
+    "formId": "halftime",
+    "tableTypes": []
+  },
+  {
+    "code": "19ЭК1тз",
+    "levelId": "mid",
+    "degreeId": null,
+    "formId": "extramural",
+    "tableTypes": []
+  },
+  {
+    "code": "20ПБ1т",
+    "levelId": "mid",
+    "degreeId": null,
+    "formId": "fulltime",
+    "tableTypes": []
+  }
+]

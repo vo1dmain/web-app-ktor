@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WeekOptionModel(
     val id: Int? = null,
-    val description: String
+    val title: String
 )

@@ -7,7 +7,7 @@ import ru.vo1d.web.app.data.dao.PostDao
 import ru.vo1d.web.app.entities.PostRaw
 import ru.vo1d.web.app.extensions.open
 import ru.vo1d.web.entities.qna.answer.AnswerModel
-import ru.vo1d.web.entities.qna.post.PostModel
+import ru.vo1d.web.entities.qna.post.PostDto
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
@@ -29,19 +29,19 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostRaw> {
         }
     }
 
-    override suspend fun create(item: PostModel): Int {
+    override suspend fun create(item: PostDto): Int {
         TODO("Not yet implemented")
     }
 
-    override suspend fun read(id: Int): PostModel? {
+    override suspend fun read(id: Int): PostDto? {
         return all().map { post ->
             val question = allQuestions().first { it.id == post.questionId }
             val answer = allAnswers().first { it.id == post.answerId }
-            PostModel(post.id, question, answer)
+            PostDto(post.id, question, answer)
         }.firstOrNull { it.id == id }
     }
 
-    override suspend fun update(item: PostModel): Int {
+    override suspend fun update(item: PostDto): Int {
         TODO("Not yet implemented")
     }
 

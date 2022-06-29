@@ -9,20 +9,23 @@ import ru.vo1d.web.entities.daybook.timetable.TimetableView
 abstract class DaybookRepo : ListRepo {
     protected abstract val timetableDao: TimetableDao
 
-    //Meta
     protected abstract val sessionTypeDao: SessionTypeDao
-    protected abstract val tableTypeDao: TableTypeDao
     protected abstract val timePeriodDao: TimePeriodDao
     protected abstract val weekOptionDao: WeekOptionDao
-    protected abstract val graduationLevelDao: GraduationLevelDao
-    protected abstract val educationFormDao: EducationFormDao
+
+    //Meta
+    protected abstract val gradLevelDao: GradLevelDao
+    protected abstract val gradDegreeDao: GradDegreeDao
+    protected abstract val eduFormDao: EduFormDao
+    protected abstract val tableTypeDao: TableTypeDao
     protected abstract val groupDao: GroupDao
 
 
     open suspend fun meta(): Meta {
         return Meta(
-            graduationLevelDao.all(),
-            educationFormDao.all(),
+            gradLevelDao.all(),
+            gradDegreeDao.all(),
+            eduFormDao.all(),
             tableTypeDao.all(),
             groupDao.all(),
             timePeriodDao.all(),
