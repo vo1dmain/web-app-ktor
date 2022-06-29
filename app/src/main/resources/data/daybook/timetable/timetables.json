@@ -1,26 +1,18 @@
 [
   {
     "groupCode": "18ИВ1бп",
-    "typeId": "tt",
-    "days": [],
-    "sessions": []
+    "typeId": "tt"
   },
   {
     "groupCode": "18ТП1бпв",
-    "typeId": "tt",
-    "days": [],
-    "sessions": []
+    "typeId": "tt"
   },
   {
     "groupCode": "19ЭК1тз",
-    "typeId": "att",
-    "days": [],
-    "sessions": []
+    "typeId": "att"
   },
   {
     "groupCode": "20ПБ1т",
-    "typeId": "att",
-    "days": [],
-    "sessions": []
+    "typeId": "att"
   }
 ]

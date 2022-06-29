@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import ru.vo1d.web.app.exposed.orm.daybook.group.*
 import ru.vo1d.web.app.exposed.orm.daybook.timetable.TimePeriods
+import ru.vo1d.web.app.exposed.orm.daybook.timetable.Timetables
 import ru.vo1d.web.app.exposed.orm.daybook.timetable.WeekOptions
 import ru.vo1d.web.app.exposed.orm.news.ArticleCategories
 import ru.vo1d.web.app.exposed.orm.news.Articles
@@ -23,6 +24,7 @@ import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
 import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
+import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.period.TimePeriodModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 import ru.vo1d.web.entities.news.article.ArticleModel
@@ -112,6 +114,7 @@ object DataFetcherRes {
 
         val periodsFile = resource("/data/daybook/timetable/time-periods.json")
         val weekOptionsFile = resource("/data/daybook/timetable/week-options.json")
+        val timetablesFile = resource("/data/daybook/timetable/timetables.json")
 
         runBlocking {
             val levels = levelsFile.open {
@@ -169,6 +172,14 @@ object DataFetcherRes {
             }
             WeekOptions.batchInsert(weekOptions, shouldReturnGeneratedValues = false) {
                 this[WeekOptions.title] = it.title
+            }
+
+            val timetables = timetablesFile.open {
+                json.decodeFromStream<List<TimetableModel>>(this)
+            }
+            Timetables.batchInsert(timetables, shouldReturnGeneratedValues = false) {
+                this[Timetables.groupCode] = it.groupCode
+                this[Timetables.typeId] = it.typeId
             }
         }
     }
