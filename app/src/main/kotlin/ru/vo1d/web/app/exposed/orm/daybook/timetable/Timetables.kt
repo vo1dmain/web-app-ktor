@@ -37,6 +37,6 @@ class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto>
         groupCode.value,
         typeId.value,
         days.map(Day::toModel),
-        sessions.map(Session::toModel),
+        sessions.map(Session::toModel)
     )
 }

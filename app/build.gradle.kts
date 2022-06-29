@@ -42,8 +42,10 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-    implementation("com.h2database:h2:$h2Version")
+
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
+
+    implementation("com.h2database:h2:$h2Version")
 
     testImplementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
