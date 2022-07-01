@@ -10,11 +10,11 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.app.data.repos.impl.NewsRepoImpl
 import ru.vo1d.web.app.plugins.configureSerialization
 import ru.vo1d.web.app.plugins.configureStatusPages
 import ru.vo1d.web.app.repos.NewsRepoTest
 import ru.vo1d.web.app.routing.newsRouting
+import ru.vo1d.web.data.repos.impl.NewsRepoImpl
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.CategoryModel
@@ -36,8 +36,8 @@ class NewsTest {
             assertEquals(0, list[0].id)
         }
 
-        client.get("/news/articles?category_id=-1").apply {
-            assertEquals(HttpStatusCode.NotFound, call.response.status)
+        client.get("/news/articles?category=-1").apply {
+            assertEquals(HttpStatusCode.BadRequest, call.response.status)
         }
     }
 
@@ -74,8 +74,8 @@ class NewsTest {
             assertEquals(0, categories[0].id)
         }
 
-        client.get("/news/categories?parent_id=-1").apply {
-            assertEquals(HttpStatusCode.NotFound, call.response.status)
+        client.get("/news/categories?parent=-1").apply {
+            assertEquals(HttpStatusCode.BadRequest, call.response.status)
         }
     }
 

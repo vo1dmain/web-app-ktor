@@ -8,13 +8,13 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.app.data.filters.daybook.SessionFilters
-import ru.vo1d.web.app.data.filters.daybook.TimetableFilters
-import ru.vo1d.web.app.data.repos.DaybookRepo
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
+import ru.vo1d.web.data.filters.daybook.SessionFilters
+import ru.vo1d.web.data.filters.daybook.TimetableFilters
+import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 
 fun Route.daybookRouting() = route("/daybook") {

@@ -2,8 +2,7 @@ val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
 val kodeinVersion: String by project
-val exposedVersion: String by project
-val h2Version: String by project
+
 
 plugins {
     application
@@ -27,6 +26,8 @@ repositories {
 
 dependencies {
     implementation(project(":entities"))
+    implementation(project(":data"))
+    implementation(project(":orm"))
 
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
@@ -39,13 +40,7 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
-
-    implementation("com.h2database:h2:$h2Version")
 
     testImplementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")

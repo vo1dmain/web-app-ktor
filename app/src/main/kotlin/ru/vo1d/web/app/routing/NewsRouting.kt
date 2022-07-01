@@ -6,13 +6,13 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.app.data.filters.news.ArticleFilters
-import ru.vo1d.web.app.data.filters.news.categoryFilters
-import ru.vo1d.web.app.data.repos.NewsRepo
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
+import ru.vo1d.web.data.filters.news.ArticleFilters
+import ru.vo1d.web.data.filters.news.CategoryFilters
+import ru.vo1d.web.data.repos.NewsRepo
 
 fun Route.newsRouting() = route("/news") {
     val repo by closestDI().instance<NewsRepo>()
@@ -25,7 +25,7 @@ private fun Route.articlesRouting(repo: NewsRepo) = route("/articles") {
     get {
         val queryParams = call.request.queryParameters
 
-        val categoryId = queryParams.getOrNull<Int>("category")
+        val categoryId = queryParams.getOrNull<Int>("category")?.failIfNegative()
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.articles(
@@ -47,11 +47,11 @@ private fun Route.categoriesRouting(repo: NewsRepo) = route("/categories") {
     get {
         val queryParams = call.request.queryParameters
 
-        val parentId = queryParams.getOrNull<Int>("parent")
+        val parentId = queryParams.getOrNull<Int>("parent")?.failIfNegative()
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.categories(
-            categoryFilters { parentId(parentId) },
+            CategoryFilters.new { this.parentId = parentId },
             page
         )
         call.respond(list.failIfEmpty())

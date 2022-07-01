@@ -1,5 +1,5 @@
 val kotlinVersion: String by project
-val serializationVersion = "1.3.3"
+val serializationVersion: String by project
 
 plugins {
     kotlin("jvm")

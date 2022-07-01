@@ -4,8 +4,8 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.app.exposed.db.DbManager
 import ru.vo1d.web.app.plugins.*
+import ru.vo1d.web.orm.db.DbManager
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost") {

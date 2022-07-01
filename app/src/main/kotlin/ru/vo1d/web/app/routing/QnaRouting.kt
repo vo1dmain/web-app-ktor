@@ -8,11 +8,11 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.app.data.repos.QnaRepo
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
+import ru.vo1d.web.data.repos.QnaRepo
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
 fun Route.qnaRouting() = route("/qna") {
