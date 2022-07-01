@@ -1,9 +1,6 @@
 package ru.vo1d.web.app.exposed.dao.daybook.timetable
 
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.or
-import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.sql.*
 import ru.vo1d.web.app.data.dao.TimetableDao
 import ru.vo1d.web.app.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.app.exposed.orm.daybook.timetable.Timetable
@@ -31,8 +28,14 @@ class TimetableDaoXp : TimetableDao {
     override suspend fun filter(filters: TimetableFilters, offset: Long, limit: Int): List<TimetableModel> {
         if (filters.areEmpty()) return list(offset, limit)
 
-        return Timetable.find {
-            (Timetables.typeId eq filters.typeId) or (Timetables.groupCode eq filters.groupCode)
-        }.limit(limit, offset).map(Timetable::toModel)
+        val query = Timetables.selectAll()
+        filters.typeId?.let {
+            query.andWhere { Timetables.typeId eq it }
+        }
+        filters.groupCode?.let {
+            query.andWhere { Timetables.groupCode eq it }
+        }
+
+        return Timetable.wrapRows(query).limit(limit, offset).map(Timetable::toModel)
     }
 }
