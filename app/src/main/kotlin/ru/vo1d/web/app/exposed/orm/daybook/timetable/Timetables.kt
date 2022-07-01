@@ -9,6 +9,7 @@ import ru.vo1d.web.app.exposed.orm.HasDto
 import ru.vo1d.web.app.exposed.orm.HasModel
 import ru.vo1d.web.app.exposed.orm.daybook.group.Groups
 import ru.vo1d.web.app.exposed.orm.daybook.group.TableTypes
+import ru.vo1d.web.app.exposed.utils.viaSupportedBy
 import ru.vo1d.web.entities.daybook.timetable.TimetableDto
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 
@@ -29,8 +30,8 @@ open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel
 class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto> {
     companion object : IntEntityClass<TimetableWithData>(Timetables)
 
+    val days by Day.viaSupportedBy(Sessions, TimetableSessions)
     val sessions by Session via TimetableSessions
-    val days by Day via Sessions
 
     override fun toDto() = TimetableDto(
         id.value,
