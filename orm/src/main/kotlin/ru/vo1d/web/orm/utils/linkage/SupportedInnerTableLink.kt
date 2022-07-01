@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-package ru.vo1d.web.orm.utils
+package ru.vo1d.web.orm.utils.linkage
 
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-
 
 class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
     private val linkedTable: IdTable<LID>,
@@ -26,6 +25,33 @@ class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
               TID : Comparable<TID>,
               Target : Entity<TID>,
               LID : Comparable<LID> {
+
+    init {
+        targetColumn?.let {
+            requireNotNull(sourceColumn) { "Both source and target columns should be specified" }
+            require(it.referee?.table == target.table) {
+                "Column $it point to wrong table, expected ${target.table.tableName}"
+            }
+            require(it.table == linkedTable) {
+                "Both source and target columns should be from the same table"
+            }
+        }
+
+        linkedColumn?.let {
+            requireNotNull(sourceColumn) { "Both source and linked columns should be specified" }
+            require(it.referee?.table == linkedTable) {
+                "Column $it point to wrong table, expected ${linkedTable.tableName}"
+            }
+            require(it.table == supportTable) {
+                "Both source and linked columns should be from the same table"
+            }
+        }
+
+        sourceColumn?.let {
+            requireNotNull(targetColumn) { "Both source and target columns should be specified" }
+            requireNotNull(linkedColumn) { "Both source and linked columns should be specified" }
+        }
+    }
 
     private val targetColumn = targetColumn
         ?: linkedTable.columns.singleOrNull { it.referee == target.table.id } as? Column<EntityID<TID>>
@@ -68,12 +94,3 @@ class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
         }
     }
 }
-
-fun <ID : Comparable<ID>, LID : Comparable<LID>, TID : Comparable<TID>, T : Entity<TID>> EntityClass<TID, T>.viaSupportedBy(
-    linkedTable: IdTable<LID>,
-    supportTable: Table,
-) = SupportedInnerTableLink<ID, Entity<ID>, TID, T, LID>(
-    linkedTable,
-    supportTable,
-    target = this@viaSupportedBy
-)

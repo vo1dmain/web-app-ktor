@@ -11,14 +11,14 @@ import ru.vo1d.web.orm.entities.HasDto
 import ru.vo1d.web.orm.entities.HasModel
 import ru.vo1d.web.orm.entities.daybook.group.Groups
 import ru.vo1d.web.orm.entities.daybook.group.TableTypes
-import ru.vo1d.web.orm.utils.viaSupportedBy
+import ru.vo1d.web.orm.utils.linkage.Supportable
 
 object Timetables : IntIdTable() {
     val groupCode = reference("groupCode", Groups, CASCADE, CASCADE)
     val typeId = reference("typeId", TableTypes, CASCADE, CASCADE)
 }
 
-open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel> {
+open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel>, Supportable<Int> {
     companion object : IntEntityClass<Timetable>(Timetables)
 
     val groupCode by Timetables.groupCode
@@ -30,7 +30,7 @@ open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel
 class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto> {
     companion object : IntEntityClass<TimetableWithData>(Timetables)
 
-    val days by Day.viaSupportedBy(Sessions, TimetableSessions)
+    val days by Day link Sessions supportedBy TimetableSessions
     val sessions by Session via TimetableSessions
 
     override fun toDto() = TimetableDto(
