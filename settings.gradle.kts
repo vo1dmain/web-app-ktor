@@ -11,5 +11,5 @@ pluginManagement {
 
 include(":app")
 include(":entities")
-include("data")
-include("orm")
+include(":data")
+include(":orm")
