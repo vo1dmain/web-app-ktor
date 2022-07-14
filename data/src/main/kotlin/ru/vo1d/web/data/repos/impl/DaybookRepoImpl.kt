@@ -26,15 +26,33 @@ abstract class DaybookRepoImpl : DaybookRepo {
     protected abstract val tableTypeDao: TableTypeDao
 
     override suspend fun meta() = Meta(
-        gradLevelDao.all(),
-        gradDegreeDao.all(),
-        eduFormDao.all(),
-        tableTypeDao.all(),
-        groupDao.all(),
-        timePeriodDao.all(),
-        sessionTypeDao.all(),
-        weekOptionDao.all()
+        levels(),
+        degrees(),
+        forms(),
+        tableTypes(),
+        groups(),
+        periods(),
+        sessionTypes(),
+        weekOptions()
     )
+
+    override suspend fun levels() = gradLevelDao.all()
+
+    override suspend fun degrees() = gradDegreeDao.all()
+
+    override suspend fun forms() = eduFormDao.all()
+
+    override suspend fun tableTypes() = tableTypeDao.all()
+
+    override suspend fun groups() = groupDao.all()
+
+    override suspend fun periods() = timePeriodDao.all()
+
+    override suspend fun sessionTypes() = sessionTypeDao.all()
+
+    override suspend fun weekOptions() = weekOptionDao.all()
+
+
 
     override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit): List<TimetableModel> {
         val offset = offset(page)
@@ -46,6 +64,8 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun timetable(id: Int) = timetableDao.read(id)
 
     override suspend fun addTimetable(item: TimetableModel) = timetableDao.create(item)
+
+
 
     override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit): List<SessionModel> {
         val offset = offset(page)

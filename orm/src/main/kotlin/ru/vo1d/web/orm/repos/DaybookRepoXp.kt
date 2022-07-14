@@ -10,7 +10,7 @@ import ru.vo1d.web.orm.dao.daybook.group.*
 import ru.vo1d.web.orm.dao.daybook.timetable.*
 import ru.vo1d.web.orm.db.DbManager
 
-class DaybookRepoXp(private val dbManager: DbManager) : DaybookRepoImpl() {
+class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRepo {
     override val timetableDao by dao<TimetableDaoXp>()
     override val sessionDao by dao<SessionDaoXp>()
     override val dayDao by dao<DayDaoXp>()
@@ -25,27 +25,35 @@ class DaybookRepoXp(private val dbManager: DbManager) : DaybookRepoImpl() {
     override val weekOptionDao by dao<WeekOptionDaoXp>()
     override val tableTypeDao by dao<TableTypeDaoXp>()
 
-    override suspend fun meta() = with(dbManager) {
+    override suspend fun meta() = dbManager {
         query(daybookDb) { super.meta() }
     }
 
-    override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit) = with(dbManager) {
+    override suspend fun levels() = dbManager {
+        query(daybookDb) { super.levels() }
+    }
+
+
+
+    override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit) = dbManager {
         query(daybookDb) { super.timetables(page, filtersProducer) }
     }
 
-    override suspend fun timetable(id: Int) = with(dbManager) {
+    override suspend fun timetable(id: Int) = dbManager {
         query(daybookDb) { super.timetable(id) }
     }
 
-    override suspend fun addTimetable(item: TimetableModel) = with(dbManager) {
+    override suspend fun addTimetable(item: TimetableModel) = dbManager {
         query(daybookDb) { super.addTimetable(item) }
     }
 
-    override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit) = with(dbManager) {
+
+
+    override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit) = dbManager {
         query(daybookDb) { super.sessions(page, filtersProducer) }
     }
 
-    override suspend fun addSession(item: SessionModel) = with(dbManager) {
+    override suspend fun addSession(item: SessionModel) = dbManager {
         query(daybookDb) { super.addSession(item) }
     }
 }

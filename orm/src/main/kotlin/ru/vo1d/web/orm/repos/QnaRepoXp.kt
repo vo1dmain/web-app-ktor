@@ -8,24 +8,24 @@ import ru.vo1d.web.orm.dao.qna.PostDaoXp
 import ru.vo1d.web.orm.dao.qna.QuestionDaoXp
 import ru.vo1d.web.orm.db.DbManager
 
-class QnaRepoXp(private val dbManager: DbManager) : QnaRepoImpl() {
+class QnaRepoXp(override val dbManager: DbManager) : QnaRepoImpl(), XpRepo {
     override val postDao by dao<PostDaoXp>()
     override val questionDao by dao<QuestionDaoXp>()
     override val answerDao by dao<AnswerDaoXp>()
 
-    override suspend fun posts(page: Int?) = with(dbManager) {
+    override suspend fun posts(page: Int?) = dbManager {
         query(qnaDb) { super.posts(page) }
     }
 
-    override suspend fun post(id: Int) = with(dbManager) {
+    override suspend fun post(id: Int) = dbManager {
         query(qnaDb) { super.post(id) }
     }
 
-    override suspend fun addQuestion(question: QuestionModel) = with(dbManager) {
+    override suspend fun addQuestion(question: QuestionModel) = dbManager {
         query(qnaDb) { super.addQuestion(question) }
     }
 
-    override suspend fun questions(page: Int?) = with(dbManager) {
+    override suspend fun questions(page: Int?) = dbManager {
         query(qnaDb) { super.questions(page) }
     }
 }

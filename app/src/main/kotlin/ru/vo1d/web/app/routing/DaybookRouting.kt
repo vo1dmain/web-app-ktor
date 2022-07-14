@@ -28,35 +28,35 @@ private fun Route.metaRouting(repo: DaybookRepo) = route("/meta") {
     }
 
     get("/levels") {
-        call.respond(repo.meta().levels.failIfEmpty())
+        call.respond(repo.levels().failIfEmpty())
     }
 
     get("/degrees") {
-        call.respond(repo.meta().degrees.failIfEmpty())
+        call.respond(repo.degrees().failIfEmpty())
     }
 
     get("/forms") {
-        call.respond(repo.meta().forms.failIfEmpty())
+        call.respond(repo.forms().failIfEmpty())
     }
 
     get("/table-types") {
-        call.respond(repo.meta().tableTypes.failIfEmpty())
+        call.respond(repo.tableTypes().failIfEmpty())
     }
 
     get("/groups") {
-        call.respond(repo.meta().groups.failIfEmpty())
+        call.respond(repo.groups().failIfEmpty())
     }
 
     get("/periods") {
-        call.respond(repo.meta().periods.failIfEmpty())
+        call.respond(repo.periods().failIfEmpty())
     }
 
     get("/session-types") {
-        call.respond(repo.meta().sessionTypes.failIfEmpty())
+        call.respond(repo.sessionTypes().failIfEmpty())
     }
 
     get("/week-options") {
-        call.respond(repo.meta().weekOptions.failIfEmpty())
+        call.respond(repo.weekOptions().failIfEmpty())
     }
 }
 
