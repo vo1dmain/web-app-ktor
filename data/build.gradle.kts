@@ -14,6 +14,6 @@ repositories {
 dependencies {
     implementation(project(":entities"))
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
 }
