@@ -12,16 +12,16 @@ class NewsRepoXp(private val dbManager: DbManager) : NewsRepoImpl() {
     override val articleDao by dao<ArticleDaoXp>()
     override val categoryDao by dao<CategoryDaoXp>()
 
-    override suspend fun articles(filters: ArticleFilters, page: Int?) = with(dbManager) {
-        query(newsDb) { super.articles(filters, page) }
+    override suspend fun articles(page: Int?, filtersProducer: ArticleFilters.() -> Unit) = with(dbManager) {
+        query(newsDb) { super.articles(page, filtersProducer) }
     }
 
     override suspend fun article(id: Int) = with(dbManager) {
         query(newsDb) { super.article(id) }
     }
 
-    override suspend fun categories(filters: CategoryFilters, page: Int?) = with(dbManager) {
-        query(newsDb) { super.categories(filters, page) }
+    override suspend fun categories(page: Int?, filtersProducer: CategoryFilters.() -> Unit) = with(dbManager) {
+        query(newsDb) { super.categories(page, filtersProducer) }
     }
 
     override suspend fun category(id: Int) = with(dbManager) {

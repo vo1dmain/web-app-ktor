@@ -2,33 +2,39 @@ package ru.vo1d.web.data.filters.daybook
 
 import ru.vo1d.web.data.dao.filters.Filters
 import ru.vo1d.web.data.dao.filters.FiltersBuilder
-import ru.vo1d.web.data.dao.filters.FiltersCreator
 
 
-interface SessionFilters : Filters {
-    companion object : FiltersCreator<SessionFilters, Builder>(Builder::class)
+class SessionFilters private constructor() : Filters<SessionFilters>(SessionFilters::class) {
+    companion object : FiltersBuilder<SessionFilters>(SessionFilters::class)
 
-    val timetableId: Int?
-    val typeId: Int?
-    val dayId: Int?
-    val periodId: Int?
-    val weekOptionId: Int?
+    var timetableId: Int? = null
+        private set
+    var typeId: Int? = null
+        private set
+    var dayId: Int? = null
+        private set
+    var periodId: Int? = null
+        private set
+    var weekOptionId: Int? = null
+        private set
 
-    override fun areEmpty() = listOf(timetableId, typeId, dayId, periodId, weekOptionId).all { it == null }
+    fun timetableId(init: () -> Int?) {
+        timetableId = init()
+    }
 
-    class Builder internal constructor() : FiltersBuilder<SessionFilters> {
-        var timetableId: Int? = null
-        var typeId: Int? = null
-        var dayId: Int? = null
-        var periodId: Int? = null
-        var weekOptionId: Int? = null
+    fun typeId(init: () -> Int?) {
+        typeId = init()
+    }
 
-        override fun build() = object : SessionFilters {
-            override val timetableId = this@Builder.timetableId
-            override val typeId = this@Builder.typeId
-            override val dayId = this@Builder.dayId
-            override val periodId = this@Builder.periodId
-            override val weekOptionId = this@Builder.weekOptionId
-        }
+    fun dayId(init: () -> Int?) {
+        dayId = init()
+    }
+
+    fun periodId(init: () -> Int?) {
+        periodId = init()
+    }
+
+    fun weekOptionId(init: () -> Int?) {
+        weekOptionId = init()
     }
 }

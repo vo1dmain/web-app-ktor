@@ -12,8 +12,6 @@ import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
-import ru.vo1d.web.data.filters.daybook.SessionFilters
-import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 
@@ -65,18 +63,12 @@ private fun Route.metaRouting(repo: DaybookRepo) = route("/meta") {
 private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
     get {
         val queryParams = call.request.queryParameters
-
-        val groupCode = queryParams.getOrNull<String>("group")
-        val typeId = queryParams.getOrNull<String>("type")
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
-        val list = repo.timetables(
-            TimetableFilters.new {
-                this.groupCode = groupCode
-                this.typeId = typeId
-            },
-            page
-        )
+        val list = repo.timetables(page) {
+            groupCode { queryParams.getOrNull("group") }
+            typeId { queryParams.getOrNull("type") }
+        }
         call.respond(list.failIfEmpty())
     }
 
@@ -94,26 +86,17 @@ private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
 
         route("/sessions") {
             get {
-                val timetableId = call.parameters.getOrFail<Int>("id")
-
                 val queryParams = call.request.queryParameters
-                val typeId = queryParams.getOrNull<Int>("type")?.failIfNegative()
-                val dayId = queryParams.getOrNull<Int>("day")?.failIfNegative()
-                val periodId = queryParams.getOrNull<Int>("period")?.failIfNegative()
-                val weekOptionId = queryParams.getOrNull<Int>("week_option")?.failIfNegative()
                 val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
-                val sessions = repo.sessions(
-                    SessionFilters.new {
-                        this.timetableId = timetableId
-                        this.typeId = typeId
-                        this.dayId = dayId
-                        this.periodId = periodId
-                        this.weekOptionId = weekOptionId
-                    },
-                    page
-                )
-                call.respond(sessions.failIfEmpty())
+                val list = repo.sessions(page) {
+                    timetableId { call.parameters.getOrFail<Int>("id") }
+                    typeId { queryParams.getOrNull<Int>("type")?.failIfNegative() }
+                    dayId { queryParams.getOrNull<Int>("day")?.failIfNegative() }
+                    periodId { queryParams.getOrNull<Int>("period")?.failIfNegative() }
+                    weekOptionId { queryParams.getOrNull<Int>("week_option")?.failIfNegative() }
+                }
+                call.respond(list.failIfEmpty())
             }
         }
     }

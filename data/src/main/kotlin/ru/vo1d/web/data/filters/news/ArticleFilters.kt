@@ -2,20 +2,14 @@ package ru.vo1d.web.data.filters.news
 
 import ru.vo1d.web.data.dao.filters.Filters
 import ru.vo1d.web.data.dao.filters.FiltersBuilder
-import ru.vo1d.web.data.dao.filters.FiltersCreator
 
-interface ArticleFilters : Filters {
-    companion object : FiltersCreator<ArticleFilters, Builder>(Builder::class)
+class ArticleFilters private constructor() : Filters<ArticleFilters>(ArticleFilters::class) {
+    companion object : FiltersBuilder<ArticleFilters>(ArticleFilters::class)
 
-    val categoryId: Int?
+    var categoryId: Int? = null
+        private set
 
-    override fun areEmpty() = categoryId == null
-
-    class Builder internal constructor() : FiltersBuilder<ArticleFilters> {
-        var categoryId: Int? = null
-
-        override fun build() = object : ArticleFilters {
-            override val categoryId = this@Builder.categoryId
-        }
+    fun categoryId(init: () -> Int?) {
+        categoryId = init()
     }
 }

@@ -10,13 +10,13 @@ import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 interface DaybookRepo : ListRepo {
     suspend fun meta(): Meta
 
-    suspend fun timetables(filters: TimetableFilters, page: Int?): List<TimetableModel>
+    suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit): List<TimetableModel>
 
     suspend fun timetable(id: Int): TimetableDto?
 
     suspend fun addTimetable(item: TimetableModel): Int
 
-    suspend fun sessions(filters: SessionFilters, page: Int?): List<SessionModel>
+    suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit): List<SessionModel>
 
     suspend fun addSession(item: SessionModel): Int
 }

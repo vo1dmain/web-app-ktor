@@ -36,9 +36,9 @@ abstract class DaybookRepoImpl : DaybookRepo {
         weekOptionDao.all()
     )
 
-    override suspend fun timetables(filters: TimetableFilters, page: Int?): List<TimetableModel> {
+    override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit): List<TimetableModel> {
         val offset = offset(page)
-
+        val filters = TimetableFilters(filtersProducer)
         if (filters.areEmpty()) return timetableDao.list(offset, limit)
         return timetableDao.filter(filters, offset, limit)
     }
@@ -47,9 +47,9 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     override suspend fun addTimetable(item: TimetableModel) = timetableDao.create(item)
 
-    override suspend fun sessions(filters: SessionFilters, page: Int?): List<SessionModel> {
+    override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit): List<SessionModel> {
         val offset = offset(page)
-
+        val filters = SessionFilters(filtersProducer)
         if (filters.areEmpty()) return sessionDao.list(offset, limit)
         return sessionDao.filter(filters, offset, limit)
     }

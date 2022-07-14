@@ -33,7 +33,7 @@ sealed interface AllDao<I> {
     suspend fun all(): List<I>
 }
 
-sealed interface FilterDao<I, F : Filters> {
+sealed interface FilterDao<I, F : Filters<F>> {
     suspend fun filter(filters: F, offset: Long, limit: Int): List<I>
 }
 

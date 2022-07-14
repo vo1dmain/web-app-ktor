@@ -12,18 +12,20 @@ abstract class NewsRepoImpl : NewsRepo {
     protected abstract val articleDao: ArticleDao
     protected abstract val categoryDao: CategoryDao
 
-    override suspend fun articles(filters: ArticleFilters, page: Int?): List<ArticleView> {
+    override suspend fun articles(page: Int?, filtersProducer: ArticleFilters.() -> Unit): List<ArticleView> {
         val offset = offset(page)
 
+        val filters = ArticleFilters(filtersProducer)
         if (filters.areEmpty()) return articleDao.list(offset, limit)
         return articleDao.filter(filters, offset, limit)
     }
 
     override suspend fun article(id: Int) = articleDao.read(id)
 
-    override suspend fun categories(filters: CategoryFilters, page: Int?): List<CategoryModel> {
+    override suspend fun categories(page: Int?, filtersProducer: CategoryFilters.() -> Unit): List<CategoryModel> {
         val offset = offset(page)
 
+        val filters = CategoryFilters(filtersProducer)
         if (filters.areEmpty()) return categoryDao.list(offset, limit)
         return categoryDao.filter(filters, offset, limit)
     }
