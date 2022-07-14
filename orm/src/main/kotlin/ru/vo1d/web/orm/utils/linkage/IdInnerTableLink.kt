@@ -33,33 +33,26 @@ class IdInnerTableLink<LID : Comparable<LID>, SID : Comparable<SID>, Source : En
         }
     }
 
-    internal val targetRefColumn = targetColumn
-        ?: table.columns.singleOrNull { it.referee == target.table.id } as? Column<EntityID<ID>>
+    internal val targetRefColumn =
+        targetColumn ?: table.columns.singleOrNull { it.referee == target.table.id } as? Column<EntityID<ID>>
         ?: error("Table does not reference target")
 
-    private fun sourceRefColumn(o: Source) = sourceColumn
-        ?: table.columns.singleOrNull { it.referee == o.klass.table.id } as? Column<EntityID<SID>>
+    private fun sourceRefColumn(o: Source) =
+        sourceColumn ?: table.columns.singleOrNull { it.referee == o.klass.table.id } as? Column<EntityID<SID>>
         ?: error("Table does not reference source")
 
 
     override operator fun getValue(thisRef: Source, property: KProperty<*>): SizedIterable<Target> {
         if (thisRef.id._value == null && !thisRef.isNewEntity()) return emptySized()
         val sourceRefColumn = sourceRefColumn(thisRef)
-        val transaction = TransactionManager.currentOrNull()
-            ?: return thisRef.getReferenceFromCache(sourceRefColumn)
+        val transaction = TransactionManager.currentOrNull() ?: return thisRef.getReferenceFromCache(sourceRefColumn)
         val alreadyInJoin = (target.dependsOnTables as? Join)?.alreadyInJoin(table) ?: false
-        val entityTables =
-            if (alreadyInJoin) target.dependsOnTables else target.dependsOnTables.join(
-                table,
-                JoinType.INNER,
-                target.table.id,
-                targetRefColumn
-            )
+        val entityTables = if (alreadyInJoin) target.dependsOnTables else target.dependsOnTables.join(
+            table, JoinType.INNER, target.table.id, targetRefColumn
+        )
 
-        val columns = (
-                target.dependsOnColumns + (if (!alreadyInJoin) table.columns else emptyList()) -
-                        sourceRefColumn
-                ).distinct() + sourceRefColumn
+        val columns =
+            (target.dependsOnColumns + (if (!alreadyInJoin) table.columns else emptyList()) - sourceRefColumn).distinct() + sourceRefColumn
 
         val query = { target.wrapRows(entityTables.slice(columns).select { sourceRefColumn eq thisRef.id }) }
         return transaction.entityCache.getOrPutReferrers(thisRef.id, sourceRefColumn, query).also {
