@@ -33,6 +33,34 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.levels() }
     }
 
+    override suspend fun degrees() = dbManager {
+        query(daybookDb) { super.degrees() }
+    }
+
+    override suspend fun forms() = dbManager {
+        query(daybookDb) { super.forms() }
+    }
+
+    override suspend fun tableTypes() = dbManager {
+        query(daybookDb) { super.tableTypes() }
+    }
+
+    override suspend fun groups() = dbManager {
+        query(daybookDb) { super.groups() }
+    }
+
+    override suspend fun periods() = dbManager {
+        query(daybookDb) { super.periods() }
+    }
+
+    override suspend fun sessionTypes() = dbManager {
+        query(daybookDb) { super.sessionTypes() }
+    }
+
+    override suspend fun weekOptions() = dbManager {
+        query(daybookDb) { super.weekOptions() }
+    }
+
 
 
     override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit) = dbManager {
@@ -46,7 +74,6 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
     override suspend fun addTimetable(item: TimetableModel) = dbManager {
         query(daybookDb) { super.addTimetable(item) }
     }
-
 
 
     override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit) = dbManager {
