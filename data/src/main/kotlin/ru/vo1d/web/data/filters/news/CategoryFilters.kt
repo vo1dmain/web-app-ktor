@@ -1,15 +1,14 @@
 package ru.vo1d.web.data.filters.news
 
-import ru.vo1d.web.data.dao.filters.Filters
-import ru.vo1d.web.data.dao.filters.FiltersBuilder
+import ru.vo1d.web.data.filters.Filters
+import ru.vo1d.web.data.filters.FiltersBuilder
 
-class CategoryFilters private constructor(): Filters<CategoryFilters>(CategoryFilters::class) {
-    companion object : FiltersBuilder<CategoryFilters>(CategoryFilters::class)
+class CategoryFilters private constructor(builder: Builder) : Filters<CategoryFilters>(CategoryFilters::class) {
+    val parentId = builder.parentId
 
-    var parentId: Int? = null
-        private set
+    class Builder : FiltersBuilder<CategoryFilters> {
+        var parentId: Int? = null
 
-    fun parentId(init: () -> Int?) {
-        parentId = init()
+        override fun build() = CategoryFilters(this)
     }
 }

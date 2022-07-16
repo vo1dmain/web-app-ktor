@@ -66,8 +66,8 @@ private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.timetables(page) {
-            groupCode { queryParams.getOrNull("group") }
-            typeId { queryParams.getOrNull("type") }
+            groupCode = queryParams.getOrNull("group")
+            typeId = queryParams.getOrNull("type")
         }
         call.respond(list.failIfEmpty())
     }
@@ -90,11 +90,11 @@ private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
                 val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
                 val list = repo.sessions(page) {
-                    timetableId { call.parameters.getOrFail<Int>("id") }
-                    typeId { queryParams.getOrNull<Int>("type")?.failIfNegative() }
-                    dayId { queryParams.getOrNull<Int>("day")?.failIfNegative() }
-                    periodId { queryParams.getOrNull<Int>("period")?.failIfNegative() }
-                    weekOptionId { queryParams.getOrNull<Int>("week_option")?.failIfNegative() }
+                    timetableId = call.parameters.getOrFail<Int>("id")
+                    typeId = queryParams.getOrNull<Int>("type")?.failIfNegative()
+                    dayId = queryParams.getOrNull<Int>("day")?.failIfNegative()
+                    periodId = queryParams.getOrNull<Int>("period")?.failIfNegative()
+                    weekOptionId = queryParams.getOrNull<Int>("week_option")?.failIfNegative()
                 }
                 call.respond(list.failIfEmpty())
             }

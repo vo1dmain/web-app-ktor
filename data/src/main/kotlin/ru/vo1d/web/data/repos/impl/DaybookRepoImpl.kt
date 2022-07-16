@@ -3,6 +3,7 @@ package ru.vo1d.web.data.repos.impl
 import ru.vo1d.web.data.dao.*
 import ru.vo1d.web.data.filters.daybook.SessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
+import ru.vo1d.web.data.filters.filters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.Meta
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
@@ -53,10 +54,12 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun weekOptions() = weekOptionDao.all()
 
 
-
-    override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit): List<TimetableModel> {
+    override suspend fun timetables(
+        page: Int?,
+        filtersBuilder: TimetableFilters.Builder.() -> Unit
+    ): List<TimetableModel> {
         val offset = offset(page)
-        val filters = TimetableFilters(filtersProducer)
+        val filters = filters(filtersBuilder)
         if (filters.areEmpty()) return timetableDao.list(offset, limit)
         return timetableDao.filter(filters, offset, limit)
     }
@@ -66,10 +69,12 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun addTimetable(item: TimetableModel) = timetableDao.create(item)
 
 
-
-    override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit): List<SessionModel> {
+    override suspend fun sessions(
+        page: Int?,
+        filtersBuilder: SessionFilters.Builder.() -> Unit
+    ): List<SessionModel> {
         val offset = offset(page)
-        val filters = SessionFilters(filtersProducer)
+        val filters = filters(filtersBuilder)
         if (filters.areEmpty()) return sessionDao.list(offset, limit)
         return sessionDao.filter(filters, offset, limit)
     }

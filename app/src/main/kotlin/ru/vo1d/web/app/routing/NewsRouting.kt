@@ -25,7 +25,7 @@ private fun Route.articlesRouting(repo: NewsRepo) = route("/articles") {
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.articles(page) {
-            categoryId { queryParams.getOrNull<Int>("category")?.failIfNegative() }
+            categoryId = queryParams.getOrNull<Int>("category")?.failIfNegative()
         }
         call.respond(list.failIfEmpty())
     }
@@ -45,7 +45,7 @@ private fun Route.categoriesRouting(repo: NewsRepo) = route("/categories") {
         val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
 
         val list = repo.categories(page) {
-            parentId { queryParams.getOrNull<Int>("parent")?.failIfNegative() }
+            parentId = queryParams.getOrNull<Int>("parent")?.failIfNegative()
         }
         call.respond(list.failIfEmpty())
     }

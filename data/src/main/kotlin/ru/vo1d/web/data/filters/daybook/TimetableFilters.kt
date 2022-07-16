@@ -1,22 +1,16 @@
 package ru.vo1d.web.data.filters.daybook
 
-import ru.vo1d.web.data.dao.filters.Filters
-import ru.vo1d.web.data.dao.filters.FiltersBuilder
+import ru.vo1d.web.data.filters.Filters
+import ru.vo1d.web.data.filters.FiltersBuilder
 
-class TimetableFilters private constructor() : Filters<TimetableFilters>(TimetableFilters::class) {
-    companion object : FiltersBuilder<TimetableFilters>(TimetableFilters::class)
+class TimetableFilters private constructor(builder: Builder) : Filters<TimetableFilters>(TimetableFilters::class) {
+    val groupCode = builder.groupCode
+    val typeId = builder.typeId
 
-    var groupCode: String? = null
-        private set
-    var typeId: String? = null
-        private set
-
-    fun groupCode(init: () -> String?) {
-        groupCode = init()
-    }
-
-    fun typeId(init: () -> String?) {
-        typeId = init()
+    class Builder : FiltersBuilder<TimetableFilters> {
+        var groupCode: String? = null
+        var typeId: String? = null
+        override fun build() = TimetableFilters(this)
     }
 }
 

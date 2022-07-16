@@ -62,10 +62,10 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
     }
 
 
-
-    override suspend fun timetables(page: Int?, filtersProducer: TimetableFilters.() -> Unit) = dbManager {
-        query(daybookDb) { super.timetables(page, filtersProducer) }
-    }
+    override suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit) =
+        dbManager {
+            query(daybookDb) { super.timetables(page, filtersBuilder) }
+        }
 
     override suspend fun timetable(id: Int) = dbManager {
         query(daybookDb) { super.timetable(id) }
@@ -76,9 +76,10 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
     }
 
 
-    override suspend fun sessions(page: Int?, filtersProducer: SessionFilters.() -> Unit) = dbManager {
-        query(daybookDb) { super.sessions(page, filtersProducer) }
-    }
+    override suspend fun sessions(page: Int?, filtersBuilder: SessionFilters.Builder.() -> Unit) =
+        dbManager {
+            query(daybookDb) { super.sessions(page, filtersBuilder) }
+        }
 
     override suspend fun addSession(item: SessionModel) = dbManager {
         query(daybookDb) { super.addSession(item) }
