@@ -1,7 +1,6 @@
 package ru.vo1d.web.data.filters.daybook
 
 import ru.vo1d.web.data.filters.Filters
-import ru.vo1d.web.data.filters.FiltersBuilder
 
 
 class SessionFilters private constructor(builder: Builder) : Filters<SessionFilters>(SessionFilters::class) {
@@ -11,12 +10,13 @@ class SessionFilters private constructor(builder: Builder) : Filters<SessionFilt
     val periodId = builder.periodId
     val weekOptionId = builder.weekOptionId
 
-    class Builder : FiltersBuilder<SessionFilters> {
+    class Builder : Filters.Builder<SessionFilters> {
         var timetableId: Int? = null
         var typeId: Int? = null
         var dayId: Int? = null
         var periodId: Int? = null
         var weekOptionId: Int? = null
+
         override fun build() = SessionFilters(this)
     }
 }
