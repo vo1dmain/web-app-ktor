@@ -21,11 +21,12 @@ class QnaRepoXp(override val dbManager: DbManager) : QnaRepoImpl(), XpRepo {
         query(qnaDb) { super.post(id) }
     }
 
-    override suspend fun addQuestion(question: QuestionModel) = dbManager {
-        query(qnaDb) { super.addQuestion(question) }
-    }
 
     override suspend fun questions(page: Int?) = dbManager {
         query(qnaDb) { super.questions(page) }
+    }
+
+    override suspend fun addQuestion(question: QuestionModel) = dbManager {
+        query(qnaDb) { super.addQuestion(question) }
     }
 }

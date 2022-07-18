@@ -35,20 +35,14 @@ interface DaybookRepo : ListRepo {
     suspend fun weekOptions(): List<WeekOptionModel>
 
 
-    suspend fun timetables(
-        page: Int?,
-        filtersBuilder: TimetableFilters.Builder.() -> Unit
-    ): List<TimetableModel>
+    suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit): List<TimetableModel>
 
     suspend fun timetable(id: Int): TimetableDto?
 
     suspend fun addTimetable(item: TimetableModel): Int
 
 
-    suspend fun sessions(
-        page: Int?,
-        filtersBuilder: SessionFilters.Builder.() -> Unit
-    ): List<SessionModel>
+    suspend fun sessions(page: Int?, filtersBuilder: SessionFilters.Builder.() -> Unit): List<SessionModel>
 
     suspend fun addSession(item: SessionModel): Int
 }
