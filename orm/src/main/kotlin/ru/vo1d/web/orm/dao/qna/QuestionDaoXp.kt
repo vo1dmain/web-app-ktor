@@ -14,7 +14,12 @@ class QuestionDaoXp : QuestionDao {
         it[body] = item.body
         it[acceptorId] = item.acceptorId
         it[email] = item.email
-        it[dateTime] = item.dateTime
+        item.dateTime?.let { itemDateTime ->
+            it[dateTime] = itemDateTime
+        }
+        item.timeZone?.let { itemTimeZone ->
+            it[timeZone] = itemTimeZone.id
+        }
     }.value
 
     override suspend fun read(id: Int) = Question.findById(id)?.toModel()
@@ -24,7 +29,12 @@ class QuestionDaoXp : QuestionDao {
         it[body] = item.body
         it[acceptorId] = item.acceptorId
         it[email] = item.email
-        it[dateTime] = item.dateTime
+        item.dateTime?.let { itemDateTime ->
+            it[dateTime] = itemDateTime
+        }
+        item.timeZone?.let { itemTimeZone ->
+            it[timeZone] = itemTimeZone.id
+        }
     }
 
     override suspend fun delete(id: Int) = Questions.deleteWhere { Questions.id eq id }

@@ -7,6 +7,7 @@ import kotlinx.serialization.json.decodeFromStream
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
+import ru.vo1d.web.data.dao.delegates.dao
 import ru.vo1d.web.data.extensions.open
 import ru.vo1d.web.entities.daybook.group.GroupModel
 import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
@@ -20,12 +21,11 @@ import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.orm.dao.news.ArticleDaoXp
 import ru.vo1d.web.orm.entities.daybook.group.*
 import ru.vo1d.web.orm.entities.daybook.timetable.TimePeriods
 import ru.vo1d.web.orm.entities.daybook.timetable.Timetables
 import ru.vo1d.web.orm.entities.daybook.timetable.WeekOptions
-import ru.vo1d.web.orm.entities.news.ArticleCategories
-import ru.vo1d.web.orm.entities.news.Articles
 import ru.vo1d.web.orm.entities.news.Categories
 import ru.vo1d.web.orm.entities.qna.Answers
 import ru.vo1d.web.orm.entities.qna.Posts
@@ -35,6 +35,8 @@ import ru.vo1d.web.orm.extensions.resource
 @OptIn(ExperimentalSerializationApi::class)
 object DataFetcherRes {
     private val json = Json { ignoreUnknownKeys = true }
+
+    private val articlesDao by dao<ArticleDaoXp>()
 
     fun fetchNews() {
         val categoriesFile = resource("/data/news/categories.json")
@@ -51,20 +53,7 @@ object DataFetcherRes {
 
             newsFile.open {
                 json.decodeFromStream<List<ArticleModel>>(this@open)
-            }.forEach { item ->
-                val itemId = Articles.insertAndGetId {
-                    it[title] = item.title
-                    it[body] = item.body
-                    it[preview] = item.previewImage
-                    it[gallery] = item.gallery?.joinToString(",")
-                    it[dateTime] = item.dateTime
-                }.value
-
-                ArticleCategories.batchInsert(item.categories, shouldReturnGeneratedValues = false) { id ->
-                    this[ArticleCategories.articleId] = itemId
-                    this[ArticleCategories.categoryId] = id
-                }
-            }
+            }.forEach { articlesDao.create(it) }
         }
     }
 
@@ -86,14 +75,24 @@ object DataFetcherRes {
                     it[body] = item.body
                     it[acceptorId] = item.acceptorId
                     it[email] = item.email
-                    it[dateTime] = item.dateTime
+                    item.dateTime?.let { itemDateTime ->
+                        it[dateTime] = itemDateTime
+                    }
+                    item.timeZone?.let { itemTimeZone ->
+                        it[timeZone] = itemTimeZone.id
+                    }
                 }.value
 
                 answers.firstOrNull { it.questionId == qId }?.let { answer ->
                     val aId = Answers.insertAndGetId {
                         it[body] = answer.body
                         it[questionId] = qId
-                        it[dateTime] = answer.dateTime
+                        answer.dateTime?.let { itemDateTime ->
+                            it[Questions.dateTime] = itemDateTime
+                        }
+                        answer.timeZone?.let { itemTimeZone ->
+                            it[Questions.timeZone] = itemTimeZone.id
+                        }
                     }.value
 
                     Posts.insert {

@@ -1,13 +1,13 @@
 package ru.vo1d.web.orm.dao.news
 
 import org.jetbrains.exposed.sql.*
-import ru.vo1d.web.data.filters.news.ArticleFilters
 import ru.vo1d.web.data.dao.ArticleDao
+import ru.vo1d.web.data.filters.news.ArticleFilters
+import ru.vo1d.web.entities.news.article.ArticleModel
+import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.orm.entities.news.Article
 import ru.vo1d.web.orm.entities.news.ArticleCategories
 import ru.vo1d.web.orm.entities.news.Articles
-import ru.vo1d.web.entities.news.article.ArticleModel
-import ru.vo1d.web.entities.news.article.ArticleView
 
 class ArticleDaoXp : ArticleDao {
     override suspend fun create(item: ArticleModel): Int {
@@ -16,7 +16,12 @@ class ArticleDaoXp : ArticleDao {
             it[body] = item.body
             it[preview] = item.previewImage
             it[gallery] = item.gallery?.joinToString(",")
-            it[dateTime] = item.dateTime
+            item.dateTime?.let { itemDateTime ->
+                it[dateTime] = itemDateTime
+            }
+            item.timeZone?.let { itemTimeZone ->
+                it[timeZone] = itemTimeZone.id
+            }
         }.value
 
         ArticleCategories.batchInsert(item.categories, shouldReturnGeneratedValues = false) {
@@ -34,7 +39,12 @@ class ArticleDaoXp : ArticleDao {
         it[body] = item.body
         it[preview] = item.previewImage
         it[gallery] = item.gallery?.joinToString(",")
-        it[dateTime] = item.dateTime
+        item.dateTime?.let { itemDateTime ->
+            it[dateTime] = itemDateTime
+        }
+        item.timeZone?.let { itemTimeZone ->
+            it[timeZone] = itemTimeZone.id
+        }
     }
 
     override suspend fun delete(id: Int) = Articles.deleteWhere { Articles.id eq id }

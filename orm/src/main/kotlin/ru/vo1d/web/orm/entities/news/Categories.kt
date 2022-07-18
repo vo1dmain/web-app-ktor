@@ -9,7 +9,7 @@ import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.orm.entities.HasModel
 
 object Categories : IntIdTable() {
-    val title = varchar("title", 128)
+    val title = varchar("title", 64)
     val parentId = optReference("parentId", id, CASCADE, CASCADE)
 }
 

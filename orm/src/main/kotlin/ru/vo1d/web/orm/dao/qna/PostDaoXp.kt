@@ -14,7 +14,7 @@ class PostDaoXp : PostDao {
         it[answerId] = item.answerId
     }.value
 
-    override suspend fun read(id: Int) = Post.findById(id)?.toModel()
+    override suspend fun read(id: Int) = Post.findById(id)?.toDto()
 
     override suspend fun update(item: PostModel) = Posts.update({ Posts.id eq item.id }) {
         it[questionId] = item.questionId

@@ -1,5 +1,7 @@
 package ru.vo1d.web.entities.qna.question
 
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,5 +11,6 @@ data class QuestionModel(
     val body: String,
     val acceptorId: Int,
     val email: String?,
-    val dateTime: Long
+    val dateTime: LocalDateTime? = null,
+    val timeZone: TimeZone? = null
 )

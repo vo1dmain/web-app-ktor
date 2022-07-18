@@ -12,7 +12,12 @@ class AnswerDaoXp : AnswerDao {
     override suspend fun create(item: AnswerModel) = Answers.insertAndGetId {
         it[questionId] = item.questionId
         it[body] = item.body
-        it[dateTime] = item.dateTime
+        item.dateTime?.let { itemDateTime ->
+            it[dateTime] = itemDateTime
+        }
+        item.timeZone?.let { itemTimeZone ->
+            it[timeZone] = itemTimeZone.id
+        }
     }.value
 
     override suspend fun read(id: Int) = Answer.findById(id)?.toModel()
@@ -20,7 +25,12 @@ class AnswerDaoXp : AnswerDao {
     override suspend fun update(item: AnswerModel) = Answers.update({ Answers.id eq item.id }) {
         it[questionId] = item.questionId
         it[body] = item.body
-        it[dateTime] = item.dateTime
+        item.dateTime?.let { itemDateTime ->
+            it[dateTime] = itemDateTime
+        }
+        item.timeZone?.let { itemTimeZone ->
+            it[timeZone] = itemTimeZone.id
+        }
     }
 
     override suspend fun delete(id: Int) = Answers.deleteWhere { Answers.id eq id }
