@@ -1,6 +1,6 @@
 package ru.vo1d.web.data.repos
 
-interface ListRepo {
+sealed interface ListRepo {
     val startPage get() = defaultPage
     val limit get() = defaultLimit
 
