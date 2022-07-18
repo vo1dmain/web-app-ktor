@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "ru.vo1d.web.orm"
-version = "1.3.0"
+version = "1.4.0"
 
 repositories {
     mavenCentral()

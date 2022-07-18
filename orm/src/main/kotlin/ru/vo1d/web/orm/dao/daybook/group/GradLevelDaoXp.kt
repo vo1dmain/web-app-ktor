@@ -1,5 +1,6 @@
 package ru.vo1d.web.orm.dao.daybook.group
 
+import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.update
@@ -13,6 +14,12 @@ class GradLevelDaoXp : GradLevelDao {
         it[id] = item.id
         it[title] = item.title
     }.value
+
+    override suspend fun create(vararg items: GradLevelModel) =
+        GraduationLevels.batchInsert(items.asIterable()) {
+            this[GraduationLevels.id] = it.id
+            this[GraduationLevels.title] = it.title
+        }.count()
 
     override suspend fun read(id: String) = GraduationLevel.findById(id)?.toModel()
 

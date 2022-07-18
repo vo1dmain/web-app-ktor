@@ -4,6 +4,8 @@ import ru.vo1d.web.data.filters.Filters
 
 sealed interface CreateDao<PK, I> {
     suspend fun create(item: I): PK
+
+    suspend fun create(vararg items: I): Int
 }
 
 sealed interface ReadDao<PK, I> {

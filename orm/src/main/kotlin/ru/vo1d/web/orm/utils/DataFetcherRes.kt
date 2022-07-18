@@ -4,10 +4,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
-import ru.vo1d.web.data.dao.delegates.dao
 import ru.vo1d.web.data.extensions.open
 import ru.vo1d.web.entities.daybook.group.GroupModel
 import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
@@ -20,44 +16,45 @@ import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.entities.qna.answer.AnswerModel
+import ru.vo1d.web.entities.qna.post.PostModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.orm.dao.daybook.group.*
+import ru.vo1d.web.orm.dao.daybook.timetable.TimePeriodDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.TimetableDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.WeekOptionDaoXp
 import ru.vo1d.web.orm.dao.news.ArticleDaoXp
-import ru.vo1d.web.orm.entities.daybook.group.*
-import ru.vo1d.web.orm.entities.daybook.timetable.TimePeriods
-import ru.vo1d.web.orm.entities.daybook.timetable.Timetables
-import ru.vo1d.web.orm.entities.daybook.timetable.WeekOptions
-import ru.vo1d.web.orm.entities.news.Categories
-import ru.vo1d.web.orm.entities.qna.Answers
-import ru.vo1d.web.orm.entities.qna.Posts
-import ru.vo1d.web.orm.entities.qna.Questions
+import ru.vo1d.web.orm.dao.news.CategoryDaoXp
+import ru.vo1d.web.orm.dao.qna.AnswerDaoXp
+import ru.vo1d.web.orm.dao.qna.PostDaoXp
+import ru.vo1d.web.orm.dao.qna.QuestionDaoXp
 import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
 object DataFetcherRes {
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val articlesDao by dao<ArticleDaoXp>()
-
     fun fetchNews() {
         val categoriesFile = resource("/data/news/categories.json")
-        val newsFile = resource("/data/news/articles.json")
+        val articlesFile = resource("/data/news/articles.json")
 
         runBlocking {
             val categories = categoriesFile.open {
-                json.decodeFromStream<List<CategoryModel>>(this@open)
+                json.decodeFromStream<Array<CategoryModel>>(this@open)
             }
-            Categories.batchInsert(categories, shouldReturnGeneratedValues = false) {
-                this[Categories.title] = it.title
-                this[Categories.parentId] = it.parentId
-            }
+            CategoryDaoXp().create(*categories)
 
-            newsFile.open {
-                json.decodeFromStream<List<ArticleModel>>(this@open)
-            }.forEach { articlesDao.create(it) }
+            val articles = articlesFile.open {
+                json.decodeFromStream<Array<ArticleModel>>(this@open)
+            }
+            ArticleDaoXp().create(*articles)
         }
     }
 
     fun fetchQna() {
+        val questionDao = QuestionDaoXp()
+        val answerDao = AnswerDaoXp()
+        val postDao = PostDaoXp()
+
         val questionsFile = resource("/data/qna/questions.json")
         val answersFile = resource("/data/qna/answers.json")
 
@@ -70,36 +67,13 @@ object DataFetcherRes {
             }
 
             questions.forEach { item ->
-                val qId = Questions.insertAndGetId {
-                    it[theme] = item.theme
-                    it[body] = item.body
-                    it[acceptorId] = item.acceptorId
-                    it[email] = item.email
-                    item.dateTime?.let { itemDateTime ->
-                        it[dateTime] = itemDateTime
-                    }
-                    item.timeZone?.let { itemTimeZone ->
-                        it[timeZone] = itemTimeZone.id
-                    }
-                }.value
+                val qId = questionDao.create(item)
 
-                answers.firstOrNull { it.questionId == qId }?.let { answer ->
-                    val aId = Answers.insertAndGetId {
-                        it[body] = answer.body
-                        it[questionId] = qId
-                        answer.dateTime?.let { itemDateTime ->
-                            it[Questions.dateTime] = itemDateTime
-                        }
-                        answer.timeZone?.let { itemTimeZone ->
-                            it[Questions.timeZone] = itemTimeZone.id
-                        }
-                    }.value
-
-                    Posts.insert {
-                        it[answerId] = aId
-                        it[questionId] = qId
+                answers.firstOrNull { it.questionId == qId }
+                    ?.let {
+                        val aId = answerDao.create(it)
+                        postDao.create(PostModel(null, qId, aId))
                     }
-                }
             }
         }
     }
@@ -115,71 +89,46 @@ object DataFetcherRes {
         val weekOptionsFile = resource("/data/daybook/timetable/week-options.json")
         val timetablesFile = resource("/data/daybook/timetable/timetables.json")
 
-        runBlocking {
+        runBlocking<Unit> {
             val levels = levelsFile.open {
-                json.decodeFromStream<List<GradLevelModel>>(this)
+                json.decodeFromStream<Array<GradLevelModel>>(this)
             }
-            GraduationLevels.batchInsert(levels, shouldReturnGeneratedValues = false) {
-                this[GraduationLevels.id] = it.id
-                this[GraduationLevels.title] = it.title
-            }
+            GradLevelDaoXp().create(*levels)
 
             val degrees = degreesFile.open {
-                json.decodeFromStream<List<GradDegreeModel>>(this)
+                json.decodeFromStream<Array<GradDegreeModel>>(this)
             }
-            GraduationDegrees.batchInsert(degrees, shouldReturnGeneratedValues = false) {
-                this[GraduationDegrees.id] = it.id
-                this[GraduationDegrees.title] = it.title
-            }
+            GradDegreeDaoXp().create(*degrees)
 
             val forms = formsFile.open {
-                json.decodeFromStream<List<EduFormModel>>(this)
+                json.decodeFromStream<Array<EduFormModel>>(this)
             }
-            EducationForms.batchInsert(forms, shouldReturnGeneratedValues = false) {
-                this[EducationForms.id] = it.id
-                this[EducationForms.title] = it.title
-            }
+            EduFormDaoXp().create(*forms)
 
             val types = typesFile.open {
-                json.decodeFromStream<List<TableTypeModel>>(this)
+                json.decodeFromStream<Array<TableTypeModel>>(this)
             }
-            TableTypes.batchInsert(types, shouldReturnGeneratedValues = false) {
-                this[TableTypes.id] = it.id
-                this[TableTypes.title] = it.title
-            }
+            TableTypeDaoXp().create(*types)
 
             val groups = groupsFile.open {
-                json.decodeFromStream<List<GroupModel>>(this)
+                json.decodeFromStream<Array<GroupModel>>(this)
             }
-            Groups.batchInsert(groups, shouldReturnGeneratedValues = false) {
-                this[Groups.id] = it.code
-                this[Groups.levelId] = it.levelId
-                this[Groups.degreeId] = it.degreeId
-                this[Groups.formId] = it.formId
-            }
+            GroupDaoXp().create(*groups)
 
             val periods = periodsFile.open {
-                json.decodeFromStream<List<TimePeriodModel>>(this)
+                json.decodeFromStream<Array<TimePeriodModel>>(this)
             }
-            TimePeriods.batchInsert(periods, shouldReturnGeneratedValues = false) {
-                this[TimePeriods.start] = it.start
-                this[TimePeriods.end] = it.end
-            }
+            TimePeriodDaoXp().create(*periods)
 
             val weekOptions = weekOptionsFile.open {
-                json.decodeFromStream<List<WeekOptionModel>>(this)
+                json.decodeFromStream<Array<WeekOptionModel>>(this)
             }
-            WeekOptions.batchInsert(weekOptions, shouldReturnGeneratedValues = false) {
-                this[WeekOptions.title] = it.title
-            }
+            WeekOptionDaoXp().create(*weekOptions)
 
             val timetables = timetablesFile.open {
-                json.decodeFromStream<List<TimetableModel>>(this)
+                json.decodeFromStream<Array<TimetableModel>>(this)
             }
-            Timetables.batchInsert(timetables, shouldReturnGeneratedValues = false) {
-                this[Timetables.groupCode] = it.groupCode
-                this[Timetables.typeId] = it.typeId
-            }
+            TimetableDaoXp().create(*timetables)
         }
     }
 }
