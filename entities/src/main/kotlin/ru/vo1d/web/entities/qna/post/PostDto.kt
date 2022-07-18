@@ -5,8 +5,4 @@ import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
 
 @Serializable
-data class PostDto(
-    val id: Int,
-    val question: QuestionModel,
-    val answer: AnswerModel
-)
+data class PostDto(val id: Int, val question: QuestionModel, val answer: AnswerModel)
