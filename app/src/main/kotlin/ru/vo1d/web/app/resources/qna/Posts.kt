@@ -12,8 +12,8 @@ data class Posts(val page: Int? = null) {
     }
 
     @Serializable
-    @Resource("{id}")
-    data class Id(val parent: Posts = Posts(), val id: Int) {
+    @Resource("/posts/{id}")
+    data class Id(val id: Int) {
         init {
             id.failIfNegative()
         }

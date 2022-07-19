@@ -17,8 +17,8 @@ data class Articles(
 
 
     @Serializable
-    @Resource("{id}")
-    data class Id(val parent: Articles = Articles(), val id: Int) {
+    @Resource("/articles/{id}")
+    data class Id(val id: Int) {
         init {
             id.failIfNegative()
         }
