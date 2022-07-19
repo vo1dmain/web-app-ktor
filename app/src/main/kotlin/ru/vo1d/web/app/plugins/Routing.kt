@@ -34,14 +34,14 @@ private fun Routing.root() = get {
         body {
             ul {
                 allRoutes.forEach {
-                    val href = it.replace("{id}", "1").replace("/\\[.*]".toRegex(), "")
+                    val href = it.replace("/\\[.*]".toRegex(), "")
 
                     li {
                         if (href.contains("(method:POST)")) {
                             +href
                             return@li
                         }
-                        a(href) { +it }
+                        a(href.replace("{id}", "1")) { +it }
                     }
                 }
             }
