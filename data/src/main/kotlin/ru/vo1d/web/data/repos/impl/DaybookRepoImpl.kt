@@ -8,10 +8,12 @@ import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.Meta
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
 
 abstract class DaybookRepoImpl : DaybookRepo {
     protected abstract val timetableDao: TimetableDao
     protected abstract val sessionDao: SessionDao
+    protected abstract val timetableSessionDao: TimetableSessionDao
     protected abstract val dayDao: DayDao
 
     //Group
@@ -80,4 +82,6 @@ abstract class DaybookRepoImpl : DaybookRepo {
     }
 
     override suspend fun addSession(item: SessionModel) = sessionDao.create(item)
+
+    override suspend fun addJunction(item: TimetableSessionModel) = timetableSessionDao.create(item)
 }

@@ -13,6 +13,7 @@ import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 
 interface DaybookRepo : ListRepo {
@@ -45,4 +46,6 @@ interface DaybookRepo : ListRepo {
     suspend fun sessions(page: Int?, filtersBuilder: SessionFilters.Builder.() -> Unit): List<SessionModel>
 
     suspend fun addSession(item: SessionModel): Int
+
+    suspend fun addJunction(item: TimetableSessionModel)
 }

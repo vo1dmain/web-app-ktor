@@ -16,6 +16,7 @@ import ru.vo1d.web.entities.daybook.timetable.day.DayModel
 import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.article.ArticleView
@@ -37,6 +38,8 @@ interface TimetableDao : CudDao<Int, TimetableModel>, ReadDao<Int, TimetableDto>
     FilterDao<TimetableModel, TimetableFilters>
 
 interface SessionDao : CrudDao<Int, SessionModel>, ListDao<SessionModel>, FilterDao<SessionModel, SessionFilters>
+
+interface TimetableSessionDao : CreateDao<Unit, TimetableSessionModel>, DeleteDao<TimetableSessionModel>
 
 interface DayDao : CrudDao<Int, DayModel>
 

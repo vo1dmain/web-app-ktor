@@ -14,9 +14,8 @@ interface DbManager {
 
     fun init()
 
-    suspend fun <T> query(db: Database?, block: suspend Transaction.() -> T) = newSuspendedTransaction(
-        context = Dispatchers.IO,
-        db = db,
-        statement = block
-    )
+    suspend fun <T> query(db: Database?, block: suspend Transaction.() -> T) =
+        newSuspendedTransaction(Dispatchers.IO, db, null, block)
+
+    suspend operator fun <T> invoke(block: suspend DbManager.() -> T) = block()
 }

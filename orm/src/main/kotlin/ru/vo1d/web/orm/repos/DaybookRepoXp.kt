@@ -1,29 +1,32 @@
 package ru.vo1d.web.orm.repos
 
+import ru.vo1d.web.data.dao.delegates.crudDao
 import ru.vo1d.web.data.dao.delegates.dao
 import ru.vo1d.web.data.filters.daybook.SessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.impl.DaybookRepoImpl
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
 import ru.vo1d.web.orm.dao.daybook.group.*
 import ru.vo1d.web.orm.dao.daybook.timetable.*
 import ru.vo1d.web.orm.db.DbManager
 
 class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRepo {
-    override val timetableDao by dao<TimetableDaoXp>()
-    override val sessionDao by dao<SessionDaoXp>()
-    override val dayDao by dao<DayDaoXp>()
+    override val timetableDao by crudDao<TimetableDaoXp>()
+    override val sessionDao by crudDao<SessionDaoXp>()
+    override val timetableSessionDao by dao<TimetableSessionDaoXp>()
+    override val dayDao by crudDao<DayDaoXp>()
 
-    override val gradLevelDao by dao<GradLevelDaoXp>()
-    override val gradDegreeDao by dao<GradDegreeDaoXp>()
-    override val eduFormDao by dao<EduFormDaoXp>()
-    override val groupDao by dao<GroupDaoXp>()
+    override val gradLevelDao by crudDao<GradLevelDaoXp>()
+    override val gradDegreeDao by crudDao<GradDegreeDaoXp>()
+    override val eduFormDao by crudDao<EduFormDaoXp>()
+    override val groupDao by crudDao<GroupDaoXp>()
 
-    override val sessionTypeDao by dao<SessionTypeDaoXp>()
-    override val startTimeDao by dao<StartTimeDaoXp>()
-    override val weekOptionDao by dao<WeekOptionDaoXp>()
-    override val tableTypeDao by dao<TableTypeDaoXp>()
+    override val sessionTypeDao by crudDao<SessionTypeDaoXp>()
+    override val startTimeDao by crudDao<StartTimeDaoXp>()
+    override val weekOptionDao by crudDao<WeekOptionDaoXp>()
+    override val tableTypeDao by crudDao<TableTypeDaoXp>()
 
     override suspend fun meta() = dbManager {
         query(daybookDb) { super.meta() }
@@ -83,5 +86,9 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
 
     override suspend fun addSession(item: SessionModel) = dbManager {
         query(daybookDb) { super.addSession(item) }
+    }
+
+    override suspend fun addJunction(item: TimetableSessionModel) = dbManager {
+        query(daybookDb) { super.addJunction(item) }
     }
 }
