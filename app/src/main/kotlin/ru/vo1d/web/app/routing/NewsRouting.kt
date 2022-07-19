@@ -1,15 +1,15 @@
 package ru.vo1d.web.app.routing
 
 import io.ktor.server.application.*
+import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.app.extensions.failIfEmpty
-import ru.vo1d.web.app.extensions.failIfNegative
-import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
+import ru.vo1d.web.app.resources.news.Articles
+import ru.vo1d.web.app.resources.news.Categories
 import ru.vo1d.web.data.repos.NewsRepo
 
 fun Route.newsRouting() = route("/news") {
@@ -19,41 +19,28 @@ fun Route.newsRouting() = route("/news") {
     categoriesRouting(repo)
 }
 
-private fun Route.articlesRouting(repo: NewsRepo) = route("/articles") {
-    get {
-        val queryParams = call.request.queryParameters
-        val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
-
-        val list = repo.articles(page) {
-            categoryId = queryParams.getOrNull<Int>("category")?.failIfNegative()
+private fun Route.articlesRouting(repo: NewsRepo) {
+    get<Articles> {
+        val list = repo.articles(it.page) {
+            categoryId = it.category
         }
         call.respond(list.failIfEmpty())
     }
 
-    get("/{id}") {
-        val pathParams = call.parameters
-        val id = pathParams.getOrFail<Int>("id")
-
-        call.respond(repo.article(id).orFail())
+    get<Articles.Id> {
+        call.respond(repo.article(it.id).orFail())
     }
 }
 
-private fun Route.categoriesRouting(repo: NewsRepo) = route("/categories") {
-    get {
-        val queryParams = call.request.queryParameters
-
-        val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
-
-        val list = repo.categories(page) {
-            parentId = queryParams.getOrNull<Int>("parent")?.failIfNegative()
+private fun Route.categoriesRouting(repo: NewsRepo) {
+    get<Categories> {
+        val list = repo.categories(it.page) {
+            parentId = it.parent
         }
         call.respond(list.failIfEmpty())
     }
 
-    get("/{id}") {
-        val pathParams = call.parameters
-        val id = pathParams.getOrFail<Int>("id")
-
-        call.respond(repo.category(id).orFail())
+    get<Categories.Id> {
+        call.respond(repo.category(it.id).orFail())
     }
 }

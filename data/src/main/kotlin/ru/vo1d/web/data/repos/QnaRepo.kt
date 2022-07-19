@@ -12,5 +12,7 @@ interface QnaRepo : ListRepo {
 
     suspend fun questions(page: Int?): List<QuestionModel>
 
+    suspend fun question(id: Int): QuestionModel?
+
     suspend fun addQuestion(question: QuestionModel): Int
 }

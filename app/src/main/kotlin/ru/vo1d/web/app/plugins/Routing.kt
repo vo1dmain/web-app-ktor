@@ -13,6 +13,7 @@ import ru.vo1d.web.app.routing.qnaRouting
 
 fun Application.configureRouting() {
     install(IgnoreTrailingSlash)
+
     routing {
         root()
         route("/api/v1") {
@@ -33,7 +34,7 @@ private fun Routing.root() = get {
         body {
             ul {
                 allRoutes.forEach {
-                    val href = it.replace("{id}", "1")
+                    val href = it.replace("{id}", "1").replace("/\\[.*]".toRegex(), "")
 
                     li {
                         if (href.contains("(method:POST)")) {

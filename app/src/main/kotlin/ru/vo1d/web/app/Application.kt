@@ -10,6 +10,7 @@ import ru.vo1d.web.orm.db.DbManager
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost") {
         configureDI()
+        configureResources()
         configureRouting()
         configureSerialization()
         configureMonitoring()

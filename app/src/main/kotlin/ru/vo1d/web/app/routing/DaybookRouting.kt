@@ -3,6 +3,7 @@ package ru.vo1d.web.app.routing
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
+import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
@@ -11,12 +12,15 @@ import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.failIfNegative
-import ru.vo1d.web.app.extensions.getOrNull
 import ru.vo1d.web.app.extensions.orFail
+import ru.vo1d.web.app.resources.daybook.Meta
+import ru.vo1d.web.app.resources.daybook.Sessions
+import ru.vo1d.web.app.resources.daybook.Timetables
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
+import io.ktor.server.resources.post as postRes
 
 fun Route.daybookRouting() = route("/daybook") {
     val repo by closestDI().instance<DaybookRepo>()
@@ -26,111 +30,97 @@ fun Route.daybookRouting() = route("/daybook") {
     sessionsRouting(repo)
 }
 
-private fun Route.metaRouting(repo: DaybookRepo) = route("/meta") {
-    get {
+private fun Route.metaRouting(repo: DaybookRepo) {
+    get<Meta> {
         call.respond(repo.meta().orFail())
     }
 
-    get("/levels") {
+    get<Meta.Levels> {
         call.respond(repo.levels().failIfEmpty())
     }
 
-    get("/degrees") {
+    get<Meta.Degrees> {
         call.respond(repo.degrees().failIfEmpty())
     }
 
-    get("/forms") {
+    get<Meta.Forms> {
         call.respond(repo.forms().failIfEmpty())
     }
 
-    get("/table-types") {
+    get<Meta.TableTypes> {
         call.respond(repo.tableTypes().failIfEmpty())
     }
 
-    get("/groups") {
+    get<Meta.Groups> {
         call.respond(repo.groups().failIfEmpty())
     }
 
-    get("/start-times") {
+    get<Meta.Times> {
         call.respond(repo.startTimes().failIfEmpty())
     }
 
-    get("/session-types") {
+    get<Meta.SessionTypes> {
         call.respond(repo.sessionTypes().failIfEmpty())
     }
 
-    get("/week-options") {
+    get<Meta.WeekOptions> {
         call.respond(repo.weekOptions().failIfEmpty())
     }
 }
 
-private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
-    get {
-        val queryParams = call.request.queryParameters
-        val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
-
-        val list = repo.timetables(page) {
-            groupCode = queryParams.getOrNull("group")
-            typeId = queryParams.getOrNull("type")
+private fun Route.timetablesRouting(repo: DaybookRepo) {
+    get<Timetables> {
+        val list = repo.timetables(it.page) {
+            groupCode = it.group
+            typeId = it.type
         }
         call.respond(list.failIfEmpty())
     }
 
-    post {
+    postRes<Timetables> {
         val timetable = call.receive<TimetableModel>()
         val id = repo.addTimetable(timetable)
         call.respond(HttpStatusCode.Created, id)
     }
 
-    route("/{id}") {
-        get {
-            val id = call.parameters.getOrFail<Int>("id").failIfNegative()
-            call.respond(repo.timetable(id).orFail())
-        }
+    get<Timetables.Id> {
+        call.respond(repo.timetable(it.id).orFail())
+    }
 
-        route("/sessions") {
-            get {
-                val ttId = call.parameters.getOrFail<Int>("id").failIfNegative()
-                val query = Parameters.build {
-                    appendAll(call.request.queryParameters)
-                    append("timetable", ttId.toString())
-                }.toMap()
-                    .map { "${it.key}=${it.value.joinToString(",")}" }
-                    .joinToString("&")
+    get<Timetables.Id.Sessions> {
+        val ttId = call.parameters.getOrFail<Int>("id").failIfNegative()
+        val query = Parameters.build {
+            appendAll(call.request.queryParameters)
+            append("timetable", ttId.toString())
+        }.toMap()
+            .map { "${it.key}=${it.value.joinToString(",")}" }
+            .joinToString("&")
 
-                call.respondRedirect("/api/v1/daybook/sessions?$query")
-            }
+        call.respondRedirect("/api/v1/daybook/sessions?$query")
+    }
 
-            post {
-                val input = call.receive<TimetableSessionModel>()
+    postRes<Timetables.Id.Sessions> {
+        val input = call.receive<TimetableSessionModel>()
+        val junction = if (input.timetableId == null) input.copy(timetableId = it.parent.id) else input
 
-                val junction = if (input.timetableId == null) {
-                    val ttId = call.parameters.getOrFail<Int>("id").failIfNegative()
-                    input.copy(timetableId = ttId)
-                } else input
-
-                repo.addJunction(junction)
-                call.respond(HttpStatusCode.Created, junction)
-            }
-        }
+        repo.addJunction(junction)
+        call.respond(HttpStatusCode.Created, junction)
     }
 }
 
-private fun Route.sessionsRouting(repo: DaybookRepo) = route("/sessions") {
-    get {
-        val queryParams = call.request.queryParameters
-        val page = queryParams.getOrNull<Int>("page")?.failIfNegative()
-        val list = repo.sessions(page) {
-            timetableId = queryParams.getOrNull<Int>("timetable")?.failIfNegative()
-            typeId = queryParams.getOrNull<Int>("type")?.failIfNegative()
-            dayId = queryParams.getOrNull<Int>("day")?.failIfNegative()
-            timeId = queryParams.getOrNull<Int>("time")?.failIfNegative()
-            weekOptionId = queryParams.getOrNull<Int>("week_option")?.failIfNegative()
-        }
-        call.respond(list.failIfEmpty())
+private fun Route.sessionsRouting(repo: DaybookRepo) {
+    get<Sessions> {
+        val list = repo.sessions(it.page) {
+            timetableId = it.timetable
+            typeId = it.type
+            dayId = it.day
+            timeId = it.time
+            weekOptionId = it.weekOption
+        }.failIfEmpty()
+        call.respond(list)
     }
 
-    post {
+    postRes<Sessions> {
         val session = call.receive<SessionModel>()
         val id = repo.addSession(session)
         call.respond(HttpStatusCode.Created, id)

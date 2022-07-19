@@ -18,5 +18,7 @@ abstract class QnaRepoImpl : QnaRepo {
 
     override suspend fun questions(page: Int?) = questionDao.list(offset(page), limit)
 
+    override suspend fun question(id: Int) = questionDao.read(id)
+
     override suspend fun addQuestion(question: QuestionModel) = questionDao.create(question)
 }
