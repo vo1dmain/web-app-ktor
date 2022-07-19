@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "ru.vo1d.web.orm"
+group = "ru.vo1d.web"
 version = "1.5.0"
 
 repositories {

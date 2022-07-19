@@ -10,7 +10,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "ru.vo1d.web.app"
+group = "ru.vo1d.web"
 version = "0.4.0"
 
 application {

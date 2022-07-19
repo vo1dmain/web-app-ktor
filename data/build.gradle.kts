@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "ru.vo1d.web.data"
+group = "ru.vo1d.web"
 version = "1.3.0"
 
 repositories {
