@@ -6,12 +6,10 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.*
 import io.ktor.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.app.extensions.failIfEmpty
-import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.extensions.orFail
 import ru.vo1d.web.app.resources.daybook.Meta
 import ru.vo1d.web.app.resources.daybook.Sessions
@@ -88,10 +86,9 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
     }
 
     get<Timetables.Id.Sessions> {
-        val ttId = call.parameters.getOrFail<Int>("id").failIfNegative()
         val query = Parameters.build {
             appendAll(call.request.queryParameters)
-            append("timetable", ttId.toString())
+            append("timetable", it.parent.id.toString())
         }.toMap()
             .map { "${it.key}=${it.value.joinToString(",")}" }
             .joinToString("&")
