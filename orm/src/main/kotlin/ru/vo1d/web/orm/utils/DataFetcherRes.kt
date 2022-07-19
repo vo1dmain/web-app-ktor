@@ -11,7 +11,7 @@ import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.period.TimePeriodModel
+import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.category.CategoryModel
@@ -19,7 +19,7 @@ import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.post.PostModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
 import ru.vo1d.web.orm.dao.daybook.group.*
-import ru.vo1d.web.orm.dao.daybook.timetable.TimePeriodDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.TimetableDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.WeekOptionDaoXp
 import ru.vo1d.web.orm.dao.news.ArticleDaoXp
@@ -85,7 +85,7 @@ object DataFetcherRes {
         val typesFile = resource("/data/daybook/group/types.json")
         val groupsFile = resource("/data/daybook/group/groups.json")
 
-        val periodsFile = resource("/data/daybook/timetable/time-periods.json")
+        val periodsFile = resource("/data/daybook/timetable/start-times.json")
         val weekOptionsFile = resource("/data/daybook/timetable/week-options.json")
         val timetablesFile = resource("/data/daybook/timetable/timetables.json")
 
@@ -116,9 +116,9 @@ object DataFetcherRes {
             GroupDaoXp().create(*groups)
 
             val periods = periodsFile.open {
-                json.decodeFromStream<Array<TimePeriodModel>>(this)
+                json.decodeFromStream<Array<StartTimeModel>>(this)
             }
-            TimePeriodDaoXp().create(*periods)
+            StartTimeDaoXp().create(*periods)
 
             val weekOptions = weekOptionsFile.open {
                 json.decodeFromStream<Array<WeekOptionModel>>(this)

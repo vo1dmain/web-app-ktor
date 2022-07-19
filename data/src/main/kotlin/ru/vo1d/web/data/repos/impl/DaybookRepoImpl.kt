@@ -22,7 +22,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     //Meta
     protected abstract val sessionTypeDao: SessionTypeDao
-    protected abstract val timePeriodDao: TimePeriodDao
+    protected abstract val startTimeDao: StartTimeDao
     protected abstract val weekOptionDao: WeekOptionDao
     protected abstract val tableTypeDao: TableTypeDao
 
@@ -32,7 +32,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
         forms(),
         tableTypes(),
         groups(),
-        periods(),
+        startTimes(),
         sessionTypes(),
         weekOptions()
     )
@@ -47,7 +47,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     override suspend fun groups() = groupDao.all()
 
-    override suspend fun periods() = timePeriodDao.all()
+    override suspend fun startTimes() = startTimeDao.all()
 
     override suspend fun sessionTypes() = sessionTypeDao.all()
 

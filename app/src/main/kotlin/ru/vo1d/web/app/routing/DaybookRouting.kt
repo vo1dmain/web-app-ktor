@@ -47,8 +47,8 @@ private fun Route.metaRouting(repo: DaybookRepo) = route("/meta") {
         call.respond(repo.groups().failIfEmpty())
     }
 
-    get("/periods") {
-        call.respond(repo.periods().failIfEmpty())
+    get("/start-times") {
+        call.respond(repo.startTimes().failIfEmpty())
     }
 
     get("/session-types") {
@@ -93,7 +93,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) = route("/timetables") {
                     timetableId = call.parameters.getOrFail<Int>("id")
                     typeId = queryParams.getOrNull<Int>("type")?.failIfNegative()
                     dayId = queryParams.getOrNull<Int>("day")?.failIfNegative()
-                    periodId = queryParams.getOrNull<Int>("period")?.failIfNegative()
+                    timeId = queryParams.getOrNull<Int>("time")?.failIfNegative()
                     weekOptionId = queryParams.getOrNull<Int>("week_option")?.failIfNegative()
                 }
                 call.respond(list.failIfEmpty())

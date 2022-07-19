@@ -13,7 +13,7 @@ import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableDto
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.day.DayModel
-import ru.vo1d.web.entities.daybook.timetable.period.TimePeriodModel
+import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
@@ -58,7 +58,7 @@ interface SessionTypeDao : CrudDao<Int, SessionTypeModel>, AllDao<SessionTypeMod
 
 interface WeekOptionDao : CrudDao<Int, WeekOptionModel>, AllDao<WeekOptionModel>
 
-interface TimePeriodDao : CrudDao<Int, TimePeriodModel>, AllDao<TimePeriodModel>
+interface StartTimeDao : CrudDao<Int, StartTimeModel>, AllDao<StartTimeModel>
 
 
 //News

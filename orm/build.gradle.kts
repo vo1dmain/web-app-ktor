@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "ru.vo1d.web.orm"
-version = "1.4.0"
+version = "1.5.0"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,6 @@ repositories {
 
 dependencies {
     implementation(project(":data"))
-    implementation(project(":entities"))
 
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")

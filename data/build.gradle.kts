@@ -5,14 +5,14 @@ plugins {
 }
 
 group = "ru.vo1d.web.data"
-version = "1.2.1"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(project(":entities"))
+    api(project(":entities"))
 
     implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")

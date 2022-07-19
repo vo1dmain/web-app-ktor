@@ -10,7 +10,7 @@ import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableDto
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.period.TimePeriodModel
+import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
@@ -28,7 +28,7 @@ interface DaybookRepo : ListRepo {
 
     suspend fun groups(): List<GroupDto>
 
-    suspend fun periods(): List<TimePeriodModel>
+    suspend fun startTimes(): List<StartTimeModel>
 
     suspend fun sessionTypes(): List<SessionTypeModel>
 

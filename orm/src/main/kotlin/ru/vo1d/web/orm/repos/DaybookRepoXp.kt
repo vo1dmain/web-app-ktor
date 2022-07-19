@@ -21,7 +21,7 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
     override val groupDao by dao<GroupDaoXp>()
 
     override val sessionTypeDao by dao<SessionTypeDaoXp>()
-    override val timePeriodDao by dao<TimePeriodDaoXp>()
+    override val startTimeDao by dao<StartTimeDaoXp>()
     override val weekOptionDao by dao<WeekOptionDaoXp>()
     override val tableTypeDao by dao<TableTypeDaoXp>()
 
@@ -49,8 +49,8 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.groups() }
     }
 
-    override suspend fun periods() = dbManager {
-        query(daybookDb) { super.periods() }
+    override suspend fun startTimes() = dbManager {
+        query(daybookDb) { super.startTimes() }
     }
 
     override suspend fun sessionTypes() = dbManager {

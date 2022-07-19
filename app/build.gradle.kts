@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.vo1d.web.app"
-version = "0.3.0"
+version = "0.4.0"
 
 application {
     mainClass.set("ru.vo1d.web.app.ApplicationKt")
@@ -25,7 +25,6 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":entities"))
     implementation(project(":data"))
     implementation(project(":orm"))
 

@@ -6,7 +6,7 @@ import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
 import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
-import ru.vo1d.web.entities.daybook.timetable.period.TimePeriodModel
+import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
 
@@ -17,7 +17,7 @@ data class Meta(
     val forms: List<EduFormModel>,
     val tableTypes: List<TableTypeModel>,
     val groups: List<GroupDto>,
-    val periods: List<TimePeriodModel>,
+    val startTimes: List<StartTimeModel>,
     val sessionTypes: List<SessionTypeModel>,
     val weekOptions: List<WeekOptionModel>
 )

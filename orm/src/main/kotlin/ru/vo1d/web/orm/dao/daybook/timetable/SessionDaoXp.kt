@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.vo1d.web.data.dao.SessionDao
 import ru.vo1d.web.data.filters.daybook.SessionFilters
 import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
+import ru.vo1d.web.entities.extensions.toDuration
 import ru.vo1d.web.orm.dao.XpDao
 import ru.vo1d.web.orm.entities.daybook.timetable.Session
 import ru.vo1d.web.orm.entities.daybook.timetable.Sessions
@@ -30,13 +31,14 @@ class SessionDaoXp : SessionDao, XpDao<SessionModel> {
 
         val query = Sessions.selectAll().apply {
             filters.timetableId?.let {
-                adjustColumnSet { innerJoin(TimetableSessions) }.adjustSlice { slice(Sessions.columns) }
+                adjustColumnSet { innerJoin(TimetableSessions) }
+                andWhere { TimetableSessions.timetableId eq it }
             }
             filters.dayId?.let {
                 andWhere { Sessions.dayId eq it }
             }
-            filters.periodId?.let {
-                andWhere { Sessions.periodId eq it }
+            filters.timeId?.let {
+                andWhere { Sessions.timeId eq it }
             }
             filters.typeId?.let {
                 andWhere { Sessions.typeId eq it }
@@ -55,7 +57,8 @@ class SessionDaoXp : SessionDao, XpDao<SessionModel> {
         this[Sessions.place] = item.place
         this[Sessions.typeId] = item.typeId
         this[Sessions.dayId] = item.dayId
-        this[Sessions.periodId] = item.periodId
+        this[Sessions.timeId] = item.timeId
+        this[Sessions.duration] = item.duration.toDuration()
         this[Sessions.weekOptionId] = item.weekOptionId
     }
 }
