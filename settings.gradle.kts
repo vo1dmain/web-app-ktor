@@ -9,7 +9,7 @@ pluginManagement {
     }
 }
 
-include(":app")
-include(":entities")
-include(":data")
-include(":orm")
+include("app")
+include("entities")
+include("data")
+include("orm")
