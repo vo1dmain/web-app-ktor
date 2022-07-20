@@ -1,0 +1,20 @@
+[
+  {
+    "subject": "Программирование",
+    "instructor": "Данилов Е.А.",
+    "place": "1-237",
+    "typeId": 1,
+    "dayId": 1,
+    "timeId": 1,
+    "weekOptionId": 1
+  },
+  {
+    "subject": "Программирование",
+    "instructor": "Данилов Е.А.",
+    "place": "1-237",
+    "typeId": 1,
+    "dayId": 1,
+    "timeId": 2,
+    "weekOptionId": 1
+  }
+]
