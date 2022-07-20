@@ -69,7 +69,7 @@ class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
     override fun getValue(thisRef: Source, property: KProperty<*>): SizedIterable<Target> {
         if (thisRef.id._value == null && !thisRef.isNewEntity()) return emptySized()
         val sourceRefColumn = sourceRefColumn(thisRef)
-        val transaction = TransactionManager.currentOrNull() ?: return thisRef.getReferenceFromCache(sourceRefColumn)
+        val transaction = TransactionManager.currentOrNull() ?: return thisRef.getReferenceFromCache(targetColumn)
 
 
         val alreadyInJoin = (target.dependsOnTables as? Join)?.alreadyInJoin(linkedTable) ?: false
@@ -89,8 +89,8 @@ class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
             .groupBy(target.table.id)
 
         val refs = { target.wrapRows(query) }
-        return transaction.entityCache.getOrPutReferrers(thisRef.id, sourceRefColumn, refs).also {
-            thisRef.storeReferenceInCache(sourceRefColumn, it)
+        return transaction.entityCache.getOrPutReferrers(thisRef.id, targetColumn, refs).also {
+            thisRef.storeReferenceInCache(targetColumn, it)
         }
     }
 }
