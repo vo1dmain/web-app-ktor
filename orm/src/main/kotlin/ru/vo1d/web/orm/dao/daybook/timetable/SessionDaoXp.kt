@@ -58,7 +58,7 @@ class SessionDaoXp : SessionDao, XpDao<SessionModel> {
         this[Sessions.typeId] = item.typeId
         this[Sessions.dayId] = item.dayId
         this[Sessions.timeId] = item.timeId
-        this[Sessions.duration] = item.duration.toDuration()
+        item.duration?.let { this[Sessions.duration] = it.toDuration() }
         this[Sessions.weekOptionId] = item.weekOptionId
     }
 }
