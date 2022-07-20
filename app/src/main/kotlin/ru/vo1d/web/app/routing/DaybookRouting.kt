@@ -9,6 +9,7 @@ import io.ktor.server.routing.*
 import io.ktor.util.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.vo1d.web.app.errors.UnprocessableEntityException
 import ru.vo1d.web.app.extensions.failIfEmpty
 import ru.vo1d.web.app.extensions.orFail
 import ru.vo1d.web.app.resources.daybook.Meta
@@ -98,8 +99,15 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
 
     postRes<Timetables.Id.Sessions> {
         val input = call.receive<TimetableSessionModel>()
-        val junction = if (input.timetableId == null) input.copy(timetableId = it.parent.id) else input
+        val inputId = input.timetableId ?: it.parent.id
 
+        if (inputId != it.parent.id) throw UnprocessableEntityException(
+            TimetableSessionModel::timetableId.name,
+            it.parent.id.toString(),
+            inputId.toString()
+        )
+
+        val junction = input.copy(timetableId = inputId)
         repo.addJunction(junction)
         call.respond(HttpStatusCode.Created, junction)
     }

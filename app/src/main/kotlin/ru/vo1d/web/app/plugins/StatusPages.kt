@@ -6,6 +6,7 @@ import io.ktor.server.plugins.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.ContentTransformationException
 import io.ktor.server.response.*
+import ru.vo1d.web.app.errors.UnprocessableEntityException
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
@@ -13,6 +14,13 @@ fun Application.configureStatusPages() {
             call.respondText(
                 "400: Bad request. Missing parameter ${cause.parameterName}",
                 status = HttpStatusCode.BadRequest
+            )
+        }
+
+        exception<UnprocessableEntityException> { call, cause ->
+            call.respondText(
+                "422: Unprocessable entity. Cause: ${cause.message}",
+                status = HttpStatusCode.UnprocessableEntity
             )
         }
 
