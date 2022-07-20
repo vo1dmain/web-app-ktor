@@ -18,7 +18,7 @@ object Timetables : IntIdTable() {
     val typeId = reference("typeId", TableTypes, CASCADE, CASCADE)
 }
 
-open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel>, Supportable<Int> {
+open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel> {
     companion object : IntEntityClass<Timetable>(Timetables)
 
     val groupCode by Timetables.groupCode
@@ -27,7 +27,7 @@ open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel
     override fun toModel() = TimetableModel(id.value, groupCode.value, typeId.value)
 }
 
-class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto> {
+class TimetableWithData(id: EntityID<Int>) : Timetable(id), HasDto<TimetableDto>, Supportable<Int> {
     companion object : IntEntityClass<TimetableWithData>(Timetables)
 
     val days by Day link Sessions supportedBy TimetableSessions
