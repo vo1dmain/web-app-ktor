@@ -3,14 +3,15 @@ package ru.vo1d.web.app.resources.daybook
 import io.ktor.resources.*
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.app.extensions.failIfNegative
+import ru.vo1d.web.app.resources.ListResource
 
 @Serializable
 @Resource("/timetables")
 data class Timetables(
-    val page: Int? = null,
+    override val page: Int? = null,
     val group: String? = null,
     val type: String? = null
-) {
+) : ListResource {
     init {
         page?.failIfNegative()
     }
@@ -26,12 +27,12 @@ data class Timetables(
         @Resource("/sessions")
         data class Sessions(
             val parent: Id,
-            val page: Int? = null,
+            override val page: Int? = null,
             val type: Int? = null,
             val day: Int? = null,
             val time: Int? = null,
             val weekOption: Int? = null
-        ) {
+        ) : ListResource {
             init {
                 page?.failIfNegative()
                 type?.failIfNegative()
