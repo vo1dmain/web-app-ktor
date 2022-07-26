@@ -1,7 +1,3 @@
-val serializationVersion: String by project
-val exposedVersion: String by project
-val h2Version: String by project
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
@@ -14,6 +10,9 @@ repositories {
     mavenCentral()
 }
 
+val serializationVersion: String by project
+val exposedVersion: String by project
+val h2Version: String by project
 dependencies {
     implementation(project(":data"))
 

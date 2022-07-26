@@ -9,7 +9,4 @@ inline fun <reified T> crudDao(): ReadOnlyProperty<Any, T>
     return ReadOnlyProperty { _, _ -> T::class.createInstance() }
 }
 
-inline fun <reified T> dao(): ReadOnlyProperty<Any, T>
-        where T : Dao {
-    return ReadOnlyProperty { _, _ -> T::class.createInstance() }
-}
+inline fun <reified T : Dao> dao() = ReadOnlyProperty<Any, T> { _, _ -> T::class.createInstance() }
