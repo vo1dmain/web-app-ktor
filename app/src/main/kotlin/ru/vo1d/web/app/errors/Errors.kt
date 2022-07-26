@@ -5,13 +5,14 @@ import kotlinx.coroutines.CopyableThrowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class UnprocessableEntityException(message: String? = null) : Exception(message),
+class UnprocessableEntityException(
+    private val fieldName: String,
+    private val expected: String,
+    private val actual: String
+) : Exception("Wrong field \'$fieldName\' value. Expected: \'$expected\'. Actual: \'$actual\'."),
     CopyableThrowable<UnprocessableEntityException> {
 
-    constructor(fieldName: String, expected: String, actual: String) :
-            this("Wrong field \'$fieldName\' value. Expected: \'$expected\'; actual: \'$actual\'.")
-
-    override fun createCopy() = UnprocessableEntityException(message).also {
+    override fun createCopy() = UnprocessableEntityException(fieldName, expected, actual).also {
         it.initCauseBridge(this)
     }
 }

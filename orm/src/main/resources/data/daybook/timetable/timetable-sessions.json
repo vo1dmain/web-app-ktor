@@ -6,5 +6,9 @@
   {
     "timetableId": 1,
     "sessionId": 2
+  },
+  {
+    "timetableId": 1,
+    "sessionId": 3
   }
 ]
