@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.vo1d.web"
-version = "0.5.2"
+version = "0.6.0"
 
 application {
     mainClass.set("ru.vo1d.web.app.ApplicationKt")

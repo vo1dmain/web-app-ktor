@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.StartTimeDao
-import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
+import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
 import ru.vo1d.web.orm.dao.XpDao
 import ru.vo1d.web.orm.entities.daybook.timetable.SessionStartTime
 import ru.vo1d.web.orm.entities.daybook.timetable.SessionStartTimes

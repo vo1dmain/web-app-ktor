@@ -2,21 +2,32 @@ package ru.vo1d.web.orm.repos
 
 import ru.vo1d.web.data.dao.delegates.crudDao
 import ru.vo1d.web.data.dao.delegates.dao
-import ru.vo1d.web.data.filters.daybook.SessionFilters
+import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
+import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.impl.DaybookRepoImpl
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
 import ru.vo1d.web.orm.dao.daybook.group.*
-import ru.vo1d.web.orm.dao.daybook.timetable.*
+import ru.vo1d.web.orm.dao.daybook.timetable.SessionTypeDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.TimetableDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.dated.DatedSessionDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.dated.TimetableDatedSessionDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.regular.RegularSessionDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.regular.TimetableRegularSessionDaoXp
 import ru.vo1d.web.orm.db.DbManager
 
 class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRepo {
-    override val timetableDao by crudDao<TimetableDaoXp>()
-    override val sessionDao by crudDao<SessionDaoXp>()
-    override val timetableSessionDao by dao<TimetableSessionDaoXp>()
-    override val dayDao by crudDao<DayDaoXp>()
+    override val timetableDao by dao<TimetableDaoXp>()
+
+    override val regularSessionDao by crudDao<RegularSessionDaoXp>()
+    override val datedSessionDao by crudDao<DatedSessionDaoXp>()
+
+    override val timetableRegularSessionDao by dao<TimetableRegularSessionDaoXp>()
+    override val timetableDatedSessionDao by dao<TimetableDatedSessionDaoXp>()
 
     override val gradLevelDao by crudDao<GradLevelDaoXp>()
     override val gradDegreeDao by crudDao<GradDegreeDaoXp>()
@@ -25,7 +36,6 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
 
     override val sessionTypeDao by crudDao<SessionTypeDaoXp>()
     override val startTimeDao by crudDao<StartTimeDaoXp>()
-    override val weekOptionDao by crudDao<WeekOptionDaoXp>()
     override val tableTypeDao by crudDao<TableTypeDaoXp>()
 
     override suspend fun meta() = dbManager {
@@ -60,18 +70,19 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.sessionTypes() }
     }
 
-    override suspend fun weekOptions() = dbManager {
-        query(daybookDb) { super.weekOptions() }
-    }
-
 
     override suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit) =
         dbManager {
             query(daybookDb) { super.timetables(page, filtersBuilder) }
         }
 
+
     override suspend fun timetable(id: Int) = dbManager {
         query(daybookDb) { super.timetable(id) }
+    }
+
+    override suspend fun timetableBase(id: Int) = dbManager {
+        query(daybookDb) { super.timetableBase(id) }
     }
 
     override suspend fun addTimetable(item: TimetableModel) = dbManager {
@@ -79,16 +90,34 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
     }
 
 
-    override suspend fun sessions(page: Int?, filtersBuilder: SessionFilters.Builder.() -> Unit) =
-        dbManager {
-            query(daybookDb) { super.sessions(page, filtersBuilder) }
-        }
-
-    override suspend fun addSession(item: SessionModel) = dbManager {
-        query(daybookDb) { super.addSession(item) }
+    override suspend fun regularSessions(
+        page: Int?,
+        filtersBuilder: RegularSessionFilters.Builder.() -> Unit
+    ) = dbManager {
+        query(daybookDb) { super.regularSessions(page, filtersBuilder) }
     }
 
-    override suspend fun addJunction(item: TimetableSessionModel) = dbManager {
-        query(daybookDb) { super.addJunction(item) }
+    override suspend fun datedSessions(
+        page: Int?,
+        filtersBuilder: DatedSessionFilters.Builder.() -> Unit
+    ) = dbManager {
+        query(daybookDb) { super.datedSessions(page, filtersBuilder) }
+    }
+
+    override suspend fun addRegularSession(item: RegularSessionModel) = dbManager {
+        query(daybookDb) { super.addRegularSession(item) }
+    }
+
+    override suspend fun addDatedSession(item: DatedSessionModel) = dbManager {
+        query(daybookDb) { super.addDatedSession(item) }
+    }
+
+
+    override suspend fun addRegularJunction(item: TimetableSessionModel) = dbManager {
+        query(daybookDb) { super.addRegularJunction(item) }
+    }
+
+    override suspend fun addDatedJunction(item: TimetableSessionModel) = dbManager {
+        query(daybookDb) { super.addDatedJunction(item) }
     }
 }

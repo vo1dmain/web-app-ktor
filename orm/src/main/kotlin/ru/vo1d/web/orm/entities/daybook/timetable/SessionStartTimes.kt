@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
-import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
+import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
 import ru.vo1d.web.orm.entities.HasModel
 import ru.vo1d.web.orm.utils.time.time
 

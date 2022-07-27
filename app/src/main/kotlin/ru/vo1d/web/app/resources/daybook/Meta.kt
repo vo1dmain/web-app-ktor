@@ -33,8 +33,4 @@ class Meta {
     @Serializable
     @Resource("/session-types")
     data class SessionTypes(val parent: Meta = Meta())
-
-    @Serializable
-    @Resource("/week-options")
-    data class WeekOptions(val parent: Meta = Meta())
 }

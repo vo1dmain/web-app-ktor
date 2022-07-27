@@ -6,9 +6,8 @@ import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
 import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
-import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
-import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
+import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
 
 @Serializable
 data class Meta(
@@ -18,6 +17,5 @@ data class Meta(
     val tableTypes: List<TableTypeModel>,
     val groups: List<GroupDto>,
     val startTimes: List<StartTimeModel>,
-    val sessionTypes: List<SessionTypeModel>,
-    val weekOptions: List<WeekOptionModel>
+    val sessionTypes: List<SessionTypeModel>
 )
