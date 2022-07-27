@@ -1,4 +1,4 @@
-package ru.vo1d.web.entities.daybook.timetable.period
+package ru.vo1d.web.entities.daybook.timetable.time
 
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone

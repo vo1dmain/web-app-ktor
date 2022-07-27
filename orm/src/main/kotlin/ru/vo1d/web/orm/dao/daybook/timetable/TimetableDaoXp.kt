@@ -7,7 +7,7 @@ import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.orm.dao.XpDao
 import ru.vo1d.web.orm.entities.daybook.timetable.Timetable
-import ru.vo1d.web.orm.entities.daybook.timetable.TimetableWithData
+import ru.vo1d.web.orm.entities.daybook.timetable.TimetableWithSessions
 import ru.vo1d.web.orm.entities.daybook.timetable.Timetables
 
 class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
@@ -16,7 +16,10 @@ class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
     override suspend fun create(vararg items: TimetableModel) =
         Timetables.batchInsert(items.asIterable()) { mapItem(it) }.count()
 
-    override suspend fun read(id: Int) = TimetableWithData.findById(id)?.toDto()
+
+    override suspend fun read(id: Int) = Timetable.findById(id)?.toModel()
+
+    override suspend fun readLinked(id: Int) = TimetableWithSessions.findById(id)?.toDto()
 
     override suspend fun update(item: TimetableModel) =
         Timetables.update({ Timetables.id eq item.id }) { it.mapItem(item) }
@@ -31,6 +34,7 @@ class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
         val query = Timetables.selectAll().apply {
             filters.typeId?.let { andWhere { Timetables.typeId eq it } }
             filters.groupCode?.let { andWhere { Timetables.groupCode eq it } }
+            filters.format?.let { andWhere { Timetables.format eq it } }
         }
 
         return Timetable.wrapRows(query).limit(limit, offset).map(Timetable::toModel)
@@ -39,5 +43,6 @@ class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
     override fun UpdateBuilder<Int>.mapItem(item: TimetableModel) {
         this[Timetables.groupCode] = item.groupCode
         this[Timetables.typeId] = item.typeId
+        this[Timetables.format] = item.format
     }
 }

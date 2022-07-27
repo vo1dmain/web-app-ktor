@@ -4,29 +4,29 @@
     "instructor": "Курносов",
     "place": "1-418",
     "typeId": 1,
-    "dayId": 1,
-    "timeId": 9,
     "duration": "PT1H40M",
-    "weekOptionId": 1
+    "dayOfWeek": "MONDAY",
+    "timeId": 9,
+    "weekOption": "Both"
   },
   {
     "subject": "Микропроцссорные системы",
     "instructor": "Данилов Е.А.",
     "place": "1-301",
     "typeId": 1,
-    "dayId": 1,
-    "timeId": 11,
     "duration": "PT1H40M",
-    "weekOptionId": 1
+    "dayOfWeek": "MONDAY",
+    "timeId": 11,
+    "weekOption": "Both"
   },
   {
     "subject": "Геоинформационные системы",
     "instructor": "Данилов Е.А.",
     "place": "1-301",
     "typeId": 1,
-    "dayId": 1,
-    "timeId": 13,
     "duration": "PT1H40M",
-    "weekOptionId": 1
+    "dayOfWeek": "MONDAY",
+    "timeId": 13,
+    "weekOption": "Both"
   }
 ]

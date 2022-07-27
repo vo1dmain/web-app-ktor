@@ -39,4 +39,8 @@ sealed interface FilterDao<I, F : Filters<F>> : Dao {
     suspend fun filter(filters: F, offset: Long, limit: Int): List<I>
 }
 
+sealed interface LinkedReadDao<PK, I> : Dao {
+    suspend fun readLinked(id: PK): I?
+}
+
 

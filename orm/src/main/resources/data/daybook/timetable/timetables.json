@@ -1,18 +1,22 @@
 [
   {
     "groupCode": "18ИВ1бп",
-    "typeId": "tt"
+    "typeId": "tt",
+    "format": "Regular"
   },
   {
     "groupCode": "18ТП1бпв",
-    "typeId": "tt"
+    "typeId": "tt",
+    "format": "Regular"
   },
   {
     "groupCode": "19ЭК1тз",
-    "typeId": "att"
+    "typeId": "att",
+    "format": "Dated"
   },
   {
     "groupCode": "20ПБ1т",
-    "typeId": "att"
+    "typeId": "att",
+    "format": "Dated"
   }
 ]

@@ -11,19 +11,21 @@ import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.day.DayModel
-import ru.vo1d.web.entities.daybook.timetable.period.StartTimeModel
-import ru.vo1d.web.entities.daybook.timetable.session.SessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
-import ru.vo1d.web.entities.daybook.timetable.week.WeekOptionModel
+import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
 import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.entities.qna.answer.AnswerModel
 import ru.vo1d.web.entities.qna.post.PostModel
 import ru.vo1d.web.entities.qna.question.QuestionModel
 import ru.vo1d.web.orm.dao.daybook.group.*
-import ru.vo1d.web.orm.dao.daybook.timetable.*
+import ru.vo1d.web.orm.dao.daybook.timetable.SessionTypeDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.TimetableDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.regular.RegularSessionDaoXp
+import ru.vo1d.web.orm.dao.daybook.timetable.regular.TimetableRegularSessionDaoXp
 import ru.vo1d.web.orm.dao.news.ArticleDaoXp
 import ru.vo1d.web.orm.dao.news.CategoryDaoXp
 import ru.vo1d.web.orm.dao.qna.AnswerDaoXp
@@ -88,12 +90,10 @@ object DataFetcherRes {
         val groupsFile = resource("/data/daybook/group/groups.json")
 
         val startTimesFile = resource("/data/daybook/timetable/start-times.json")
-        val daysFile = resource("/data/daybook/timetable/days.json")
         val sessionTypesFile = resource("/data/daybook/timetable/session-types.json")
-        val weekOptionsFile = resource("/data/daybook/timetable/week-options.json")
         val timetablesFile = resource("/data/daybook/timetable/timetables.json")
-        val sessionsFile = resource("/data/daybook/timetable/sessions.json")
-        val timetableSessionsFile = resource("/data/daybook/timetable/timetable-sessions.json")
+        val sessionsFile = resource("/data/daybook/timetable/regular-sessions.json")
+        val timetableSessionsFile = resource("/data/daybook/timetable/timetable-regular-sessions.json")
 
         runBlocking<Unit> {
             val levels = levelsFile.open {
@@ -127,20 +127,10 @@ object DataFetcherRes {
             }
             StartTimeDaoXp().create(*times)
 
-            val days = daysFile.open {
-                json.decodeFromStream<Array<DayModel>>(this)
-            }
-            DayDaoXp().create(*days)
-
             val sessionTypes = sessionTypesFile.open {
                 json.decodeFromStream<Array<SessionTypeModel>>(this)
             }
             SessionTypeDaoXp().create(*sessionTypes)
-
-            val weekOptions = weekOptionsFile.open {
-                json.decodeFromStream<Array<WeekOptionModel>>(this)
-            }
-            WeekOptionDaoXp().create(*weekOptions)
 
             val timetables = timetablesFile.open {
                 json.decodeFromStream<Array<TimetableModel>>(this)
@@ -148,14 +138,14 @@ object DataFetcherRes {
             TimetableDaoXp().create(*timetables)
 
             val sessions = sessionsFile.open {
-                json.decodeFromStream<Array<SessionModel>>(this)
+                json.decodeFromStream<Array<RegularSessionModel>>(this)
             }
-            SessionDaoXp().create(*sessions)
+            RegularSessionDaoXp().create(*sessions)
 
             val timetableSessions = timetableSessionsFile.open {
                 json.decodeFromStream<Array<TimetableSessionModel>>(this)
             }
-            TimetableSessionDaoXp().create(*timetableSessions)
+            TimetableRegularSessionDaoXp().create(*timetableSessions)
         }
     }
 }
