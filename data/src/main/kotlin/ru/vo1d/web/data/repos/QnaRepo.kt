@@ -14,5 +14,5 @@ interface QnaRepo : ListRepo {
 
     suspend fun question(id: Int): QuestionModel?
 
-    suspend fun addQuestion(question: QuestionModel): Int
+    suspend fun addQuestion(question: QuestionModel): Int?
 }

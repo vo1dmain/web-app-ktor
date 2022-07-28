@@ -2,7 +2,7 @@ package ru.vo1d.web.orm.dao.daybook.group
 
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insertIgnoreAndGetId
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.GradDegreeDao
@@ -12,10 +12,11 @@ import ru.vo1d.web.orm.entities.daybook.group.GraduationDegree
 import ru.vo1d.web.orm.entities.daybook.group.GraduationDegrees
 
 class GradDegreeDaoXp : GradDegreeDao, XpDao<GradDegreeModel> {
-    override suspend fun create(item: GradDegreeModel) = GraduationDegrees.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: GradDegreeModel) =
+        GraduationDegrees.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: GradDegreeModel) =
-        GraduationDegrees.batchInsert(items.asIterable()) { mapItem(it) }.count()
+        GraduationDegrees.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: String) = GraduationDegree.findById(id)?.toModel()
 
@@ -26,7 +27,7 @@ class GradDegreeDaoXp : GradDegreeDao, XpDao<GradDegreeModel> {
 
     override suspend fun all() = GraduationDegree.all().map(GraduationDegree::toModel)
 
-    override fun UpdateBuilder<Int>.mapItem(item: GradDegreeModel) {
+    override fun UpdateBuilder<*>.mapItem(item: GradDegreeModel) {
         this[GraduationDegrees.id] = item.id
         this[GraduationDegrees.title] = item.title
     }

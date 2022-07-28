@@ -12,10 +12,11 @@ import ru.vo1d.web.orm.entities.daybook.timetable.DatedSessions
 import ru.vo1d.web.orm.entities.daybook.timetable.TimetableDatedSessions
 
 class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSessionModel> {
-    override suspend fun create(item: DatedSessionModel) = DatedSessions.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: DatedSessionModel) =
+        DatedSessions.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: DatedSessionModel) =
-        DatedSessions.batchInsert(items.asIterable()) { mapItem(it) }.count()
+        DatedSessions.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: Int) = DatedSession.findById(id)?.toModel()
 
@@ -55,7 +56,7 @@ class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSessionModel> {
         return DatedSession.wrapRows(query).limit(limit, offset).map(DatedSession::toModel)
     }
 
-    override fun UpdateBuilder<Int>.mapItem(item: DatedSessionModel) {
+    override fun UpdateBuilder<*>.mapItem(item: DatedSessionModel) {
         this[DatedSessions.subject] = item.subject
         this[DatedSessions.instructor] = item.instructor
         this[DatedSessions.place] = item.place

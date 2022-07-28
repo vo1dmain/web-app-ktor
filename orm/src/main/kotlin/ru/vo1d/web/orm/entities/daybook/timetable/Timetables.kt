@@ -18,6 +18,7 @@ object Timetables : IntIdTable() {
     val groupCode = reference("groupCode", Groups, CASCADE, CASCADE)
     val typeId = reference("typeId", TableTypes, CASCADE, CASCADE)
     val format = enumerationByName("format", 10, TimetableFormat::class)
+    val index = uniqueIndex(groupCode, typeId, format)
 }
 
 open class Timetable(id: EntityID<Int>) : IntEntity(id), HasModel<TimetableModel> {

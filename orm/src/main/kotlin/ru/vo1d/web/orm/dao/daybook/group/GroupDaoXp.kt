@@ -2,7 +2,7 @@ package ru.vo1d.web.orm.dao.daybook.group
 
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insertIgnoreAndGetId
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.GroupDao
@@ -12,10 +12,11 @@ import ru.vo1d.web.orm.entities.daybook.group.GroupWithTypes
 import ru.vo1d.web.orm.entities.daybook.group.Groups
 
 class GroupDaoXp : GroupDao, XpDao<GroupModel> {
-    override suspend fun create(item: GroupModel) = Groups.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: GroupModel) =
+        Groups.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: GroupModel) =
-        Groups.batchInsert(items.asIterable()) { mapItem(it) }.count()
+        Groups.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: String) = GroupWithTypes.findById(id)?.toDto()
 
@@ -29,7 +30,7 @@ class GroupDaoXp : GroupDao, XpDao<GroupModel> {
 
     override suspend fun all() = GroupWithTypes.all().map(GroupWithTypes::toDto)
 
-    override fun UpdateBuilder<Int>.mapItem(item: GroupModel) {
+    override fun UpdateBuilder<*>.mapItem(item: GroupModel) {
         this[Groups.id] = item.code
         this[Groups.levelId] = item.levelId
         this[Groups.degreeId] = item.degreeId

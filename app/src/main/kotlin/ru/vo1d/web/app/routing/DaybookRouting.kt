@@ -76,7 +76,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
 
     postRes<Timetables> {
         val timetable = call.receive<TimetableModel>()
-        val id = repo.addTimetable(timetable)
+        val id = repo.addTimetable(timetable) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 
@@ -125,7 +125,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
 
     postRes<RegularSessions> {
         val session = call.receive<RegularSessionModel>()
-        val id = repo.addRegularSession(session)
+        val id = repo.addRegularSession(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 
@@ -143,7 +143,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
 
     postRes<DatedSessions> {
         val session = call.receive<DatedSessionModel>()
-        val id = repo.addDatedSession(session)
+        val id = repo.addDatedSession(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 }

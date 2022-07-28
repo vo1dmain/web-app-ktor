@@ -2,11 +2,14 @@ package ru.vo1d.web.app
 
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
+import ru.vo1d.web.app.utils.DataFetcherRes
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.data.repos.QnaRepo
@@ -28,4 +31,8 @@ fun Application.mainModule() {
 
     val dbManager by closestDI().instance<DbManager>()
     dbManager.init()
+    runBlocking(Dispatchers.IO) {
+        dbManager { queryDatebook { DataFetcherRes.fetchDaybook() } }
+        dbManager { queryNews { DataFetcherRes.fetchNews() } }
+    }
 }

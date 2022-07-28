@@ -10,7 +10,7 @@ import ru.vo1d.web.orm.entities.HasModel
 import ru.vo1d.web.orm.utils.time.time
 
 object SessionStartTimes : IntIdTable() {
-    val time = time("time")
+    val time = time("time").uniqueIndex()
     val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)
 }
 

@@ -29,7 +29,7 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
         json.decodeFromStream<List<AnswerModel>>(this)
     }
 
-    override suspend fun create(item: PostModel): Int {
+    override suspend fun create(item: PostModel): Int? {
         TODO("Not yet implemented")
     }
 
