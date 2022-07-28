@@ -9,7 +9,6 @@ import ru.vo1d.web.orm.entities.HasModel
 
 object GraduationDegrees : IdTable<String>() {
     override val id = varchar("id", 16).uniqueIndex().entityId()
-
     val title = varchar("title", 16)
 }
 

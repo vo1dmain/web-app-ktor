@@ -5,6 +5,7 @@ import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.entities.daybook.Meta
 import ru.vo1d.web.entities.daybook.group.GroupDto
+import ru.vo1d.web.entities.daybook.group.GroupModel
 import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
 import ru.vo1d.web.entities.daybook.group.form.EduFormModel
 import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
@@ -26,6 +27,8 @@ interface DaybookRepo : ListRepo {
     suspend fun tableTypes(): List<TableTypeModel>
 
     suspend fun groups(): List<GroupDto>
+
+    suspend fun addGroups(vararg groups: GroupModel): Int
 
     suspend fun startTimes(): List<StartTimeModel>
 
@@ -51,9 +54,11 @@ interface DaybookRepo : ListRepo {
         filtersBuilder: DatedSessionFilters.Builder.() -> Unit
     ): List<DatedSessionModel>
 
+
     suspend fun addRegularSession(item: RegularSessionModel): Int
 
     suspend fun addDatedSession(item: DatedSessionModel): Int
+
 
     suspend fun addRegularJunction(item: TimetableSessionModel)
 

@@ -34,7 +34,6 @@ object H2Manager : DbManager {
 
         transaction(qnaDb) {
             SchemaUtils.create(Posts)
-            DataFetcherRes.fetchQna()
         }
 
         transaction(daybookDb) {
