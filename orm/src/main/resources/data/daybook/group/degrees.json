@@ -1,5 +1,9 @@
 [
   {
+    "id": "vocational",
+    "title": "СПО"
+  },
+  {
     "id": "bachelor",
     "title": "Бакалавриат"
   },

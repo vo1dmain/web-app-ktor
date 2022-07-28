@@ -6,7 +6,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.json.Json
 import ru.vo1d.web.entities.daybook.timetable.dtoModule
 
-fun Application.configureSerialization() {
+fun Application.contentNegotiation() {
     install(ContentNegotiation) {
         json(Json {
             ignoreUnknownKeys = true

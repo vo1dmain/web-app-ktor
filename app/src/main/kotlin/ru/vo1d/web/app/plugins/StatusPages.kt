@@ -8,7 +8,7 @@ import io.ktor.server.request.ContentTransformationException
 import ru.vo1d.web.app.errors.UnprocessableEntityException
 import ru.vo1d.web.app.extensions.respondError
 
-fun Application.configureStatusPages() {
+fun Application.statusPages() {
     install(StatusPages) {
         exception<BadRequestException> { call, cause ->
             call.respondError(HttpStatusCode.BadRequest, cause)

@@ -11,10 +11,10 @@ import ru.vo1d.web.app.routing.daybookRouting
 import ru.vo1d.web.app.routing.newsRouting
 import ru.vo1d.web.app.routing.qnaRouting
 
-fun Application.configureRouting() {
+fun Application.routing() {
     install(IgnoreTrailingSlash)
 
-    routing {
+    this@routing.routing {
         root()
         route("/api/v1") {
             newsRouting()
