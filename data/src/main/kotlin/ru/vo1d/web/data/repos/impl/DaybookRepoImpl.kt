@@ -76,6 +76,14 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     override suspend fun addTimetable(item: TimetableModel) = timetableDao.create(item)
 
+    override suspend fun timetableExists(code: String, type: String) = timetableDao.filter(
+        filters<TimetableFilters, TimetableFilters.Builder> {
+            groupCode = code
+            typeId = type
+        },
+        offset = 0,
+        limit = 1
+    ).isNotEmpty()
 
     override suspend fun regularSessions(
         page: Int?,

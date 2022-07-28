@@ -2,7 +2,7 @@ package ru.vo1d.web.orm.dao.daybook.timetable
 
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insertIgnoreAndGetId
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.StartTimeDao
@@ -12,10 +12,11 @@ import ru.vo1d.web.orm.entities.daybook.timetable.SessionStartTime
 import ru.vo1d.web.orm.entities.daybook.timetable.SessionStartTimes
 
 class StartTimeDaoXp : StartTimeDao, XpDao<StartTimeModel> {
-    override suspend fun create(item: StartTimeModel) = SessionStartTimes.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: StartTimeModel) =
+        SessionStartTimes.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: StartTimeModel) =
-        SessionStartTimes.batchInsert(items.asIterable()) { mapItem(it) }.count()
+        SessionStartTimes.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: Int) = SessionStartTime.findById(id)?.toModel()
 
@@ -26,7 +27,7 @@ class StartTimeDaoXp : StartTimeDao, XpDao<StartTimeModel> {
 
     override suspend fun all() = SessionStartTime.all().map(SessionStartTime::toModel)
 
-    override fun UpdateBuilder<Int>.mapItem(item: StartTimeModel) {
+    override fun UpdateBuilder<*>.mapItem(item: StartTimeModel) {
         this[SessionStartTimes.time] = item.time
         item.timeZone?.let { this[SessionStartTimes.timeZone] = it.id }
     }

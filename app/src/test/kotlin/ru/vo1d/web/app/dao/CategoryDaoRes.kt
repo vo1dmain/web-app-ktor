@@ -13,7 +13,7 @@ import ru.vo1d.web.orm.extensions.resource
 class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<CategoryModel> {
     private val file = resource("/categories.json")
 
-    override suspend fun create(item: CategoryModel): Int {
+    override suspend fun create(item: CategoryModel): Int? {
         TODO("Not yet implemented")
     }
 

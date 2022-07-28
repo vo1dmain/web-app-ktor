@@ -12,10 +12,11 @@ import ru.vo1d.web.orm.entities.daybook.timetable.RegularSessions
 import ru.vo1d.web.orm.entities.daybook.timetable.TimetableRegularSessions
 
 class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSessionModel> {
-    override suspend fun create(item: RegularSessionModel) = RegularSessions.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: RegularSessionModel) =
+        RegularSessions.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: RegularSessionModel) =
-        RegularSessions.batchInsert(items.asIterable()) { mapItem(it) }.count()
+        RegularSessions.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: Int) = RegularSession.findById(id)?.toModel()
 
@@ -61,7 +62,7 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSessionModel> {
         return RegularSession.wrapRows(query).limit(limit, offset).map(RegularSession::toModel)
     }
 
-    override fun UpdateBuilder<Int>.mapItem(item: RegularSessionModel) {
+    override fun UpdateBuilder<*>.mapItem(item: RegularSessionModel) {
         this[RegularSessions.subject] = item.subject
         this[RegularSessions.instructor] = item.instructor
         this[RegularSessions.place] = item.place

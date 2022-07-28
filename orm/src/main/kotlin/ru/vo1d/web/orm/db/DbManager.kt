@@ -7,15 +7,24 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import ru.vo1d.web.orm.utils.XpDslMarker
 
 @XpDslMarker
-interface DbManager {
-    val newsDb: Database?
-    val qnaDb: Database?
-    val daybookDb: Database?
+abstract class DbManager {
+    internal abstract val newsDb: Database?
+    internal abstract val qnaDb: Database?
+    internal abstract val daybookDb: Database?
 
-    fun init()
+    abstract fun init()
 
-    suspend fun <T> query(db: Database?, block: suspend Transaction.() -> T) =
+    internal suspend fun <T> query(db: Database?, block: suspend Transaction.() -> T) =
         newSuspendedTransaction(Dispatchers.IO, db, null, block)
+
+    suspend fun <T> queryDatebook(block: suspend Transaction.() -> T) =
+        newSuspendedTransaction(Dispatchers.IO, daybookDb, null, block)
+
+    suspend fun <T> queryNews(block: suspend Transaction.() -> T) =
+        newSuspendedTransaction(Dispatchers.IO, newsDb, null, block)
+
+    suspend fun <T> queryQna(block: suspend Transaction.() -> T) =
+        newSuspendedTransaction(Dispatchers.IO, qnaDb, null, block)
 
     suspend operator fun <T> invoke(block: suspend DbManager.() -> T) = block()
 }

@@ -44,7 +44,7 @@ private fun Route.questionsRouting(repo: QnaRepo) {
 
     postRes<Questions> {
         val question = call.receive<QuestionModel>()
-        val id = repo.addQuestion(question)
+        val id = repo.addQuestion(question) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 }

@@ -26,7 +26,7 @@ class QuestionDaoXp : QuestionDao, XpDao<QuestionModel> {
 
     override suspend fun list(offset: Long, limit: Int) = Question.all().limit(limit, offset).map(Question::toModel)
 
-    override fun UpdateBuilder<Int>.mapItem(item: QuestionModel) {
+    override fun UpdateBuilder<*>.mapItem(item: QuestionModel) {
         this[Questions.theme] = item.theme
         this[Questions.body] = item.body
         this[Questions.acceptorId] = item.acceptorId

@@ -41,8 +41,9 @@ interface DaybookRepo : ListRepo {
 
     suspend fun timetableBase(id: Int): TimetableModel?
 
-    suspend fun addTimetable(item: TimetableModel): Int
+    suspend fun addTimetable(item: TimetableModel): Int?
 
+    suspend fun timetableExists(code: String, type: String): Boolean
 
     suspend fun regularSessions(
         page: Int?,
@@ -55,12 +56,12 @@ interface DaybookRepo : ListRepo {
     ): List<DatedSessionModel>
 
 
-    suspend fun addRegularSession(item: RegularSessionModel): Int
+    suspend fun addRegularSession(item: RegularSessionModel): Int?
 
-    suspend fun addDatedSession(item: DatedSessionModel): Int
+    suspend fun addDatedSession(item: DatedSessionModel): Int?
 
 
-    suspend fun addRegularJunction(item: TimetableSessionModel)
+    suspend fun addRegularJunction(item: TimetableSessionModel): Unit?
 
-    suspend fun addDatedJunction(item: TimetableSessionModel)
+    suspend fun addDatedJunction(item: TimetableSessionModel): Unit?
 }

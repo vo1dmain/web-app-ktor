@@ -18,7 +18,7 @@ import ru.vo1d.web.orm.extensions.resource
 class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<ArticleModel> {
     private val file = resource("/articles.json")
 
-    override suspend fun create(item: ArticleModel): Int {
+    override suspend fun create(item: ArticleModel): Int? {
         TODO("Not yet implemented")
     }
 

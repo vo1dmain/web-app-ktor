@@ -26,7 +26,7 @@ class AnswerDaoXp : AnswerDao, XpDao<AnswerModel> {
 
     override suspend fun list(offset: Long, limit: Int) = Answer.all().limit(limit, offset).map(Answer::toModel)
 
-    override fun UpdateBuilder<Int>.mapItem(item: AnswerModel) {
+    override fun UpdateBuilder<*>.mapItem(item: AnswerModel) {
         this[Answers.questionId] = item.questionId
         this[Answers.body] = item.body
         item.dateTime?.let { this[Answers.dateTime] = it }

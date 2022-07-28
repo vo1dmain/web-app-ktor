@@ -90,10 +90,13 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.timetableBase(id) }
     }
 
-    override suspend fun addTimetable(item: TimetableModel) = dbManager {
+    override suspend fun addTimetable(item: TimetableModel): Int? = dbManager {
         query(daybookDb) { super.addTimetable(item) }
     }
 
+    override suspend fun timetableExists(code: String, type: String) = dbManager {
+        query(daybookDb) { super.timetableExists(code, type) }
+    }
 
     override suspend fun regularSessions(
         page: Int?,

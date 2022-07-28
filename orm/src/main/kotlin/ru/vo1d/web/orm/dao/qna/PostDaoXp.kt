@@ -25,7 +25,7 @@ class PostDaoXp : PostDao, XpDao<PostModel> {
 
     override suspend fun list(offset: Long, limit: Int) = Post.all().limit(limit, offset).map(Post::toView)
 
-    override fun UpdateBuilder<Int>.mapItem(item: PostModel) {
+    override fun UpdateBuilder<*>.mapItem(item: PostModel) {
         this[Posts.questionId] = item.questionId
         this[Posts.answerId] = item.answerId
     }

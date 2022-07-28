@@ -11,11 +11,11 @@ import ru.vo1d.web.orm.entities.daybook.timetable.TimetableWithSessions
 import ru.vo1d.web.orm.entities.daybook.timetable.Timetables
 
 class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
-    override suspend fun create(item: TimetableModel) = Timetables.insertAndGetId { it.mapItem(item) }.value
+    override suspend fun create(item: TimetableModel) =
+        Timetables.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
     override suspend fun create(vararg items: TimetableModel) =
-        Timetables.batchInsert(items.asIterable()) { mapItem(it) }.count()
-
+        Timetables.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
     override suspend fun read(id: Int) = Timetable.findById(id)?.toModel()
 
@@ -40,7 +40,7 @@ class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
         return Timetable.wrapRows(query).limit(limit, offset).map(Timetable::toModel)
     }
 
-    override fun UpdateBuilder<Int>.mapItem(item: TimetableModel) {
+    override fun UpdateBuilder<*>.mapItem(item: TimetableModel) {
         this[Timetables.groupCode] = item.groupCode
         this[Timetables.typeId] = item.typeId
         this[Timetables.format] = item.format

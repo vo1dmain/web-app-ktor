@@ -52,7 +52,7 @@ class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
         return Article.wrapRows(query).limit(limit, offset).map(Article::toView)
     }
 
-    override fun UpdateBuilder<Int>.mapItem(item: ArticleModel) {
+    override fun UpdateBuilder<*>.mapItem(item: ArticleModel) {
         this[Articles.title] = item.title
         this[Articles.body] = item.body
         this[Articles.preview] = item.previewImage

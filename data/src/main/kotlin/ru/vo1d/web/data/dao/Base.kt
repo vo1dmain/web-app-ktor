@@ -5,7 +5,7 @@ import ru.vo1d.web.data.filters.Filters
 sealed interface Dao
 
 sealed interface CreateDao<PK, I> : Dao {
-    suspend fun create(item: I): PK
+    suspend fun create(item: I): PK?
 
     suspend fun create(vararg items: I): Int
 }

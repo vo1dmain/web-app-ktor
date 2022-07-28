@@ -33,7 +33,7 @@ class CategoryDaoXp : CategoryDao, XpDao<CategoryModel> {
         return Category.find { Categories.parentId eq filters.parentId }.limit(limit, offset).map(Category::toModel)
     }
 
-    override fun UpdateBuilder<Int>.mapItem(item: CategoryModel) {
+    override fun UpdateBuilder<*>.mapItem(item: CategoryModel) {
         this[Categories.title] = item.title
         this[Categories.parentId] = item.parentId
     }

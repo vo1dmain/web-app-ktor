@@ -1,4 +1,4 @@
-package ru.vo1d.web.orm.utils
+package ru.vo1d.web.app.utils
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -65,7 +65,6 @@ object DataFetcherRes {
                 json.decodeFromStream<Array<TableTypeModel>>(this)
             }
             TableTypeDaoXp().create(*types)
-
 
             val times = startTimesFile.open {
                 json.decodeFromStream<Array<StartTimeModel>>(this)

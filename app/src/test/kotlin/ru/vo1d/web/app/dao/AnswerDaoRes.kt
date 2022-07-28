@@ -12,7 +12,7 @@ import ru.vo1d.web.orm.extensions.resource
 class AnswerDaoRes : AnswerDao, JsonDao, AllDaoTest<AnswerModel> {
     private val file = resource("/answers.json")
 
-    override suspend fun create(item: AnswerModel): Int {
+    override suspend fun create(item: AnswerModel): Int? {
         TODO("Not yet implemented")
     }
 
