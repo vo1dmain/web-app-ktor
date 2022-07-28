@@ -14,9 +14,9 @@ import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 
 object RegularSessions : IntIdTable() {
-    val subject = varchar("subject", 64)
+    val subject = varchar("subject", 160)
     val instructor = varchar("instructor", 64)
-    val place = varchar("place", 24)
+    val place = varchar("place", 32)
     val typeId = reference("typeId", SessionTypes, CASCADE, CASCADE)
     val dayOfWeek = enumerationByName("dayOfWeek", 10, DayOfWeek::class)
     val timeId = reference("timeId", SessionStartTimes, CASCADE, CASCADE)

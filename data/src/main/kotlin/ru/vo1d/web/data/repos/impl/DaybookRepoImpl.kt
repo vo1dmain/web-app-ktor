@@ -7,6 +7,7 @@ import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.filters.filters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.Meta
+import ru.vo1d.web.entities.daybook.group.GroupModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
@@ -51,6 +52,8 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun tableTypes() = tableTypeDao.all()
 
     override suspend fun groups() = groupDao.all()
+
+    override suspend fun addGroups(vararg groups: GroupModel) = groupDao.create(*groups)
 
     override suspend fun startTimes() = startTimeDao.all()
 

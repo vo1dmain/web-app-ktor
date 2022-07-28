@@ -1,9 +1,3 @@
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val kodeinVersion: String by project
-
-
 plugins {
     application
     kotlin("jvm")
@@ -24,12 +18,16 @@ repositories {
     mavenCentral()
 }
 
+val ktorVersion: String by project
+val kotlinVersion: String by project
+val logbackVersion: String by project
+val kodeinVersion: String by project
 dependencies {
     implementation(project(":data"))
     implementation(project(":orm"))
 
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-default-headers-jvm:$ktorVersion")

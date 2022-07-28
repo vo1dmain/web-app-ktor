@@ -14,9 +14,9 @@ import ru.vo1d.web.entities.DEFAULT_DURATION
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
 
 object DatedSessions : IntIdTable() {
-    val subject = varchar("subject", 64)
+    val subject = varchar("subject", 160)
     val instructor = varchar("instructor", 64)
-    val place = varchar("place", 24)
+    val place = varchar("place", 32)
     val typeId = reference("typeId", SessionTypes, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
     val datetime = datetime("datetime")
     val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)

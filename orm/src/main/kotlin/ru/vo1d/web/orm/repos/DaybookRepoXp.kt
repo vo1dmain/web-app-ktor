@@ -6,6 +6,7 @@ import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.impl.DaybookRepoImpl
+import ru.vo1d.web.entities.daybook.group.GroupModel
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
@@ -60,6 +61,10 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
 
     override suspend fun groups() = dbManager {
         query(daybookDb) { super.groups() }
+    }
+
+    override suspend fun addGroups(vararg groups: GroupModel) = dbManager {
+        query(daybookDb) { super.addGroups(*groups) }
     }
 
     override suspend fun startTimes() = dbManager {

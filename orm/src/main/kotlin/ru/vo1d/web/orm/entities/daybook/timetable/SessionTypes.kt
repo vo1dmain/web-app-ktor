@@ -8,7 +8,7 @@ import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.orm.entities.HasModel
 
 object SessionTypes : IntIdTable() {
-    val title = varchar("title", 16)
+    val title = varchar("title", 32)
 }
 
 class SessionType(id: EntityID<Int>) : IntEntity(id), HasModel<SessionTypeModel> {
