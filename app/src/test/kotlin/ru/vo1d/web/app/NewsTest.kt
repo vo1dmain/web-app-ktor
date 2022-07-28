@@ -10,9 +10,9 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.app.plugins.configureResources
-import ru.vo1d.web.app.plugins.configureSerialization
-import ru.vo1d.web.app.plugins.configureStatusPages
+import ru.vo1d.web.app.plugins.resources
+import ru.vo1d.web.app.plugins.contentNegotiation
+import ru.vo1d.web.app.plugins.statusPages
 import ru.vo1d.web.app.repos.NewsRepoTest
 import ru.vo1d.web.app.routing.newsRouting
 import ru.vo1d.web.data.repos.impl.NewsRepoImpl
@@ -101,9 +101,9 @@ class NewsTest {
 
 
     private fun Application.newsTest() {
-        configureSerialization()
-        configureStatusPages()
-        configureResources()
+        contentNegotiation()
+        statusPages()
+        resources()
 
         di {
             bind<NewsRepoImpl> { singleton { NewsRepoTest() } }

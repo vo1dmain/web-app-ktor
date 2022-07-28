@@ -3,7 +3,7 @@
     "code": "18ИВ1бп",
     "levelId": "high",
     "degreeId": "bachelor",
-    "formId": "fulltime"
+    "formId": "full-time"
   },
   {
     "code": "18ТП1бпв",
@@ -21,6 +21,6 @@
     "code": "20ПБ1т",
     "levelId": "mid",
     "degreeId": null,
-    "formId": "fulltime"
+    "formId": "full-time"
   }
 ]
