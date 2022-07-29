@@ -36,6 +36,10 @@ private fun Route.metaRouting(repo: DaybookRepo) {
         call.respond(repo.meta().orFail())
     }
 
+    get<Meta.Week> {
+        call.respond(repo.weekNumber())
+    }
+
     get<Meta.Levels> {
         call.respond(repo.levels().failIfEmpty())
     }

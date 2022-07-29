@@ -6,6 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Resource("/meta")
 class Meta {
+
+    @Serializable
+    @Resource("/week")
+    data class Week(val parent: Meta = Meta())
+
     @Serializable
     @Resource("/levels")
     data class Levels(val parent: Meta = Meta())

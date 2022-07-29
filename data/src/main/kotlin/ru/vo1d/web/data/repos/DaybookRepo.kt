@@ -1,5 +1,6 @@
 package ru.vo1d.web.data.repos
 
+import kotlinx.datetime.*
 import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
@@ -14,6 +15,7 @@ import ru.vo1d.web.entities.daybook.timetable.TimetableDto
 import ru.vo1d.web.entities.daybook.timetable.TimetableModel
 import ru.vo1d.web.entities.daybook.timetable.session.*
 import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
+import ru.vo1d.web.entities.daybook.timetable.week.WeekModel
 
 interface DaybookRepo : ListRepo {
     suspend fun meta(): Meta
@@ -33,6 +35,25 @@ interface DaybookRepo : ListRepo {
     suspend fun startTimes(): List<StartTimeModel>
 
     suspend fun sessionTypes(): List<SessionTypeModel>
+
+    suspend fun weekNumber(): WeekModel {
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val thisYearS1 = LocalDate(today.year, Month.SEPTEMBER, 1)
+
+        if (today == thisYearS1) return WeekModel.FIRST
+
+        val lastYearS1 = when(today < thisYearS1) {
+            true -> LocalDate(today.year - 1, Month.SEPTEMBER, 1)
+            else -> thisYearS1
+        }
+
+        val weeksBetween = lastYearS1.daysUntil(today) / 7
+
+        return when(weeksBetween % 2) {
+            0 -> WeekModel.FIRST
+            else -> WeekModel.SECOND
+        }
+    }
 
 
     suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit): List<TimetableModel>
