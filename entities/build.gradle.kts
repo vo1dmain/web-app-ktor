@@ -1,7 +1,3 @@
-val kotlinVersion: String by project
-val serializationVersion: String by project
-val datetimeVersion: String by project
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
@@ -14,10 +10,12 @@ repositories {
     mavenCentral()
 }
 
+val serializationVersion: String by project
+val datetimeVersion: String by project
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-datetime-jvm:$datetimeVersion")
+    api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
 
-    testImplementation(kotlin("test-junit"))
+    testImplementation(kotlin("test-junit", kotlin.coreLibrariesVersion))
 }

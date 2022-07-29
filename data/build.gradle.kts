@@ -3,18 +3,17 @@ plugins {
 }
 
 group = "ru.vo1d.web"
-version = "0.6.0"
+version = "0.7.0"
 
 repositories {
     mavenCentral()
 }
 
-val kotlinVersion: String by project
 val coroutinesVersion: String by project
 
 dependencies {
     api(project(":entities"))
 
-    implementation(kotlin("reflect"))
+    implementation(kotlin("reflect", kotlin.coreLibrariesVersion))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 }

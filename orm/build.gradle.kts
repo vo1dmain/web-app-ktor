@@ -25,5 +25,5 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
-    testImplementation(kotlin("test-junit"))
+    testImplementation(kotlin("test-junit", kotlin.coreLibrariesVersion))
 }

@@ -1,16 +1,10 @@
 rootProject.name = "web-app-2"
 
 pluginManagement {
-    val kotlinVersion: String by settings
-
     plugins {
-        kotlin("jvm") version kotlinVersion
-        kotlin("plugin.serialization") version kotlinVersion
+        kotlin("jvm") version "1.7.10"
+        kotlin("plugin.serialization") version "1.7.10"
     }
 }
 
-include("app")
-include("entities")
-include("data")
-include("orm")
-include("legacy")
+include("app", "entities", "data", "orm")
