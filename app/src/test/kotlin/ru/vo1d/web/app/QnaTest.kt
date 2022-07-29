@@ -11,9 +11,6 @@ import org.junit.Test
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.app.plugins.resources
-import ru.vo1d.web.app.plugins.contentNegotiation
-import ru.vo1d.web.app.plugins.statusPages
 import ru.vo1d.web.app.repos.QnaRepoTest
 import ru.vo1d.web.app.routing.qnaRouting
 import ru.vo1d.web.data.repos.impl.QnaRepoImpl
@@ -82,10 +79,6 @@ class QnaTest {
 
 
     private fun Application.qnaTest() {
-        contentNegotiation()
-        statusPages()
-        resources()
-
         di {
             bind<QnaRepoImpl> { singleton { QnaRepoTest() } }
         }
