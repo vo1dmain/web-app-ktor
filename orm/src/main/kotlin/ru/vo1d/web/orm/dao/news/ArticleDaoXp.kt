@@ -1,6 +1,7 @@
 package ru.vo1d.web.orm.dao.news
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.data.filters.news.ArticleFilters
@@ -44,10 +45,15 @@ class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
     override suspend fun list(offset: Long, limit: Int) = Article.all().limit(limit, offset).map(Article::toView)
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int): List<ArticleView> {
-        if (filters.categoryId == null) return list(offset, limit)
+        if (filters.categories == null) return list(offset, limit)
 
-        val query = Articles.innerJoin(ArticleCategories).slice(Articles.columns)
-            .select { ArticleCategories.categoryId eq filters.categoryId }
+        val query = Articles.innerJoin(ArticleCategories).slice(Articles.columns).selectAll()
+            .apply {
+                filters.categories?.let {
+                    adjustWhere { ArticleCategories.categoryId.inList(it) }
+                    groupBy(Articles.id)
+                }
+            }
 
         return Article.wrapRows(query).limit(limit, offset).map(Article::toView)
     }

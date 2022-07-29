@@ -1,7 +1,9 @@
 package ru.vo1d.web.app.resources.news
 
 import io.ktor.resources.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.vo1d.web.app.extensions.failIf
 import ru.vo1d.web.app.extensions.failIfNegative
 import ru.vo1d.web.app.resources.ListResource
 
@@ -9,11 +11,11 @@ import ru.vo1d.web.app.resources.ListResource
 @Resource("/articles")
 data class Articles(
     override val page: Int? = null,
-    val category: Int? = null
+    @SerialName("category") val categories: List<Int>? = null
 ) : ListResource {
     init {
         page?.failIfNegative()
-        category?.failIfNegative()
+        categories?.failIf { all { it > 0 } }
     }
 
 
