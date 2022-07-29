@@ -34,6 +34,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
     protected abstract val tableTypeDao: TableTypeDao
 
     override suspend fun meta() = Meta(
+        weekNumber(),
         levels(),
         degrees(),
         forms(),
