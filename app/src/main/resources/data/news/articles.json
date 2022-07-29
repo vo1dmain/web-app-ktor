@@ -1,16 +1,15 @@
 [
   {
-    "id": 0,
     "title": "Срочные новости!",
     "body": "Случилось непоправимое.",
     "previewImage": null,
     "gallery": null,
     "categories": [
-      0
+      1,
+      2
     ]
   },
   {
-    "id": 1,
     "title": "Несрочные новости!",
     "body": "Случилось поправимое.",
     "previewImage": null,

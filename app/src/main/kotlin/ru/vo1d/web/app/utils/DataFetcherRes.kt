@@ -11,6 +11,7 @@ import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
 import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
 import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
 import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
+import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.category.CategoryModel
 import ru.vo1d.web.orm.dao.daybook.group.EduFormDaoXp
 import ru.vo1d.web.orm.dao.daybook.group.GradDegreeDaoXp
@@ -18,6 +19,7 @@ import ru.vo1d.web.orm.dao.daybook.group.GradLevelDaoXp
 import ru.vo1d.web.orm.dao.daybook.group.TableTypeDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.SessionTypeDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
+import ru.vo1d.web.orm.dao.news.ArticleDaoXp
 import ru.vo1d.web.orm.dao.news.CategoryDaoXp
 import ru.vo1d.web.orm.extensions.resource
 
@@ -27,12 +29,18 @@ object DataFetcherRes {
 
     fun fetchNews() {
         val categoriesFile = resource("/data/news/categories.json")
+        val articlesFile = resource("/data/news/articles.json")
 
-        runBlocking {
+        runBlocking<Unit> {
             val categories = categoriesFile.open {
                 json.decodeFromStream<Array<CategoryModel>>(this@open)
             }
             CategoryDaoXp().create(*categories)
+
+            val articles = articlesFile.open {
+                json.decodeFromStream<Array<ArticleModel>>(this@open)
+            }
+            ArticleDaoXp().create(*articles)
         }
     }
 
