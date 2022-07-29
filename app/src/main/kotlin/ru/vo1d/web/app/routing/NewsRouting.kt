@@ -22,7 +22,7 @@ fun Route.newsRouting() = route("/news") {
 private fun Route.articlesRouting(repo: NewsRepo) {
     get<Articles> {
         val list = repo.articles(it.page) {
-            categoryId = it.category
+            categories = it.categories
         }
         call.respond(list.failIfEmpty())
     }
