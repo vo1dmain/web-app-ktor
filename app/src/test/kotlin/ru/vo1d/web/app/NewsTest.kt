@@ -10,9 +10,6 @@ import io.ktor.server.testing.*
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.app.plugins.resources
-import ru.vo1d.web.app.plugins.contentNegotiation
-import ru.vo1d.web.app.plugins.statusPages
 import ru.vo1d.web.app.repos.NewsRepoTest
 import ru.vo1d.web.app.routing.newsRouting
 import ru.vo1d.web.data.repos.impl.NewsRepoImpl
@@ -37,7 +34,9 @@ class NewsTest {
             assertEquals(0, list[0].id)
         }
 
-        client.get("/news/articles?category=-1").apply {
+        client.get("/news/articles") {
+            parameter("category", listOf(-1, -2, -3))
+        }.apply {
             assertEquals(HttpStatusCode.BadRequest, call.response.status)
         }
     }
@@ -101,10 +100,6 @@ class NewsTest {
 
 
     private fun Application.newsTest() {
-        contentNegotiation()
-        statusPages()
-        resources()
-
         di {
             bind<NewsRepoImpl> { singleton { NewsRepoTest() } }
         }
