@@ -51,7 +51,7 @@ class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<ArticleModel> {
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int) = list(offset, limit)
         .filter { view ->
-            filters.categoryId?.let { view.categories.contains(it) } ?: true
+            view.categories.any { filters.categories?.contains(it) ?: true }
         }
 
     override suspend fun all() = file.open {
