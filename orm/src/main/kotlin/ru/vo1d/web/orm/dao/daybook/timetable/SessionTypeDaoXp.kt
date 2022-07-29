@@ -26,7 +26,7 @@ class SessionTypeDaoXp : SessionTypeDao, XpDao<SessionTypeModel> {
     override suspend fun delete(id: Int) =
         SessionTypes.deleteWhere { SessionTypes.id eq id }
 
-    override suspend fun all() = SessionType.all().map(SessionType::toModel)
+    override suspend fun all() = SessionType.all().sortedBy { it.id }.map(SessionType::toModel)
     override fun UpdateBuilder<*>.mapItem(item: SessionTypeModel) {
         this[SessionTypes.title] = item.title
     }

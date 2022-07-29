@@ -33,8 +33,9 @@ class TimetableDaoXp : TimetableDao, XpDao<TimetableModel> {
 
         val query = Timetables.selectAll().apply {
             filters.typeId?.let { andWhere { Timetables.typeId eq it } }
-            filters.groupCode?.let { andWhere { Timetables.groupCode eq it } }
+            filters.groupCode?.let { andWhere { Timetables.groupCode like it } }
             filters.format?.let { andWhere { Timetables.format eq it } }
+            orderBy(Timetables.id)
         }
 
         return Timetable.wrapRows(query).limit(limit, offset).map(Timetable::toModel)
