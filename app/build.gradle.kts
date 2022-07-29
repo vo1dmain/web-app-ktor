@@ -40,7 +40,7 @@ dependencies {
 
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
 
-    testImplementation(("test-junit"), kotlin.coreLibrariesVersion)
+    testImplementation(kotlin("test-junit", kotlin.coreLibrariesVersion))
 
     testImplementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     testImplementation("io.ktor:ktor-client-logging:$ktorVersion")
