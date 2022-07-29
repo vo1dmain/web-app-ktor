@@ -1,6 +1,7 @@
 package ru.vo1d.web.orm.db
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -26,5 +27,5 @@ abstract class DbManager {
     suspend fun <T> queryQna(block: suspend Transaction.() -> T) =
         newSuspendedTransaction(Dispatchers.IO, qnaDb, null, block)
 
-    suspend operator fun <T> invoke(block: suspend DbManager.() -> T) = block()
+    suspend operator fun <T> invoke(block: suspend DbManager.() -> T) = withContext(Dispatchers.IO) { block() }
 }
