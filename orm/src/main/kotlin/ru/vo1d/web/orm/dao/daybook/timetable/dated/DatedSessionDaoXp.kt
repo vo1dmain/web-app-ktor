@@ -26,7 +26,7 @@ class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSessionModel> {
     override suspend fun delete(id: Int) = DatedSessions.deleteWhere { DatedSessions.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        DatedSession.all().limit(limit, offset).map(DatedSession::toModel)
+        DatedSession.all().limit(limit, offset).sortedBy { it.datetime }.map(DatedSession::toModel)
 
     override suspend fun filter(filters: DatedSessionFilters, offset: Long, limit: Int): List<DatedSessionModel> {
         if (filters.areEmpty()) return list(offset, limit)

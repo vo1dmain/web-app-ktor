@@ -28,7 +28,7 @@ class GroupDaoXp : GroupDao, XpDao<GroupModel> {
 
     override suspend fun delete(id: String) = Groups.deleteWhere { Groups.id eq id }
 
-    override suspend fun all() = GroupWithTypes.all().map(GroupWithTypes::toDto)
+    override suspend fun all() = GroupWithTypes.all().sortedBy { it.id }.map(GroupWithTypes::toDto)
 
     override fun UpdateBuilder<*>.mapItem(item: GroupModel) {
         this[Groups.id] = item.code

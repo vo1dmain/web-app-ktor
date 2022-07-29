@@ -26,7 +26,8 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSessionModel> {
     override suspend fun delete(id: Int) = RegularSessions.deleteWhere { RegularSessions.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        RegularSession.all().limit(limit, offset).map(RegularSession::toModel)
+        RegularSession.all().limit(limit, offset).sortedWith(compareBy({ it.dayOfWeek }, { it.timeId }))
+            .map(RegularSession::toModel)
 
     override suspend fun filter(filters: RegularSessionFilters, offset: Long, limit: Int): List<RegularSessionModel> {
         if (filters.areEmpty()) return list(offset, limit)
