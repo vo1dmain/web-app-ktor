@@ -11,7 +11,7 @@ import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
 class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<CategoryModel> {
-    private val file = resource("/categories.json")
+    private val file = resource("/data/categories.json")
 
     override suspend fun create(item: CategoryModel): Int? {
         TODO("Not yet implemented")

@@ -17,9 +17,9 @@ import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
 class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
-    private val posts = resource("/posts.json")
-    private val questions = resource("/questions.json")
-    private val answers = resource("/answers.json")
+    private val posts = resource("/data/posts.json")
+    private val questions = resource("/data/questions.json")
+    private val answers = resource("/data/answers.json")
 
     private suspend fun allQuestions() = questions.open {
         json.decodeFromStream<List<QuestionModel>>(this)

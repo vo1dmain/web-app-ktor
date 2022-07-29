@@ -10,7 +10,7 @@ import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
 class AnswerDaoRes : AnswerDao, JsonDao, AllDaoTest<AnswerModel> {
-    private val file = resource("/answers.json")
+    private val file = resource("/data/answers.json")
 
     override suspend fun create(item: AnswerModel): Int? {
         TODO("Not yet implemented")
