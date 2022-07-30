@@ -15,7 +15,7 @@ data class Articles(
 ) : ListResource {
     init {
         page?.failIfNegative()
-        categories?.failIf { all { it > 0 } }
+        categories?.failIf { all { it < 0 } }
     }
 
 
