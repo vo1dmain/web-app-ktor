@@ -25,5 +25,9 @@ fun Application.statusPages() {
             }
             call.respondError(code, cause)
         }
+
+        exception<NotFoundException> { call, cause ->
+            call.respondError(HttpStatusCode.NotFound, cause)
+        }
     }
 }
