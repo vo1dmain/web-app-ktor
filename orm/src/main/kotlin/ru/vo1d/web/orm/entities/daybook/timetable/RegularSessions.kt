@@ -10,8 +10,8 @@ import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.duration
 import ru.vo1d.web.entities.DEFAULT_DURATION
-import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 
 object RegularSessions : IntIdTable() {
     val subject = varchar("subject", 160)
@@ -24,8 +24,8 @@ object RegularSessions : IntIdTable() {
     val weekOption = enumerationByName("weekOption", 12, WeekOption::class)
 }
 
-class RegularSession(id: EntityID<Int>) : IntEntity(id), SessionEntity<RegularSessionModel> {
-    companion object : IntEntityClass<RegularSession>(RegularSessions)
+class RegularSessionEntity(id: EntityID<Int>) : IntEntity(id), SessionEntity<RegularSession> {
+    companion object : IntEntityClass<RegularSessionEntity>(RegularSessions)
 
     val subject by RegularSessions.subject
     val instructor by RegularSessions.instructor
@@ -36,7 +36,7 @@ class RegularSession(id: EntityID<Int>) : IntEntity(id), SessionEntity<RegularSe
     val duration by RegularSessions.duration
     val weekOption by RegularSessions.weekOption
 
-    override fun toModel() = RegularSessionModel(
+    override fun toModel() = RegularSession(
         id.value,
         subject,
         instructor,

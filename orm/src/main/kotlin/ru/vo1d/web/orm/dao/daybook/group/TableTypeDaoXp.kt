@@ -6,28 +6,31 @@ import org.jetbrains.exposed.sql.insertIgnoreAndGetId
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.TableTypeDao
-import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
+import ru.vo1d.web.entities.daybook.group.type.TableType
 import ru.vo1d.web.orm.dao.XpDao
-import ru.vo1d.web.orm.entities.daybook.group.TableType
+import ru.vo1d.web.orm.entities.daybook.group.TableTypeEntity
 import ru.vo1d.web.orm.entities.daybook.group.TableTypes
 
-class TableTypeDaoXp : TableTypeDao, XpDao<TableTypeModel> {
-    override suspend fun create(item: TableTypeModel) =
+class TableTypeDaoXp : TableTypeDao, XpDao<TableType> {
+    override suspend fun create(item: TableType) =
         TableTypes.insertIgnoreAndGetId { it.mapItem(item) }?.value
 
-    override suspend fun create(vararg items: TableTypeModel) =
+    override suspend fun create(vararg items: TableType) =
         TableTypes.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
-    override suspend fun read(id: String) = TableType.findById(id)?.toModel()
+    override suspend fun read(id: String) =
+        TableTypeEntity.findById(id)?.toModel()
 
-    override suspend fun update(item: TableTypeModel) =
+    override suspend fun update(item: TableType) =
         TableTypes.update({ TableTypes.id eq item.id }) { it[title] = item.title }
 
-    override suspend fun delete(id: String) = TableTypes.deleteWhere { TableTypes.id eq id }
+    override suspend fun delete(id: String) =
+        TableTypes.deleteWhere { TableTypes.id eq id }
 
-    override suspend fun all() = TableType.all().map(TableType::toModel)
+    override suspend fun all() =
+        TableTypeEntity.all().map(TableTypeEntity::toModel)
 
-    override fun UpdateBuilder<*>.mapItem(item: TableTypeModel) {
+    override fun UpdateBuilder<*>.mapItem(item: TableType) {
         this[TableTypes.id] = item.id
         this[TableTypes.title] = item.title
     }

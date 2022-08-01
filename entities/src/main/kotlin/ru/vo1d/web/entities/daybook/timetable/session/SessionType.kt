@@ -3,7 +3,7 @@ package ru.vo1d.web.entities.daybook.timetable.session
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TimetableSessionModel(
-    val timetableId: Int? = null,
-    val sessionId: Int
+data class SessionType(
+    val id: Int? = null,
+    val title: String
 )

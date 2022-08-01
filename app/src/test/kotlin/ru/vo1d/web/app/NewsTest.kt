@@ -13,9 +13,9 @@ import org.kodein.di.singleton
 import ru.vo1d.web.app.repos.NewsRepoTest
 import ru.vo1d.web.app.routing.newsRouting
 import ru.vo1d.web.data.repos.NewsRepo
-import ru.vo1d.web.entities.news.article.ArticleModel
+import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
-import ru.vo1d.web.entities.news.category.CategoryModel
+import ru.vo1d.web.entities.news.category.Category
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -51,7 +51,7 @@ class NewsTest {
 
         client.get("/news/articles/0").apply {
             println(bodyAsText())
-            val item = body<ArticleModel>()
+            val item = body<Article>()
             assertEquals(0, item.id)
         }
 
@@ -70,7 +70,7 @@ class NewsTest {
 
         client.get("/news/categories").apply {
             println(bodyAsText())
-            val categories = body<List<CategoryModel>>()
+            val categories = body<List<Category>>()
             assertEquals(0, categories[0].id)
         }
 
@@ -89,7 +89,7 @@ class NewsTest {
 
         client.get("/news/categories/0").apply {
             println(bodyAsText())
-            val item = body<CategoryModel>()
+            val item = body<Category>()
             assertEquals(0, item.id)
         }
 

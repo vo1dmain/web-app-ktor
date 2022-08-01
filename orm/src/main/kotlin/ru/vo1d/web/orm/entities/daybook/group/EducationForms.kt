@@ -4,7 +4,7 @@ import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
-import ru.vo1d.web.entities.daybook.group.form.EduFormModel
+import ru.vo1d.web.entities.daybook.group.form.EducationForm
 import ru.vo1d.web.orm.entities.HasModel
 
 object EducationForms : IdTable<String>() {
@@ -12,10 +12,10 @@ object EducationForms : IdTable<String>() {
     val title = varchar("title", 32)
 }
 
-class EducationForm(id: EntityID<String>) : Entity<String>(id), HasModel<EduFormModel> {
-    companion object : EntityClass<String, EducationForm>(EducationForms)
+class EducationFormEntity(id: EntityID<String>) : Entity<String>(id), HasModel<EducationForm> {
+    companion object : EntityClass<String, EducationFormEntity>(EducationForms)
 
     val title by EducationForms.title
 
-    override fun toModel() = EduFormModel(id.value, title)
+    override fun toModel() = EducationForm(id.value, title)
 }

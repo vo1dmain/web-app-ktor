@@ -7,10 +7,9 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
-import ru.vo1d.web.entities.news.article.ArticleModel
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.orm.entities.HasModel
-import ru.vo1d.web.orm.entities.HasView
+import ru.vo1d.web.entities.news.article.Article as ArticleModel
 
 object Articles : IntIdTable() {
     val title = varchar("title", 64)
@@ -21,8 +20,8 @@ object Articles : IntIdTable() {
     val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)
 }
 
-class Article(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel>, HasView<ArticleView> {
-    companion object : IntEntityClass<Article>(Articles)
+class ArticleEntity(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel> {
+    companion object : IntEntityClass<ArticleEntity>(Articles)
 
     val title by Articles.title
     val body by Articles.body
@@ -30,7 +29,7 @@ class Article(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel>, HasVie
     val gallery by Articles.gallery
     val dateTime by Articles.dateTime
     val timeZone by Articles.timeZone
-    val categories by Category via ArticleCategories
+    val categories by CategoryEntity via ArticleCategories
 
     override fun toModel() = ArticleModel(
         id.value,
@@ -42,8 +41,18 @@ class Article(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel>, HasVie
         TimeZone.of(timeZone),
         categories.map { it.id.value }.toList()
     )
+}
 
-    override fun toView() = ArticleView(
+class ArticleViewEntity(id: EntityID<Int>): IntEntity(id), HasModel<ArticleView> {
+    companion object : IntEntityClass<ArticleViewEntity>(Articles)
+
+    val title by Articles.title
+    val preview by Articles.preview
+    val dateTime by Articles.dateTime
+    val timeZone by Articles.timeZone
+    val categories by CategoryEntity via ArticleCategories
+
+    override fun toModel() = ArticleView(
         id.value,
         title,
         preview,

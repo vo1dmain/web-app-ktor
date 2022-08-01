@@ -8,32 +8,32 @@ import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.app.clampedSubList
 import ru.vo1d.web.data.dao.PostDao
 import ru.vo1d.web.data.extensions.open
-import ru.vo1d.web.entities.qna.answer.AnswerModel
-import ru.vo1d.web.entities.qna.post.PostDto
-import ru.vo1d.web.entities.qna.post.PostModel
+import ru.vo1d.web.entities.qna.answer.Answer
+import ru.vo1d.web.entities.qna.post.PostWithData
+import ru.vo1d.web.entities.qna.post.Post
 import ru.vo1d.web.entities.qna.post.PostView
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
-class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
+class PostDaoRes : PostDao, JsonDao, AllDaoTest<Post> {
     private val posts = resource("/data/posts.json")
     private val questions = resource("/data/questions.json")
     private val answers = resource("/data/answers.json")
 
     private suspend fun allQuestions() = questions.open {
-        json.decodeFromStream<List<QuestionModel>>(this)
+        json.decodeFromStream<List<Question>>(this)
     }
 
     private suspend fun allAnswers() = answers.open {
-        json.decodeFromStream<List<AnswerModel>>(this)
+        json.decodeFromStream<List<Answer>>(this)
     }
 
-    override suspend fun create(item: PostModel): Int? {
+    override suspend fun create(item: Post): Int? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun create(vararg items: PostModel): Int {
+    override suspend fun create(vararg items: Post): Int {
         TODO("Not yet implemented")
     }
 
@@ -41,11 +41,11 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
         .map { post ->
             val question = allQuestions().first { it.id == post.questionId }
             val answer = allAnswers().first { it.id == post.answerId }
-            PostDto(post.id!!, question, answer)
+            PostWithData(post.id!!, question, answer)
         }.firstOrNull { it.id == id }
 
 
-    override suspend fun update(item: PostModel): Int {
+    override suspend fun update(item: Post): Int {
         TODO("Not yet implemented")
     }
 
@@ -70,6 +70,6 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<PostModel> {
         }
 
     override suspend fun all() = posts.open {
-        json.decodeFromStream<List<PostModel>>(this)
+        json.decodeFromStream<List<Post>>(this)
     }
 }

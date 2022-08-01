@@ -17,10 +17,10 @@ import ru.vo1d.web.app.resources.daybook.RegularSessions
 import ru.vo1d.web.app.resources.daybook.Timetables
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.timetable.TimetableFormat
-import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
+import ru.vo1d.web.entities.daybook.timetable.Timetable
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 import io.ktor.server.resources.post as postRes
 
 fun Route.daybookRouting() = route("/daybook") {
@@ -79,7 +79,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
     }
 
     postRes<Timetables> {
-        val timetable = call.receive<TimetableModel>()
+        val timetable = call.receive<Timetable>()
         val id = repo.addTimetable(timetable) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
@@ -89,13 +89,13 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
     }
 
     postRes<Timetables.Id.Sessions> {
-        val input = call.receive<TimetableSessionModel>()
+        val input = call.receive<TimetableSession>()
 
         val parentId = it.parent.id
         val finalId = input.timetableId ?: parentId
 
         if (finalId != parentId) throw UnprocessableEntityException(
-            TimetableSessionModel::timetableId.name,
+            TimetableSession::timetableId.name,
             parentId.toString(),
             finalId.toString()
         )
@@ -128,7 +128,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
     }
 
     postRes<RegularSessions> {
-        val session = call.receive<RegularSessionModel>()
+        val session = call.receive<RegularSession>()
         val id = repo.addRegularSession(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
@@ -146,7 +146,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
     }
 
     postRes<DatedSessions> {
-        val session = call.receive<DatedSessionModel>()
+        val session = call.receive<DatedSession>()
         val id = repo.addDatedSession(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }

@@ -6,24 +6,24 @@ import ru.vo1d.web.app.clampedSubList
 import ru.vo1d.web.data.dao.CategoryDao
 import ru.vo1d.web.data.extensions.open
 import ru.vo1d.web.data.filters.news.CategoryFilters
-import ru.vo1d.web.entities.news.category.CategoryModel
+import ru.vo1d.web.entities.news.category.Category
 import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
-class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<CategoryModel> {
+class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<Category> {
     private val file = resource("/data/categories.json")
 
-    override suspend fun create(item: CategoryModel): Int? {
+    override suspend fun create(item: Category): Int? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun create(vararg items: CategoryModel): Int {
+    override suspend fun create(vararg items: Category): Int {
         TODO("Not yet implemented")
     }
 
     override suspend fun read(id: Int) = all().firstOrNull { it.id == id }
 
-    override suspend fun update(item: CategoryModel): Int {
+    override suspend fun update(item: Category): Int {
         TODO("Not yet implemented")
     }
 
@@ -39,6 +39,6 @@ class CategoryDaoRes : CategoryDao, JsonDao, AllDaoTest<CategoryModel> {
         }
 
     override suspend fun all() = file.open {
-        json.decodeFromStream<List<CategoryModel>>(this)
+        json.decodeFromStream<List<Category>>(this)
     }
 }

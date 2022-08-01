@@ -5,15 +5,16 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.data.filters.news.ArticleFilters
-import ru.vo1d.web.entities.news.article.ArticleModel
+import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.orm.dao.XpDao
-import ru.vo1d.web.orm.entities.news.Article
 import ru.vo1d.web.orm.entities.news.ArticleCategories
+import ru.vo1d.web.orm.entities.news.ArticleEntity
+import ru.vo1d.web.orm.entities.news.ArticleViewEntity
 import ru.vo1d.web.orm.entities.news.Articles
 
-class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
-    override suspend fun create(item: ArticleModel): Int {
+class ArticleDaoXp : ArticleDao, XpDao<Article> {
+    override suspend fun create(item: Article): Int {
         val articleId = Articles.insertAndGetId { it.mapItem(item) }.value
 
         ArticleCategories.batchInsert(item.categories, shouldReturnGeneratedValues = false) {
@@ -24,7 +25,7 @@ class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
         return articleId
     }
 
-    override suspend fun create(vararg items: ArticleModel): Int {
+    override suspend fun create(vararg items: Article): Int {
         val inserted = mutableListOf<Int>()
 
         items.forEach {
@@ -35,14 +36,17 @@ class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
         return inserted.count()
     }
 
-    override suspend fun read(id: Int) = Article.findById(id)?.toModel()
+    override suspend fun read(id: Int) =
+        ArticleEntity.findById(id)?.toModel()
 
-    override suspend fun update(item: ArticleModel) =
+    override suspend fun update(item: Article) =
         Articles.update({ Articles.id eq item.id }) { it.mapItem(item) }
 
-    override suspend fun delete(id: Int) = Articles.deleteWhere { Articles.id eq id }
+    override suspend fun delete(id: Int) =
+        Articles.deleteWhere { Articles.id eq id }
 
-    override suspend fun list(offset: Long, limit: Int) = Article.all().limit(limit, offset).map(Article::toView)
+    override suspend fun list(offset: Long, limit: Int) =
+        ArticleViewEntity.all().limit(limit, offset).map(ArticleViewEntity::toModel)
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int): List<ArticleView> {
         if (filters.categories == null) return list(offset, limit)
@@ -55,10 +59,10 @@ class ArticleDaoXp : ArticleDao, XpDao<ArticleModel> {
                 }
             }
 
-        return Article.wrapRows(query).limit(limit, offset).map(Article::toView)
+        return ArticleViewEntity.wrapRows(query).limit(limit, offset).map(ArticleViewEntity::toModel)
     }
 
-    override fun UpdateBuilder<*>.mapItem(item: ArticleModel) {
+    override fun UpdateBuilder<*>.mapItem(item: Article) {
         this[Articles.title] = item.title
         this[Articles.body] = item.body
         this[Articles.preview] = item.previewImage

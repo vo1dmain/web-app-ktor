@@ -5,7 +5,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AnswerModel(
+data class Answer(
     val id: Int? = null,
     val questionId: Int,
     val body: String,

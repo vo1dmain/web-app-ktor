@@ -5,14 +5,14 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.data.extensions.open
-import ru.vo1d.web.entities.daybook.group.degree.GradDegreeModel
-import ru.vo1d.web.entities.daybook.group.form.EduFormModel
-import ru.vo1d.web.entities.daybook.group.level.GradLevelModel
-import ru.vo1d.web.entities.daybook.group.type.TableTypeModel
-import ru.vo1d.web.entities.daybook.timetable.session.SessionTypeModel
-import ru.vo1d.web.entities.daybook.timetable.time.StartTimeModel
-import ru.vo1d.web.entities.news.article.ArticleModel
-import ru.vo1d.web.entities.news.category.CategoryModel
+import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
+import ru.vo1d.web.entities.daybook.group.form.EducationForm
+import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
+import ru.vo1d.web.entities.daybook.group.type.TableType
+import ru.vo1d.web.entities.daybook.timetable.session.SessionType
+import ru.vo1d.web.entities.daybook.timetable.time.StartTime
+import ru.vo1d.web.entities.news.article.Article
+import ru.vo1d.web.entities.news.category.Category
 import ru.vo1d.web.orm.dao.daybook.group.EduFormDaoXp
 import ru.vo1d.web.orm.dao.daybook.group.GradDegreeDaoXp
 import ru.vo1d.web.orm.dao.daybook.group.GradLevelDaoXp
@@ -33,12 +33,12 @@ object DataFetcherRes {
 
         runBlocking<Unit> {
             val categories = categoriesFile.open {
-                json.decodeFromStream<Array<CategoryModel>>(this@open)
+                json.decodeFromStream<Array<Category>>(this@open)
             }
             CategoryDaoXp().create(*categories)
 
             val articles = articlesFile.open {
-                json.decodeFromStream<Array<ArticleModel>>(this@open)
+                json.decodeFromStream<Array<Article>>(this@open)
             }
             ArticleDaoXp().create(*articles)
         }
@@ -55,32 +55,32 @@ object DataFetcherRes {
 
         runBlocking<Unit> {
             val levels = levelsFile.open {
-                json.decodeFromStream<Array<GradLevelModel>>(this)
+                json.decodeFromStream<Array<GraduationLevel>>(this)
             }
             GradLevelDaoXp().create(*levels)
 
             val degrees = degreesFile.open {
-                json.decodeFromStream<Array<GradDegreeModel>>(this)
+                json.decodeFromStream<Array<GraduationDegree>>(this)
             }
             GradDegreeDaoXp().create(*degrees)
 
             val forms = formsFile.open {
-                json.decodeFromStream<Array<EduFormModel>>(this)
+                json.decodeFromStream<Array<EducationForm>>(this)
             }
             EduFormDaoXp().create(*forms)
 
             val types = typesFile.open {
-                json.decodeFromStream<Array<TableTypeModel>>(this)
+                json.decodeFromStream<Array<TableType>>(this)
             }
             TableTypeDaoXp().create(*types)
 
             val times = startTimesFile.open {
-                json.decodeFromStream<Array<StartTimeModel>>(this)
+                json.decodeFromStream<Array<StartTime>>(this)
             }
             StartTimeDaoXp().create(*times)
 
             val sessionTypes = sessionTypesFile.open {
-                json.decodeFromStream<Array<SessionTypeModel>>(this)
+                json.decodeFromStream<Array<SessionType>>(this)
             }
             SessionTypeDaoXp().create(*sessionTypes)
         }

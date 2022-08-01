@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "ru.vo1d.web"
-version = "0.8.0"
+version = "0.8.1"
 
 application {
     mainClass.set("ru.vo1d.web.app.ApplicationKt")
@@ -40,7 +40,7 @@ dependencies {
 
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
 
-    testImplementation(kotlin("test-junit", kotlin.coreLibrariesVersion))
+    testImplementation(kotlin("test-junit"))
 
     testImplementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     testImplementation("io.ktor:ktor-client-logging:$ktorVersion")

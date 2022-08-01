@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "ru.vo1d.web"
-version = "0.7.0"
+version = "0.8.0"
 
 repositories {
     mavenCentral()
@@ -25,5 +25,5 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
-    testImplementation(kotlin("test-junit", kotlin.coreLibrariesVersion))
+    testImplementation(kotlin("test-junit"))
 }
