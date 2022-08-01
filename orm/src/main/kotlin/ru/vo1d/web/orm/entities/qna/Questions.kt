@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 import ru.vo1d.web.orm.entities.HasModel
 
 object Questions : IntIdTable() {
@@ -19,8 +19,8 @@ object Questions : IntIdTable() {
     val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)
 }
 
-class Question(id: EntityID<Int>) : IntEntity(id), HasModel<QuestionModel> {
-    companion object : IntEntityClass<Question>(Questions)
+class QuestionEntity(id: EntityID<Int>) : IntEntity(id), HasModel<Question> {
+    companion object : IntEntityClass<QuestionEntity>(Questions)
 
     val theme by Questions.theme
     val body by Questions.body
@@ -29,5 +29,6 @@ class Question(id: EntityID<Int>) : IntEntity(id), HasModel<QuestionModel> {
     val dateTime by Questions.dateTime
     val timeZone by Questions.timeZone
 
-    override fun toModel() = QuestionModel(id.value, theme, body, acceptorId, email, dateTime, TimeZone.of(timeZone))
+    override fun toModel() =
+        Question(id.value, theme, body, acceptorId, email, dateTime, TimeZone.of(timeZone))
 }

@@ -8,7 +8,7 @@ import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 
 @Serializable
 @SerialName("Regular")
-data class RegularSessionModel(
+data class RegularSession(
     val id: Int? = null,
     override val subject: String,
     override val instructor: String,
@@ -18,4 +18,4 @@ data class RegularSessionModel(
     val dayOfWeek: DayOfWeek,
     val timeId: Int,
     val weekOption: WeekOption
-) : SessionModel
+) : Session

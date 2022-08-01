@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @SerialName("Dated")
-data class DatedSessionModel(
+data class DatedSession(
     val id: Int? = null,
     override val subject: String,
     override val instructor: String,
@@ -17,4 +17,4 @@ data class DatedSessionModel(
     override val duration: DateTimePeriod? = null,
     val datetime: LocalDateTime,
     val timeZone: TimeZone? = null
-) : SessionModel
+) : Session

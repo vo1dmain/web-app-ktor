@@ -6,11 +6,11 @@ import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.impl.DaybookRepoImpl
-import ru.vo1d.web.entities.daybook.group.GroupModel
-import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
+import ru.vo1d.web.entities.daybook.group.Group
+import ru.vo1d.web.entities.daybook.timetable.Timetable
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.orm.dao.daybook.group.*
 import ru.vo1d.web.orm.dao.daybook.timetable.SessionTypeDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
@@ -63,7 +63,7 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.groups() }
     }
 
-    override suspend fun addGroups(vararg groups: GroupModel) = dbManager {
+    override suspend fun addGroups(vararg groups: Group) = dbManager {
         query(daybookDb) { super.addGroups(*groups) }
     }
 
@@ -90,7 +90,7 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.timetableBase(id) }
     }
 
-    override suspend fun addTimetable(item: TimetableModel): Int? = dbManager {
+    override suspend fun addTimetable(item: Timetable): Int? = dbManager {
         query(daybookDb) { super.addTimetable(item) }
     }
 
@@ -112,20 +112,20 @@ class DaybookRepoXp(override val dbManager: DbManager) : DaybookRepoImpl(), XpRe
         query(daybookDb) { super.datedSessions(page, filtersBuilder) }
     }
 
-    override suspend fun addRegularSession(item: RegularSessionModel) = dbManager {
+    override suspend fun addRegularSession(item: RegularSession) = dbManager {
         query(daybookDb) { super.addRegularSession(item) }
     }
 
-    override suspend fun addDatedSession(item: DatedSessionModel) = dbManager {
+    override suspend fun addDatedSession(item: DatedSession) = dbManager {
         query(daybookDb) { super.addDatedSession(item) }
     }
 
 
-    override suspend fun addRegularJunction(item: TimetableSessionModel) = dbManager {
+    override suspend fun addRegularJunction(item: TimetableSession) = dbManager {
         query(daybookDb) { super.addRegularJunction(item) }
     }
 
-    override suspend fun addDatedJunction(item: TimetableSessionModel) = dbManager {
+    override suspend fun addDatedJunction(item: TimetableSession) = dbManager {
         query(daybookDb) { super.addDatedJunction(item) }
     }
 }

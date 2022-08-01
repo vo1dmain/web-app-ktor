@@ -5,4 +5,4 @@ import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StartTimeModel(val id: Int? = null, val time: LocalTime, val timeZone: TimeZone? = null)
+data class StartTime(val id: Int? = null, val time: LocalTime, val timeZone: TimeZone? = null)

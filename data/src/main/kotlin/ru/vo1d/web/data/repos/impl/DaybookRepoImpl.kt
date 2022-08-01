@@ -7,11 +7,11 @@ import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.filters.filters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.Meta
-import ru.vo1d.web.entities.daybook.group.GroupModel
-import ru.vo1d.web.entities.daybook.timetable.TimetableModel
-import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.RegularSessionModel
-import ru.vo1d.web.entities.daybook.timetable.session.TimetableSessionModel
+import ru.vo1d.web.entities.daybook.group.Group
+import ru.vo1d.web.entities.daybook.timetable.Timetable
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 
 abstract class DaybookRepoImpl : DaybookRepo {
     protected abstract val timetableDao: TimetableDao
@@ -54,7 +54,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     override suspend fun groups() = groupDao.all()
 
-    override suspend fun addGroups(vararg groups: GroupModel) = groupDao.create(*groups)
+    override suspend fun addGroups(vararg groups: Group) = groupDao.create(*groups)
 
     override suspend fun startTimes() = startTimeDao.all()
 
@@ -64,7 +64,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun timetables(
         page: Int?,
         filtersBuilder: TimetableFilters.Builder.() -> Unit
-    ): List<TimetableModel> {
+    ): List<Timetable> {
         val offset = offset(page)
         val filters = filters(filtersBuilder)
         if (filters.areEmpty()) return timetableDao.list(offset, limit)
@@ -75,7 +75,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
 
     override suspend fun timetableBase(id: Int) = timetableDao.read(id)
 
-    override suspend fun addTimetable(item: TimetableModel) = timetableDao.create(item)
+    override suspend fun addTimetable(item: Timetable) = timetableDao.create(item)
 
     override suspend fun timetableExists(code: String, type: String) = timetableDao.filter(
         filters<TimetableFilters, TimetableFilters.Builder> {
@@ -89,7 +89,7 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun regularSessions(
         page: Int?,
         filtersBuilder: RegularSessionFilters.Builder.() -> Unit
-    ): List<RegularSessionModel> {
+    ): List<RegularSession> {
         val offset = offset(page)
         val filters = filters(filtersBuilder)
         if (filters.areEmpty()) return regularSessionDao.list(offset, limit)
@@ -99,18 +99,18 @@ abstract class DaybookRepoImpl : DaybookRepo {
     override suspend fun datedSessions(
         page: Int?,
         filtersBuilder: DatedSessionFilters.Builder.() -> Unit
-    ): List<DatedSessionModel> {
+    ): List<DatedSession> {
         val offset = offset(page)
         val filters = filters(filtersBuilder)
         if (filters.areEmpty()) return datedSessionDao.list(offset, limit)
         return datedSessionDao.filter(filters, offset, limit)
     }
 
-    override suspend fun addRegularSession(item: RegularSessionModel) = regularSessionDao.create(item)
+    override suspend fun addRegularSession(item: RegularSession) = regularSessionDao.create(item)
 
-    override suspend fun addDatedSession(item: DatedSessionModel) = datedSessionDao.create(item)
+    override suspend fun addDatedSession(item: DatedSession) = datedSessionDao.create(item)
 
-    override suspend fun addRegularJunction(item: TimetableSessionModel) = timetableRegularSessionDao.create(item)
+    override suspend fun addRegularJunction(item: TimetableSession) = timetableRegularSessionDao.create(item)
 
-    override suspend fun addDatedJunction(item: TimetableSessionModel) = timetableDatedSessionDao.create(item)
+    override suspend fun addDatedJunction(item: TimetableSession) = timetableDatedSessionDao.create(item)
 }

@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.kotlin.datetime.duration
 import ru.vo1d.web.entities.DEFAULT_DURATION
-import ru.vo1d.web.entities.daybook.timetable.session.DatedSessionModel
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 
 object DatedSessions : IntIdTable() {
     val subject = varchar("subject", 160)
@@ -23,8 +23,8 @@ object DatedSessions : IntIdTable() {
     val duration = duration("duration").default(DEFAULT_DURATION)
 }
 
-class DatedSession(id: EntityID<Int>) : IntEntity(id), SessionEntity<DatedSessionModel> {
-    companion object : IntEntityClass<DatedSession>(DatedSessions)
+class DatedSessionEntity(id: EntityID<Int>) : IntEntity(id), SessionEntity<DatedSession> {
+    companion object : IntEntityClass<DatedSessionEntity>(DatedSessions)
 
     val subject by DatedSessions.subject
     val instructor by DatedSessions.instructor
@@ -34,7 +34,7 @@ class DatedSession(id: EntityID<Int>) : IntEntity(id), SessionEntity<DatedSessio
     val datetime by DatedSessions.datetime
     val timeZone by DatedSessions.timeZone
 
-    override fun toModel() = DatedSessionModel(
+    override fun toModel() = DatedSession(
         id.value,
         subject,
         instructor,

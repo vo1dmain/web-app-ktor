@@ -7,7 +7,7 @@ import ru.vo1d.web.data.filters.news.ArticleFilters
 import ru.vo1d.web.data.filters.news.CategoryFilters
 import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.entities.news.article.ArticleView
-import ru.vo1d.web.entities.news.category.CategoryModel
+import ru.vo1d.web.entities.news.category.Category
 
 abstract class NewsRepoImpl : NewsRepo {
     protected abstract val articleDao: ArticleDao
@@ -29,7 +29,7 @@ abstract class NewsRepoImpl : NewsRepo {
     override suspend fun categories(
         page: Int?,
         filtersBuilder: CategoryFilters.Builder.() -> Unit
-    ): List<CategoryModel> {
+    ): List<Category> {
         val offset = offset(page)
 
         val filters = filters(filtersBuilder)

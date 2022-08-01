@@ -14,9 +14,9 @@ import org.kodein.di.singleton
 import ru.vo1d.web.app.repos.QnaRepoTest
 import ru.vo1d.web.app.routing.qnaRouting
 import ru.vo1d.web.data.repos.impl.QnaRepoImpl
-import ru.vo1d.web.entities.qna.post.PostDto
+import ru.vo1d.web.entities.qna.post.PostWithData
 import ru.vo1d.web.entities.qna.post.PostView
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 import kotlin.test.assertEquals
 
 class QnaTest {
@@ -49,7 +49,7 @@ class QnaTest {
 
         client.get("/qna/posts/0").apply {
             println(bodyAsText())
-            val item = body<PostDto>()
+            val item = body<PostWithData>()
             assertEquals(0, item.id)
         }
 
@@ -68,7 +68,7 @@ class QnaTest {
 
         client.get("/qna/questions").apply {
             println(bodyAsText())
-            val list = body<List<QuestionModel>>()
+            val list = body<List<Question>>()
             assertEquals(0, list[0].id)
         }
 

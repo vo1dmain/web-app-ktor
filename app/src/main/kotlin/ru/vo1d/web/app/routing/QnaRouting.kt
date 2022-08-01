@@ -13,7 +13,7 @@ import ru.vo1d.web.app.extensions.orFail
 import ru.vo1d.web.app.resources.qna.Posts
 import ru.vo1d.web.app.resources.qna.Questions
 import ru.vo1d.web.data.repos.QnaRepo
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 import io.ktor.server.resources.post as postRes
 
 fun Route.qnaRouting() = route("/qna") {
@@ -43,7 +43,7 @@ private fun Route.questionsRouting(repo: QnaRepo) {
     }
 
     postRes<Questions> {
-        val question = call.receive<QuestionModel>()
+        val question = call.receive<Question>()
         val id = repo.addQuestion(question) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }

@@ -2,7 +2,7 @@ package ru.vo1d.web.orm.repos
 
 import ru.vo1d.web.data.dao.delegates.crudDao
 import ru.vo1d.web.data.repos.impl.QnaRepoImpl
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 import ru.vo1d.web.orm.dao.qna.AnswerDaoXp
 import ru.vo1d.web.orm.dao.qna.PostDaoXp
 import ru.vo1d.web.orm.dao.qna.QuestionDaoXp
@@ -30,7 +30,7 @@ class QnaRepoXp(override val dbManager: DbManager) : QnaRepoImpl(), XpRepo {
         query(qnaDb) { super.question(id) }
     }
 
-    override suspend fun addQuestion(question: QuestionModel) = dbManager {
+    override suspend fun addQuestion(question: Question) = dbManager {
         query(qnaDb) { super.addQuestion(question) }
     }
 }

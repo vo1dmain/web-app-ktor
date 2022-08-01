@@ -5,7 +5,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArticleModel(
+data class Article(
     val id: Int? = null,
     val title: String,
     val body: String,

@@ -9,26 +9,26 @@ import ru.vo1d.web.app.clampedSubList
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.data.extensions.open
 import ru.vo1d.web.data.filters.news.ArticleFilters
-import ru.vo1d.web.entities.news.article.ArticleModel
+import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.orm.extensions.resource
 
 
 @OptIn(ExperimentalSerializationApi::class)
-class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<ArticleModel> {
+class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<Article> {
     private val file = resource("/data/articles.json")
 
-    override suspend fun create(item: ArticleModel): Int? {
+    override suspend fun create(item: Article): Int? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun create(vararg items: ArticleModel): Int {
+    override suspend fun create(vararg items: Article): Int {
         TODO("Not yet implemented")
     }
 
     override suspend fun read(id: Int) = all().firstOrNull { it.id == id }
 
-    override suspend fun update(item: ArticleModel): Int {
+    override suspend fun update(item: Article): Int {
         TODO("Not yet implemented")
     }
 
@@ -55,6 +55,6 @@ class ArticleDaoRes : ArticleDao, JsonDao, AllDaoTest<ArticleModel> {
         }
 
     override suspend fun all() = file.open {
-        json.decodeFromStream<List<ArticleModel>>(this)
+        json.decodeFromStream<List<Article>>(this)
     }
 }

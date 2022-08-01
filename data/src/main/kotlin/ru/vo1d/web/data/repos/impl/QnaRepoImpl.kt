@@ -4,7 +4,7 @@ import ru.vo1d.web.data.dao.AnswerDao
 import ru.vo1d.web.data.dao.PostDao
 import ru.vo1d.web.data.dao.QuestionDao
 import ru.vo1d.web.data.repos.QnaRepo
-import ru.vo1d.web.entities.qna.question.QuestionModel
+import ru.vo1d.web.entities.qna.question.Question
 
 abstract class QnaRepoImpl : QnaRepo {
     protected abstract val questionDao: QuestionDao
@@ -20,5 +20,5 @@ abstract class QnaRepoImpl : QnaRepo {
 
     override suspend fun question(id: Int) = questionDao.read(id)
 
-    override suspend fun addQuestion(question: QuestionModel) = questionDao.create(question)
+    override suspend fun addQuestion(question: Question) = questionDao.create(question)
 }
