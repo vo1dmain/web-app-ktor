@@ -16,6 +16,7 @@ import ru.vo1d.web.entities.daybook.timetable.TimetableWithSessions
 import ru.vo1d.web.entities.daybook.timetable.session.*
 import ru.vo1d.web.entities.daybook.timetable.time.StartTime
 import ru.vo1d.web.entities.daybook.timetable.week.Week
+import java.time.temporal.TemporalAdjusters
 
 interface DaybookRepo : ListRepo {
     suspend fun meta(): Meta
@@ -42,14 +43,16 @@ interface DaybookRepo : ListRepo {
 
         if (today == thisYearS1) return Week.FIRST
 
-        val lastYearS1 = when(today < thisYearS1) {
+        val lastYearFirstWeekStart = when (today < thisYearS1) {
             true -> LocalDate(today.year - 1, Month.SEPTEMBER, 1)
             else -> thisYearS1
-        }
+        }.toJavaLocalDate()
+            .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+            .toKotlinLocalDate()
 
-        val weeksBetween = lastYearS1.daysUntil(today) / 7
+        val weeksBetween = lastYearFirstWeekStart.until(today, DateTimeUnit.WEEK)
 
-        return when(weeksBetween % 2) {
+        return when (weeksBetween % 2) {
             0 -> Week.FIRST
             else -> Week.SECOND
         }
