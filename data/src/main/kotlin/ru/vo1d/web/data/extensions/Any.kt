@@ -1,4 +1,4 @@
-package ru.vo1d.web.orm.extensions
+package ru.vo1d.web.data.extensions
 
 import java.io.FileNotFoundException
 
