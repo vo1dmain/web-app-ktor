@@ -5,6 +5,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.data.extensions.open
+import ru.vo1d.web.data.extensions.resource
 import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
 import ru.vo1d.web.entities.daybook.group.form.EducationForm
 import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
@@ -21,7 +22,6 @@ import ru.vo1d.web.orm.dao.daybook.timetable.SessionTypeDaoXp
 import ru.vo1d.web.orm.dao.daybook.timetable.StartTimeDaoXp
 import ru.vo1d.web.orm.dao.news.ArticleDaoXp
 import ru.vo1d.web.orm.dao.news.CategoryDaoXp
-import ru.vo1d.web.orm.extensions.resource
 
 @OptIn(ExperimentalSerializationApi::class)
 object DataFetcherRes {
