@@ -36,6 +36,6 @@ out/
 .vscode/
 
 /legacy/
-/gradlew.bat
-/gradlew
-/gradle/
+/**/gradlew
+/**/gradlew.bat
+/**/gradle/wrapper/
