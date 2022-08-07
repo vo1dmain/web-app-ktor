@@ -1,4 +1,4 @@
-rootProject.name = "web-app"
+rootProject.name = "core"
 
 pluginManagement {
     plugins {
@@ -6,6 +6,5 @@ pluginManagement {
         kotlin("plugin.serialization") version "1.7.10" apply false
     }
 }
-includeBuild("core")
-include("exposed-h2")
 
+include("server", "data", "entities")
