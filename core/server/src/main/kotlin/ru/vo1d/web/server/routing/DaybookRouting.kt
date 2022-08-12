@@ -8,6 +8,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.vo1d.web.data.repos.DaybookRepo
+import ru.vo1d.web.entities.daybook.timetable.Timetable
+import ru.vo1d.web.entities.daybook.timetable.TimetableFormat
+import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
+import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
+import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.server.errors.UnprocessableEntityException
 import ru.vo1d.web.server.extensions.failIfEmpty
 import ru.vo1d.web.server.extensions.orFail
@@ -15,12 +21,6 @@ import ru.vo1d.web.server.resources.daybook.DatedSessions
 import ru.vo1d.web.server.resources.daybook.Meta
 import ru.vo1d.web.server.resources.daybook.RegularSessions
 import ru.vo1d.web.server.resources.daybook.Timetables
-import ru.vo1d.web.data.repos.DaybookRepo
-import ru.vo1d.web.entities.daybook.timetable.TimetableFormat
-import ru.vo1d.web.entities.daybook.timetable.Timetable
-import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
-import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
-import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 import io.ktor.server.resources.post as postRes
 
 fun Route.daybookRouting() = route("/daybook") {
@@ -94,7 +94,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
         val parentId = it.parent.id
         val finalId = input.timetableId ?: parentId
 
-        if (finalId != parentId) throw ru.vo1d.web.server.errors.UnprocessableEntityException(
+        if (finalId != parentId) throw UnprocessableEntityException(
             TimetableSession::timetableId.name,
             parentId.toString(),
             finalId.toString()
