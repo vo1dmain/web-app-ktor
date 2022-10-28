@@ -10,9 +10,9 @@ class UnprocessableEntityException(
     private val expected: String,
     private val actual: String
 ) : Exception("Wrong field \'$fieldName\' value. Expected: \'$expected\'. Actual: \'$actual\'."),
-    CopyableThrowable<ru.vo1d.web.server.errors.UnprocessableEntityException> {
+    CopyableThrowable<UnprocessableEntityException> {
 
-    override fun createCopy() = ru.vo1d.web.server.errors.UnprocessableEntityException(fieldName, expected, actual).also {
+    override fun createCopy() = UnprocessableEntityException(fieldName, expected, actual).also {
         it.initCauseBridge(this)
     }
 }
