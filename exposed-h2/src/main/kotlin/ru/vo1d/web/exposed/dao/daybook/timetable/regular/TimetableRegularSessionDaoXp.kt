@@ -22,8 +22,7 @@ class TimetableRegularSessionDaoXp : TimetableRegularSessionDao, XpDao<Timetable
 
     override suspend fun delete(id: TimetableSession) =
         TimetableRegularSessions.deleteWhere {
-            (TimetableRegularSessions.sessionId eq id.sessionId) and
-                    (TimetableRegularSessions.timetableId eq id.timetableId)
+            (sessionId eq id.sessionId) and (timetableId eq id.timetableId)
         }
 
     override fun UpdateBuilder<*>.mapItem(item: TimetableSession) {
