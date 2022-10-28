@@ -33,7 +33,7 @@ class IdInnerTableLink<LID : Comparable<LID>, SID : Comparable<SID>, Source : En
         }
     }
 
-    internal val targetRefColumn =
+    private val targetRefColumn =
         targetColumn ?: table.columns.singleOrNull { it.referee == target.table.id } as? Column<EntityID<ID>>
         ?: error("Table does not reference target")
 

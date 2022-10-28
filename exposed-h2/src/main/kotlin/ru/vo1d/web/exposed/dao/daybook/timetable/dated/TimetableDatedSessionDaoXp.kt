@@ -1,5 +1,6 @@
 package ru.vo1d.web.exposed.dao.daybook.timetable.dated
 
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere

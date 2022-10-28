@@ -1,6 +1,7 @@
 package ru.vo1d.web.exposed.dao.news
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.vo1d.web.data.dao.ArticleDao
