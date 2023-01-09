@@ -1,27 +1,32 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.jvm)
 }
 
+group = "ru.vo1d.web"
 version = "0.8.0"
 
-repositories {
-    mavenCentral()
-}
-
-val serializationVersion: String by project
-val exposedVersion: String by project
-val h2Version: String by project
 dependencies {
     implementation("ru.vo1d.web:core")
 
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.kotlin.datetime)
 
-    implementation("com.h2database:h2:$h2Version")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation(libs.h2database.h2)
 
     testImplementation(kotlin("test-junit"))
+}
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }

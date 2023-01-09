@@ -1,11 +1,12 @@
-rootProject.name = "web-app"
-
 pluginManagement {
-    plugins {
-        kotlin("jvm") version "1.7.20" apply false
-        kotlin("plugin.serialization") version "1.7.20" apply false
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
+
+rootProject.name = "web-app"
+
 includeBuild("core")
-include("exposed-h2")
+include(":exposed-h2")
 

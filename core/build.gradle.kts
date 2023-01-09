@@ -1,19 +1,15 @@
-allprojects {
-    group = "ru.vo1d.web"
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    repositories {
-        mavenCentral()
-    }
-}
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `java-library`
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.gradle.versions)
+    alias(libs.plugins.catalog.update)
 }
 
+group = "ru.vo1d.web"
 version = "1.0.0"
 
 dependencies {
-    api(project("server"))
-    api(project("data"))
+    api(project(":server"))
+    api(project(":data"))
 }

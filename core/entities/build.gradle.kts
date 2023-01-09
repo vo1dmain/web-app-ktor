@@ -1,15 +1,16 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
+group = "ru.vo1d.web"
 version = "0.8.0"
 
-val serializationVersion: String by project
-val datetimeVersion: String by project
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
+    api(libs.kotlinx.datetime)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
+    implementation(libs.kotlinx.serialization.core)
 
     testImplementation(kotlin("test-junit"))
 }
