@@ -1,0 +1,19 @@
+[versions]
+catalogUpdate = "0.7.0"
+gradleVersions = "0.44.0"
+h2 = "2.1.214"
+jetbrainsExposed = "0.41.1"
+kotlin = "1.8.0"
+
+[libraries]
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "jetbrainsExposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "jetbrainsExposed" }
+exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "jetbrainsExposed" }
+
+h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
+
+[plugins]
+catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalogUpdate" }
+gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
