@@ -1,10 +1,16 @@
-rootProject.name = "core"
-
 pluginManagement {
-    plugins {
-        kotlin("jvm") version "1.7.20" apply false
-        kotlin("plugin.serialization") version "1.7.20" apply false
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 
-include("server", "data", "entities")
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = "core"
+
+include(":server", ":data", ":entities")

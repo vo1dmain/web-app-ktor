@@ -1,33 +1,34 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
+group = "ru.vo1d.web"
 version = "0.8.1"
 
-val ktorVersion: String by project
-val logbackVersion: String by project
-val kodeinVersion: String by project
 dependencies {
     implementation(project(":data"))
 
-    api("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("io.ktor:ktor-server-resources:$ktorVersion")
-    implementation("io.ktor:ktor-server-compression:$ktorVersion")
-    implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
-    implementation("io.ktor:ktor-server-html-builder:$ktorVersion")
-    implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
-    implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
-    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    api(libs.ktor.server.core)
+    implementation(libs.ktor.server.call.logging)
+    implementation(libs.ktor.server.compression)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.default.headers)
+    implementation(libs.ktor.server.html.builder)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.status.pages)
 
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation(libs.ktor.serialization.kotlinx.json)
 
-    api("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
+    implementation(libs.logback.classic)
+
+    api(libs.kodein.ktor.server.jvm)
 
     testImplementation(kotlin("test-junit"))
 
-    testImplementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-logging:$ktorVersion")
-    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
+    testImplementation(libs.ktor.client.content.negotiation)
+    testImplementation(libs.ktor.client.logging)
+    testImplementation(libs.ktor.server.tests)
 }
