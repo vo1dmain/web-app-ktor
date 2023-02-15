@@ -13,6 +13,9 @@ application {
 
     val isDevelopment = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+    kotlin {
+        jvmToolchain(8)
+    }
 }
 
 dependencies {
