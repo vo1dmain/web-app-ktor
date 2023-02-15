@@ -7,6 +7,10 @@ plugins {
 group = "ru.vo1d.web"
 version = "0.8.0"
 
+kotlin {
+    jvmToolchain(8)
+}
+
 dependencies {
     api(libs.kotlinx.datetime)
 

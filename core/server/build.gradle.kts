@@ -7,6 +7,10 @@ plugins {
 group = "ru.vo1d.web"
 version = "0.8.1"
 
+kotlin {
+    jvmToolchain(8)
+}
+
 dependencies {
     implementation(project(":data"))
 

@@ -6,6 +6,10 @@ plugins {
 group = "ru.vo1d.web"
 version = "0.8.0"
 
+kotlin {
+    jvmToolchain(8)
+}
+
 dependencies {
     implementation("ru.vo1d.web:core")
 
