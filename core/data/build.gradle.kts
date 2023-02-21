@@ -7,7 +7,7 @@ group = "ru.vo1d.web"
 version = "0.8.0"
 
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(rootProject.ext["jvmVersion"] as Int)
 }
 
 dependencies {

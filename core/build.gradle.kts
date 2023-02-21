@@ -9,11 +9,16 @@ plugins {
 group = "ru.vo1d.web"
 version = "1.0.0"
 
+ext {
+    set("jvmVersion", 11)
+}
+
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(11)
 }
 
 dependencies {
     api(project(":server"))
     api(project(":data"))
 }
+
