@@ -30,9 +30,9 @@ dependencies {
 
     api(libs.kodein.ktor.server.jvm)
 
-    testImplementation(kotlin("test-junit"))
+    testImplementation(kotlin("test"))
 
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.logging)
-    testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.ktor.server.test.host)
 }
