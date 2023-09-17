@@ -1,10 +1,10 @@
 [versions]
-catalogUpdate = "0.7.0"
-gradleVersions = "0.44.0"
-h2 = "2.1.214"
-jetbrainsExposed = "0.41.1"
-kotlin = "1.8.0"
-kotlinxSerialization = "1.4.1"
+catalogUpdate = "0.8.1"
+gradleVersions = "0.48.0"
+h2 = "2.2.222"
+jetbrainsExposed = "0.43.0"
+kotlin = "1.9.10"
+kotlinxSerialization = "1.6.0"
 
 [libraries]
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }
@@ -12,9 +12,9 @@ exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "jet
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "jetbrainsExposed" }
 exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "jetbrainsExposed" }
 
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-
 h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
+
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
 catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalogUpdate" }
