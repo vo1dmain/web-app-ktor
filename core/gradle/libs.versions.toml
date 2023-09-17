@@ -1,13 +1,13 @@
 [versions]
-catalogUpdate = "0.7.0"
-gradleVersions = "0.44.0"
-kodein = "7.17.0"
-kotlin = "1.8.0"
-kotlinxCoroutines = "1.6.4"
-kotlinxDatetime = "0.4.0"
-kotlinxSerialization = "1.4.1"
-ktor = "2.2.2"
-logback = "1.4.5"
+catalogUpdate = "0.8.1"
+gradleVersions = "0.48.0"
+kodein = "7.20.2"
+kotlin = "1.9.10"
+kotlinxCoroutines = "1.7.3"
+kotlinxDatetime = "0.4.1"
+kotlinxSerialization = "1.6.0"
+ktor = "2.3.4"
+logback = "1.4.11"
 
 [libraries]
 kodein-ktor-server-jvm = { module = "org.kodein.di:kodein-di-framework-ktor-server-jvm", version.ref = "kodein" }
@@ -30,7 +30,7 @@ ktor-server-html-builder = { module = "io.ktor:ktor-server-html-builder", versio
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
-ktor-server-tests = { module = "io.ktor:ktor-server-tests", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
