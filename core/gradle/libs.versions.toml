@@ -1,5 +1,4 @@
 [versions]
-catalogUpdate = "0.8.1"
 gradleVersions = "0.48.0"
 kodein = "7.20.2"
 kotlin = "1.9.10"
@@ -35,7 +34,6 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 [plugins]
-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalogUpdate" }
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
