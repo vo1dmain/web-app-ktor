@@ -23,3 +23,12 @@ dependencies {
     implementation("ru.vo1d.web:core")
     implementation(project(":exposed-h2"))
 }
+
+subprojects {
+    rootProject.tasks.clean {
+        dependsOn(tasks.findByName("clean"))
+    }
+    rootProject.tasks.compileKotlin {
+        dependsOn(tasks.findByName("test"))
+    }
+}

@@ -22,3 +22,12 @@ dependencies {
     api(project(":data"))
 }
 
+subprojects {
+    rootProject.tasks.clean {
+        dependsOn(tasks.findByName("clean"))
+    }
+    rootProject.tasks.compileKotlin {
+        dependsOn(tasks.findByName("test"))
+    }
+}
+
