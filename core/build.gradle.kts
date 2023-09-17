@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `java-library`
     alias(libs.plugins.kotlin.jvm)
@@ -9,12 +8,12 @@ plugins {
 group = "ru.vo1d.web"
 version = "1.0.0"
 
-ext {
+extra.apply {
     set("jvmVersion", 11)
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(rootProject.extra["jvmVersion"] as Int)
 }
 
 dependencies {
