@@ -2,7 +2,6 @@ plugins {
     `java-library`
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.gradle.versions)
-    alias(libs.plugins.catalog.update)
 }
 
 group = "ru.vo1d.web"

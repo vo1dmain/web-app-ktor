@@ -1,5 +1,4 @@
 [versions]
-catalogUpdate = "0.8.1"
 gradleVersions = "0.48.0"
 h2 = "2.2.222"
 jetbrainsExposed = "0.43.0"
@@ -17,6 +16,5 @@ h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalogUpdate" }
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
