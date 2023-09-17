@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
@@ -8,7 +7,7 @@ group = "ru.vo1d.web"
 version = "0.8.1"
 
 kotlin {
-    jvmToolchain(rootProject.ext["jvmVersion"] as Int)
+    jvmToolchain(rootProject.extra["jvmVersion"] as Int)
 }
 
 dependencies {
