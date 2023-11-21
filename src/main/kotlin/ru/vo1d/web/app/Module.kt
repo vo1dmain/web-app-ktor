@@ -20,10 +20,10 @@ import ru.vo1d.web.exposed.utils.DataFetcherRes
 
 fun Application.mainModule() {
     di {
-        bind<NewsRepo> { singleton { NewsRepoXp(H2Context) } }
-        bind<QnaRepo> { singleton { QnaRepoXp(H2Context) } }
-        bind<DaybookRepo> { singleton { DaybookRepoXp(H2Context) } }
-        bind<DbContext> { singleton { H2Context } }
+        bind<NewsRepo>() with singleton { NewsRepoXp(H2Context) }
+        bind<QnaRepo>() with singleton { QnaRepoXp(H2Context) }
+        bind<DaybookRepo>() with singleton { DaybookRepoXp(H2Context) }
+        bind<DbContext>() with singleton { H2Context }
     }
 
     val dbContext by closestDI().instance<DbContext>()
