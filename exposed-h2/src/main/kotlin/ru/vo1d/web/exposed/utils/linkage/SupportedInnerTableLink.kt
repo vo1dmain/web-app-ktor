@@ -84,8 +84,8 @@ class SupportedInnerTableLink<SID, Source, TID, Target, LID>(
 
         val columns = target.dependsOnColumns - sourceRefColumn
 
-        val query = supportedEntityTables.slice(columns)
-            .select { sourceRefColumn eq thisRef.id }
+        val query = supportedEntityTables.select(columns)
+            .where { sourceRefColumn eq thisRef.id }
             .groupBy(target.table.id)
 
         val refs = { target.wrapRows(query) }

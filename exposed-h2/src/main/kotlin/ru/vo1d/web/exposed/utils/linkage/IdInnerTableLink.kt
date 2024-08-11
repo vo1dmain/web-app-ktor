@@ -54,7 +54,7 @@ class IdInnerTableLink<LID : Comparable<LID>, SID : Comparable<SID>, Source : En
         val columns =
             (target.dependsOnColumns + (if (!alreadyInJoin) table.columns else emptyList()) - sourceRefColumn).distinct() + sourceRefColumn
 
-        val query = { target.wrapRows(entityTables.slice(columns).select { sourceRefColumn eq thisRef.id }) }
+        val query = { target.wrapRows(entityTables.select(columns).where { sourceRefColumn eq thisRef.id }) }
         return transaction.entityCache.getOrPutReferrers(thisRef.id, sourceRefColumn, query).also {
             thisRef.storeReferenceInCache(sourceRefColumn, it)
         }
