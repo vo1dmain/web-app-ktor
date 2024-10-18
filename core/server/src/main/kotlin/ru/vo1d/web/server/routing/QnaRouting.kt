@@ -1,19 +1,18 @@
 package ru.vo1d.web.server.routing
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.vo1d.web.data.repos.QnaRepo
+import ru.vo1d.web.entities.qna.question.Question
 import ru.vo1d.web.server.extensions.failIfEmpty
 import ru.vo1d.web.server.extensions.orFail
 import ru.vo1d.web.server.resources.qna.Posts
 import ru.vo1d.web.server.resources.qna.Questions
-import ru.vo1d.web.data.repos.QnaRepo
-import ru.vo1d.web.entities.qna.question.Question
 import io.ktor.server.resources.post as postRes
 
 fun Route.qnaRouting() = route("/qna") {
