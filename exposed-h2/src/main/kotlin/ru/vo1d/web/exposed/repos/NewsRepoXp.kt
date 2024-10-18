@@ -12,18 +12,18 @@ class NewsRepoXp(override val dbContext: DbContext) : NewsRepoBase(), XpRepo {
     override val articleDao by crudDao<ArticleDaoXp>()
     override val categoryDao by crudDao<CategoryDaoXp>()
 
-    override suspend fun articles(page: Int?, filtersBuilder: ArticleFilters.Builder.() -> Unit) =
+    override suspend fun articles(page: Int?, filters: ArticleFilters) =
         dbContext {
-            query(newsDb) { super.articles(page, filtersBuilder) }
+            query(newsDb) { super.articles(page, filters) }
         }
 
     override suspend fun article(id: Int) = dbContext {
         query(newsDb) { super.article(id) }
     }
 
-    override suspend fun categories(page: Int?, filtersBuilder: CategoryFilters.Builder.() -> Unit) =
+    override suspend fun categories(page: Int?, filters: CategoryFilters) =
         dbContext {
-            query(newsDb) { super.categories(page, filtersBuilder) }
+            query(newsDb) { super.categories(page, filters) }
         }
 
     override suspend fun category(id: Int) = dbContext {

@@ -2,7 +2,6 @@ package ru.vo1d.web.data.repos.base
 
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.data.dao.CategoryDao
-import ru.vo1d.web.data.filters.filters
 import ru.vo1d.web.data.filters.news.ArticleFilters
 import ru.vo1d.web.data.filters.news.CategoryFilters
 import ru.vo1d.web.data.repos.NewsRepo
@@ -15,26 +14,24 @@ abstract class NewsRepoBase : NewsRepo {
 
     override suspend fun articles(
         page: Int?,
-        filtersBuilder: ArticleFilters.Builder.() -> Unit
+        filters: ArticleFilters
     ): List<ArticleView> {
         val offset = offset(page)
 
-        val filters = filters(filtersBuilder)
-        if (filters.areEmpty()) return articleDao.list(offset, limit)
-        return articleDao.filter(filters, offset, limit)
+        return if (filters == ArticleFilters.Empty) articleDao.list(offset, limit)
+        else articleDao.filter(filters, offset, limit)
     }
 
     override suspend fun article(id: Int) = articleDao.read(id)
 
     override suspend fun categories(
         page: Int?,
-        filtersBuilder: CategoryFilters.Builder.() -> Unit
+        filters: CategoryFilters
     ): List<Category> {
         val offset = offset(page)
 
-        val filters = filters(filtersBuilder)
-        if (filters.areEmpty()) return categoryDao.list(offset, limit)
-        return categoryDao.filter(filters, offset, limit)
+        return if (filters == CategoryFilters.Empty) categoryDao.list(offset, limit)
+        else categoryDao.filter(filters, offset, limit)
     }
 
     override suspend fun category(id: Int) = categoryDao.read(id)

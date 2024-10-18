@@ -4,7 +4,6 @@ import ru.vo1d.web.data.dao.*
 import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
-import ru.vo1d.web.data.filters.filters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.Meta
 import ru.vo1d.web.entities.daybook.group.Group
@@ -61,14 +60,11 @@ abstract class DaybookRepoBase : DaybookRepo {
     override suspend fun sessionTypes() = sessionTypeDao.all()
 
 
-    override suspend fun timetables(
-        page: Int?,
-        filtersBuilder: TimetableFilters.Builder.() -> Unit
-    ): List<Timetable> {
+    override suspend fun timetables(page: Int?, filters: TimetableFilters): List<Timetable> {
         val offset = offset(page)
-        val filters = filters(filtersBuilder)
-        if (filters.areEmpty()) return timetableDao.list(offset, limit)
-        return timetableDao.filter(filters, offset, limit)
+
+        return if (filters == TimetableFilters.Empty) timetableDao.list(offset, limit)
+        else timetableDao.filter(filters, offset, limit)
     }
 
     override suspend fun timetable(id: Int) = timetableDao.readLinked(id)
@@ -78,32 +74,24 @@ abstract class DaybookRepoBase : DaybookRepo {
     override suspend fun addTimetable(item: Timetable) = timetableDao.create(item)
 
     override suspend fun timetableExists(code: String, type: String) = timetableDao.filter(
-        filters<TimetableFilters, TimetableFilters.Builder> {
-            groupCode = code
+        TimetableFilters(
+            groupCode = code,
             typeId = type
-        },
+        ),
         offset = 0,
         limit = 1
     ).isNotEmpty()
 
-    override suspend fun regularSessions(
-        page: Int?,
-        filtersBuilder: RegularSessionFilters.Builder.() -> Unit
-    ): List<RegularSession> {
+    override suspend fun regularSessions(page: Int?, filters: RegularSessionFilters): List<RegularSession> {
         val offset = offset(page)
-        val filters = filters(filtersBuilder)
-        if (filters.areEmpty()) return regularSessionDao.list(offset, limit)
-        return regularSessionDao.filter(filters, offset, limit)
+        return if (filters == RegularSessionFilters.Empty) regularSessionDao.list(offset, limit)
+        else regularSessionDao.filter(filters, offset, limit)
     }
 
-    override suspend fun datedSessions(
-        page: Int?,
-        filtersBuilder: DatedSessionFilters.Builder.() -> Unit
-    ): List<DatedSession> {
+    override suspend fun datedSessions(page: Int?, filters: DatedSessionFilters): List<DatedSession> {
         val offset = offset(page)
-        val filters = filters(filtersBuilder)
-        if (filters.areEmpty()) return datedSessionDao.list(offset, limit)
-        return datedSessionDao.filter(filters, offset, limit)
+        return if (filters == DatedSessionFilters.Empty) datedSessionDao.list(offset, limit)
+        else datedSessionDao.filter(filters, offset, limit)
     }
 
     override suspend fun addRegularSession(item: RegularSession) = regularSessionDao.create(item)

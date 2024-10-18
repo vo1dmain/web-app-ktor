@@ -34,7 +34,8 @@ class TimetableDaoXp : TimetableDao, XpDao<Timetable> {
         TimetableEntity.all().limit(limit, offset).map(TimetableEntity::toModel)
 
     override suspend fun filter(filters: TimetableFilters, offset: Long, limit: Int): List<Timetable> {
-        if (filters.areEmpty()) return list(offset, limit)
+        if (filters == TimetableFilters.Empty)
+            return list(offset, limit)
 
         val query = Timetables.selectAll().apply {
             filters.typeId?.let { andWhere { Timetables.typeId eq it } }

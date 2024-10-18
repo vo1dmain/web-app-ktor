@@ -59,7 +59,7 @@ interface DaybookRepo : ListRepo {
     }
 
 
-    suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit): List<Timetable>
+    suspend fun timetables(page: Int?, filters: TimetableFilters): List<Timetable>
 
     suspend fun timetable(id: Int): TimetableWithSessions<Session>?
 
@@ -71,12 +71,12 @@ interface DaybookRepo : ListRepo {
 
     suspend fun regularSessions(
         page: Int?,
-        filtersBuilder: RegularSessionFilters.Builder.() -> Unit
+        filters: RegularSessionFilters
     ): List<RegularSession>
 
     suspend fun datedSessions(
         page: Int?,
-        filtersBuilder: DatedSessionFilters.Builder.() -> Unit
+        filters: DatedSessionFilters
     ): List<DatedSession>
 
 

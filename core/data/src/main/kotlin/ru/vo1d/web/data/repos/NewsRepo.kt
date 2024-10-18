@@ -7,12 +7,11 @@ import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.Category
 
 interface NewsRepo : ListRepo {
-    suspend fun articles(page: Int?, filtersBuilder: ArticleFilters.Builder.() -> Unit): List<ArticleView>
+    suspend fun articles(page: Int?, filters: ArticleFilters): List<ArticleView>
 
     suspend fun article(id: Int): Article?
 
-
-    suspend fun categories(page: Int?, filtersBuilder: CategoryFilters.Builder.() -> Unit): List<Category>
+    suspend fun categories(page: Int?, filters: CategoryFilters): List<Category>
 
     suspend fun category(id: Int): Category?
 }

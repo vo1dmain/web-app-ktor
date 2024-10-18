@@ -36,7 +36,8 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSession> {
             .map(RegularSessionEntity::toModel)
 
     override suspend fun filter(filters: RegularSessionFilters, offset: Long, limit: Int): List<RegularSession> {
-        if (filters.areEmpty()) return list(offset, limit)
+        if (filters == RegularSessionFilters.Empty)
+            return list(offset, limit)
 
         val query = RegularSessions.selectAll().apply {
             filters.timetableId?.let {
@@ -61,7 +62,7 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSession> {
             filters.typeId?.let {
                 andWhere { RegularSessions.typeId eq it }
             }
-            filters.weekOptionId?.let {
+            filters.weekOption?.let {
                 andWhere { RegularSessions.weekOption eq it }
             }
         }
