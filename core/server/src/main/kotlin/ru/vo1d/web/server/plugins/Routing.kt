@@ -25,7 +25,7 @@ fun Application.routing() {
 }
 
 private fun Routing.root() = get {
-    val root = application.plugin(Routing)
+    val root = application.plugin(RoutingRoot)
     val allRoutes = allRoutes(root)
         .filter { it.selector is HttpMethodRouteSelector && it.parent != root }
         .map { it.toString().removeSuffix("(method:GET)") }
@@ -49,4 +49,4 @@ private fun Routing.root() = get {
     }
 }
 
-private fun allRoutes(root: Route): List<Route> = listOf(root) + root.children.flatMap { allRoutes(it) }
+private fun allRoutes(root: RoutingNode): List<RoutingNode> = listOf(root) + root.children.flatMap { allRoutes(it) }

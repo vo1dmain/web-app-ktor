@@ -17,6 +17,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "web-app"
 
-includeBuild("core")
+include(":core:data")
+include(":core:entities")
+include(":core:server")
 include(":exposed-h2")
 

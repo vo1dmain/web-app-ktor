@@ -13,20 +13,12 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(libs.versions.jvm.get().toInt())
     }
 }
 
 dependencies {
-    implementation("ru.vo1d.web:core")
+    implementation(project(":core:data"))
+    implementation(project(":core:server"))
     implementation(project(":exposed-h2"))
-}
-
-subprojects {
-    rootProject.tasks.clean {
-        dependsOn(tasks.findByName("clean"))
-    }
-    rootProject.tasks.compileKotlin {
-        dependsOn(tasks.findByName("test"))
-    }
 }

@@ -6,11 +6,11 @@ group = "ru.vo1d.web"
 version = "0.8.0"
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(libs.versions.jvm.get().toInt())
 }
 
 dependencies {
-    implementation("ru.vo1d.web:core")
+    implementation(project(":core:data"))
 
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
