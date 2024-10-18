@@ -30,14 +30,14 @@ class ArticleDaoXp : ArticleDao, XpDao<Article> {
     }
 
     override suspend fun create(vararg items: Article): Int {
-        val inserted = mutableListOf<Int>()
+        val inserted = 0
 
         items.forEach {
-            val id = create(it)
-            inserted.add(id)
+            create(it)
+            inserted.inc()
         }
 
-        return inserted.count()
+        return inserted
     }
 
     override suspend fun read(id: Int) =
