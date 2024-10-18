@@ -18,14 +18,5 @@ abstract class DbContext {
     internal suspend fun <T> query(db: Database?, block: suspend Transaction.() -> T) =
         newSuspendedTransaction(Dispatchers.IO, db, null, block)
 
-    suspend fun <T> queryDatebook(block: suspend Transaction.() -> T) =
-        newSuspendedTransaction(Dispatchers.IO, daybookDb, null, block)
-
-    suspend fun <T> queryNews(block: suspend Transaction.() -> T) =
-        newSuspendedTransaction(Dispatchers.IO, newsDb, null, block)
-
-    suspend fun <T> queryQna(block: suspend Transaction.() -> T) =
-        newSuspendedTransaction(Dispatchers.IO, qnaDb, null, block)
-
     suspend operator fun <T> invoke(block: suspend DbContext.() -> T) = withContext(Dispatchers.IO) { block() }
 }
