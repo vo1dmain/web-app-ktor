@@ -31,7 +31,10 @@ class TimetableDaoXp : TimetableDao, XpDao<Timetable> {
         Timetables.deleteWhere { Timetables.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        TimetableEntity.all().limit(limit, offset).map(TimetableEntity::toModel)
+        TimetableEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(TimetableEntity::toModel)
 
     override suspend fun filter(filters: TimetableFilters, offset: Long, limit: Int): List<Timetable> {
         if (filters == TimetableFilters.Empty)
@@ -44,7 +47,10 @@ class TimetableDaoXp : TimetableDao, XpDao<Timetable> {
             orderBy(Timetables.id)
         }
 
-        return TimetableEntity.wrapRows(query).limit(limit, offset).map(TimetableEntity::toModel)
+        return TimetableEntity.wrapRows(query)
+            .limit(limit)
+            .offset(offset)
+            .map(TimetableEntity::toModel)
     }
 
     override fun UpdateBuilder<*>.mapItem(item: Timetable) {

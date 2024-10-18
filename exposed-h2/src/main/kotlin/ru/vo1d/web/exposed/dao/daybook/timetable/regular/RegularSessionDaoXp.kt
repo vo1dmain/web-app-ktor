@@ -29,9 +29,9 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSession> {
         RegularSessions.deleteWhere { RegularSessions.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        RegularSessionEntity
-            .all()
-            .limit(limit, offset)
+        RegularSessionEntity.all()
+            .limit(limit)
+            .offset(offset)
             .sortedWith(compareBy({ it.dayOfWeek }, { it.timeId }))
             .map(RegularSessionEntity::toModel)
 
@@ -67,7 +67,10 @@ class RegularSessionDaoXp : RegularSessionDao, XpDao<RegularSession> {
             }
         }
 
-        return RegularSessionEntity.wrapRows(query).limit(limit, offset).map(RegularSessionEntity::toModel)
+        return RegularSessionEntity.wrapRows(query)
+            .limit(limit)
+            .offset(offset)
+            .map(RegularSessionEntity::toModel)
     }
 
     override fun UpdateBuilder<*>.mapItem(item: RegularSession) {

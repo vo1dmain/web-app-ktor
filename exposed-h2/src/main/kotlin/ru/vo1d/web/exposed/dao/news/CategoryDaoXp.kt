@@ -30,15 +30,18 @@ class CategoryDaoXp : CategoryDao, XpDao<Category> {
         Categories.deleteWhere { Categories.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        CategoryEntity.all().limit(limit, offset).map(CategoryEntity::toModel)
+        CategoryEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(CategoryEntity::toModel)
 
     override suspend fun filter(filters: CategoryFilters, offset: Long, limit: Int): List<Category> {
         if (filters.parentId == null)
             return list(offset, limit)
 
-        return CategoryEntity
-            .find { Categories.parentId eq filters.parentId }
-            .limit(limit, offset)
+        return CategoryEntity.find { Categories.parentId eq filters.parentId }
+            .limit(limit)
+            .offset(offset)
             .map(CategoryEntity::toModel)
     }
 

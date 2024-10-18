@@ -29,7 +29,10 @@ class PostDaoXp : PostDao, XpDao<Post> {
         Posts.deleteWhere { Posts.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        PostWithDataEntity.all().limit(limit, offset).map(PostWithDataEntity::toView)
+        PostWithDataEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(PostWithDataEntity::toView)
 
     override fun UpdateBuilder<*>.mapItem(item: Post) {
         this[Posts.questionId] = item.questionId

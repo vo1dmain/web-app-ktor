@@ -29,7 +29,10 @@ class QuestionDaoXp : QuestionDao, XpDao<Question> {
         Questions.deleteWhere { Questions.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        QuestionEntity.all().limit(limit, offset).map(QuestionEntity::toModel)
+        QuestionEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(QuestionEntity::toModel)
 
     override fun UpdateBuilder<*>.mapItem(item: Question) {
         this[Questions.theme] = item.theme

@@ -29,9 +29,9 @@ class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSession> {
         DatedSessions.deleteWhere { DatedSessions.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        DatedSessionEntity
-            .all()
-            .limit(limit, offset)
+        DatedSessionEntity.all()
+            .limit(limit)
+            .offset(offset)
             .sortedBy { it.datetime }
             .map(DatedSessionEntity::toModel)
 
@@ -61,7 +61,10 @@ class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSession> {
             }
         }
 
-        return DatedSessionEntity.wrapRows(query).limit(limit, offset).map(DatedSessionEntity::toModel)
+        return DatedSessionEntity.wrapRows(query)
+            .limit(limit)
+            .offset(offset)
+            .map(DatedSessionEntity::toModel)
     }
 
     override fun UpdateBuilder<*>.mapItem(item: DatedSession) {
