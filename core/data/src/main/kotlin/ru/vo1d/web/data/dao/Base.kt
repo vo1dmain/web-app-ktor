@@ -1,7 +1,5 @@
 package ru.vo1d.web.data.dao
 
-import ru.vo1d.web.data.filters.Filters
-
 sealed interface Dao
 
 sealed interface CreateDao<PK, I> : Dao {
@@ -22,11 +20,6 @@ sealed interface DeleteDao<PK> : Dao {
     suspend fun delete(id: PK): Int
 }
 
-
-sealed interface CudDao<PK, I> : CreateDao<PK, I>, UpdateDao<I>, DeleteDao<PK>
-sealed interface CrudDao<PK, I> : CreateDao<PK, I>, ReadDao<PK, I>, UpdateDao<I>, DeleteDao<PK>
-
-
 sealed interface ListDao<I> : Dao {
     suspend fun list(offset: Long, limit: Int): List<I>
 }
@@ -35,7 +28,7 @@ sealed interface AllDao<I> : Dao {
     suspend fun all(): List<I>
 }
 
-sealed interface FilterDao<I, F : Filters<F>> : Dao {
+sealed interface FilterDao<I, F> : Dao {
     suspend fun filter(filters: F, offset: Long, limit: Int): List<I>
 }
 
