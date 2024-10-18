@@ -7,11 +7,11 @@ group = "ru.vo1d.web"
 version = "0.8.1"
 
 kotlin {
-    jvmToolchain(rootProject.extra["jvmVersion"] as Int)
+    jvmToolchain(libs.versions.jvm.get().toInt())
 }
 
 dependencies {
-    implementation(project(":data"))
+    implementation(project(":core:data"))
 
     api(libs.ktor.server.core)
     implementation(libs.ktor.server.call.logging)
