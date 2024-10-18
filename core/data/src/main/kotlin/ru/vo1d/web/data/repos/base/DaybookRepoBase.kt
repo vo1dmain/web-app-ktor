@@ -1,4 +1,4 @@
-package ru.vo1d.web.data.repos.impl
+package ru.vo1d.web.data.repos.base
 
 import ru.vo1d.web.data.dao.*
 import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
@@ -13,7 +13,7 @@ import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 
-abstract class DaybookRepoImpl : DaybookRepo {
+abstract class DaybookRepoBase : DaybookRepo {
     protected abstract val timetableDao: TimetableDao
 
     protected abstract val regularSessionDao: RegularSessionDao

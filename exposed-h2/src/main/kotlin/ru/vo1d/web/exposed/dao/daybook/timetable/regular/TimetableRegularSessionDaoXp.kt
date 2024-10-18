@@ -19,7 +19,6 @@ class TimetableRegularSessionDaoXp : TimetableRegularSessionDao, XpDao<Timetable
     override suspend fun create(vararg items: TimetableSession) =
         TimetableRegularSessions.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
 
-
     override suspend fun delete(id: TimetableSession) =
         TimetableRegularSessions.deleteWhere {
             (sessionId eq id.sessionId) and (timetableId eq id.timetableId)

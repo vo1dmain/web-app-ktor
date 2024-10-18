@@ -1,4 +1,4 @@
-package ru.vo1d.web.data.repos.impl
+package ru.vo1d.web.data.repos.base
 
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.data.dao.CategoryDao
@@ -9,7 +9,7 @@ import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.Category
 
-abstract class NewsRepoImpl : NewsRepo {
+abstract class NewsRepoBase : NewsRepo {
     protected abstract val articleDao: ArticleDao
     protected abstract val categoryDao: CategoryDao
 

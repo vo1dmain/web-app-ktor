@@ -53,12 +53,14 @@ class ArticleDaoXp : ArticleDao, XpDao<Article> {
         ArticleViewEntity.all().limit(limit, offset).map(ArticleViewEntity::toModel)
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int): List<ArticleView> {
-        if (filters.categories == null) return list(offset, limit)
+        if (filters.categories == null)
+            return list(offset, limit)
 
-        val query = Articles.innerJoin(ArticleCategories).select(Articles.columns)
+        val query = Articles.innerJoin(ArticleCategories)
+            .select(Articles.columns)
             .apply {
                 filters.categories?.let {
-                    adjustWhere { ArticleCategories.categoryId.inList(it) }
+                    adjustWhere { ArticleCategories.categoryId inList it }
                     groupBy(Articles.id)
                 }
             }

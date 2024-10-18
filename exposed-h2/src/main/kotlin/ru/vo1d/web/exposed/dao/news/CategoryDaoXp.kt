@@ -33,7 +33,8 @@ class CategoryDaoXp : CategoryDao, XpDao<Category> {
         CategoryEntity.all().limit(limit, offset).map(CategoryEntity::toModel)
 
     override suspend fun filter(filters: CategoryFilters, offset: Long, limit: Int): List<Category> {
-        if (filters.parentId == null) return list(offset, limit)
+        if (filters.parentId == null)
+            return list(offset, limit)
 
         return CategoryEntity
             .find { Categories.parentId eq filters.parentId }
