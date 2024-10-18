@@ -76,9 +76,9 @@ class DaybookRepoXp(override val dbContext: DbContext) : DaybookRepoBase(), XpRe
     }
 
 
-    override suspend fun timetables(page: Int?, filtersBuilder: TimetableFilters.Builder.() -> Unit) =
+    override suspend fun timetables(page: Int?, filters: TimetableFilters) =
         dbContext {
-            query(daybookDb) { super.timetables(page, filtersBuilder) }
+            query(daybookDb) { super.timetables(page, filters) }
         }
 
 
@@ -100,16 +100,16 @@ class DaybookRepoXp(override val dbContext: DbContext) : DaybookRepoBase(), XpRe
 
     override suspend fun regularSessions(
         page: Int?,
-        filtersBuilder: RegularSessionFilters.Builder.() -> Unit
+        filters: RegularSessionFilters
     ) = dbContext {
-        query(daybookDb) { super.regularSessions(page, filtersBuilder) }
+        query(daybookDb) { super.regularSessions(page, filters) }
     }
 
     override suspend fun datedSessions(
         page: Int?,
-        filtersBuilder: DatedSessionFilters.Builder.() -> Unit
+        filters: DatedSessionFilters
     ) = dbContext {
-        query(daybookDb) { super.datedSessions(page, filtersBuilder) }
+        query(daybookDb) { super.datedSessions(page, filters) }
     }
 
     override suspend fun addRegularSession(item: RegularSession) = dbContext {

@@ -36,7 +36,8 @@ class DatedSessionDaoXp : DatedSessionDao, XpDao<DatedSession> {
             .map(DatedSessionEntity::toModel)
 
     override suspend fun filter(filters: DatedSessionFilters, offset: Long, limit: Int): List<DatedSession> {
-        if (filters.areEmpty()) return list(offset, limit)
+        if (filters == DatedSessionFilters.Empty)
+            return list(offset, limit)
 
         val query = DatedSessions.selectAll().apply {
             filters.timetableId?.let {

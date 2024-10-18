@@ -1,13 +1,15 @@
 package ru.vo1d.web.server.routing
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
+import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
+import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
+import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.entities.daybook.timetable.Timetable
 import ru.vo1d.web.entities.daybook.timetable.TimetableFormat
@@ -71,10 +73,13 @@ private fun Route.metaRouting(repo: DaybookRepo) {
 
 private fun Route.timetablesRouting(repo: DaybookRepo) {
     get<Timetables> {
-        val list = repo.timetables(it.page) {
-            groupCode = it.group
-            typeId = it.type
-        }
+        val list = repo.timetables(
+            it.page,
+            TimetableFilters(
+                groupCode = it.group,
+                typeId = it.type
+            )
+        )
         call.respond(list.failIfEmpty())
     }
 
@@ -114,16 +119,19 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
 
 private fun Route.sessionsRouting(repo: DaybookRepo) {
     get<RegularSessions> {
-        val list = repo.regularSessions(it.page) {
-            timetableId = it.timetable
-            subject = it.subject
-            instructor = it.instructor
-            place = it.place
-            typeId = it.type
-            dayOfWeek = it.day
-            timeId = it.time
-            weekOption = it.weekOption
-        }
+        val list = repo.regularSessions(
+            it.page,
+            RegularSessionFilters(
+                timetableId = it.timetable,
+                subject = it.subject,
+                instructor = it.instructor,
+                place = it.place,
+                typeId = it.type,
+                dayOfWeek = it.day,
+                timeId = it.time,
+                weekOption = it.weekOption
+            )
+        )
         call.respond(list.failIfEmpty())
     }
 
@@ -134,14 +142,17 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
     }
 
     get<DatedSessions> {
-        val list = repo.datedSessions(it.page) {
-            timetableId = it.timetable
-            subject = it.subject
-            instructor = it.instructor
-            place = it.place
-            typeId = it.type
-            datetime = it.datetime
-        }
+        val list = repo.datedSessions(
+            it.page,
+            DatedSessionFilters(
+                timetableId = it.timetable,
+                subject = it.subject,
+                instructor = it.instructor,
+                place = it.place,
+                typeId = it.type,
+                datetime = it.datetime
+            )
+        )
         call.respond(list.failIfEmpty())
     }
 
