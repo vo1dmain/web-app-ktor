@@ -29,7 +29,10 @@ class AnswerDaoXp : AnswerDao, XpDao<Answer> {
         Answers.deleteWhere { Answers.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        AnswerEntity.all().limit(limit, offset).map(AnswerEntity::toModel)
+        AnswerEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(AnswerEntity::toModel)
 
     override fun UpdateBuilder<*>.mapItem(item: Answer) {
         this[Answers.questionId] = item.questionId

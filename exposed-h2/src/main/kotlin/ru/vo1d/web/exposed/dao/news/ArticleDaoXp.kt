@@ -50,7 +50,10 @@ class ArticleDaoXp : ArticleDao, XpDao<Article> {
         Articles.deleteWhere { Articles.id eq id }
 
     override suspend fun list(offset: Long, limit: Int) =
-        ArticleViewEntity.all().limit(limit, offset).map(ArticleViewEntity::toModel)
+        ArticleViewEntity.all()
+            .limit(limit)
+            .offset(offset)
+            .map(ArticleViewEntity::toModel)
 
     override suspend fun filter(filters: ArticleFilters, offset: Long, limit: Int): List<ArticleView> {
         if (filters.categories == null)
@@ -65,7 +68,10 @@ class ArticleDaoXp : ArticleDao, XpDao<Article> {
                 }
             }
 
-        return ArticleViewEntity.wrapRows(query).limit(limit, offset).map(ArticleViewEntity::toModel)
+        return ArticleViewEntity.wrapRows(query)
+            .limit(limit)
+            .offset(offset)
+            .map(ArticleViewEntity::toModel)
     }
 
     override fun UpdateBuilder<*>.mapItem(item: Article) {
