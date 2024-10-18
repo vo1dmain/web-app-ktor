@@ -9,7 +9,7 @@ import ru.vo1d.web.exposed.utils.tables.StringEntity
 import ru.vo1d.web.exposed.utils.tables.StringEntityClass
 import ru.vo1d.web.exposed.utils.tables.StringIdTable
 
-object Groups : StringIdTable(idColLength = 16) {
+object Groups : StringIdTable(idColumnLength = 16) {
     val levelId = reference("levelId", GraduationLevels, CASCADE, CASCADE)
     val degreeId = optReference("degreeId", GraduationDegrees, CASCADE, CASCADE)
     val formId = reference("formId", EducationForms, CASCADE, CASCADE)

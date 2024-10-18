@@ -1,8 +1,8 @@
 package ru.vo1d.web.data.repos
 
 sealed interface ListRepo {
-    val startPage get() = defaultPage
-    val limit get() = defaultLimit
+    val startPage get() = DEFAULT_PAGE
+    val limit get() = DEFAULT_LIMIT
 
     fun offset(page: Int?): Long {
         val p = page ?: startPage
@@ -10,7 +10,7 @@ sealed interface ListRepo {
     }
 
     companion object {
-        const val defaultPage = 1
-        const val defaultLimit = 10
+        const val DEFAULT_PAGE = 1
+        const val DEFAULT_LIMIT = 10
     }
 }

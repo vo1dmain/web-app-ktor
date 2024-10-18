@@ -5,7 +5,7 @@ import ru.vo1d.web.data.dao.delegates.dao
 import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
-import ru.vo1d.web.data.repos.impl.DaybookRepoImpl
+import ru.vo1d.web.data.repos.base.DaybookRepoBase
 import ru.vo1d.web.entities.daybook.group.Group
 import ru.vo1d.web.entities.daybook.timetable.Timetable
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
@@ -21,7 +21,7 @@ import ru.vo1d.web.exposed.dao.daybook.timetable.dated.TimetableDatedSessionDaoX
 import ru.vo1d.web.exposed.dao.daybook.timetable.regular.RegularSessionDaoXp
 import ru.vo1d.web.exposed.dao.daybook.timetable.regular.TimetableRegularSessionDaoXp
 
-class DaybookRepoXp(override val dbContext: DbContext) : DaybookRepoImpl(), XpRepo {
+class DaybookRepoXp(override val dbContext: DbContext) : DaybookRepoBase(), XpRepo {
     override val timetableDao by dao<TimetableDaoXp>()
 
     override val regularSessionDao by crudDao<RegularSessionDaoXp>()

@@ -7,7 +7,7 @@ import ru.vo1d.web.exposed.utils.tables.StringEntity
 import ru.vo1d.web.exposed.utils.tables.StringEntityClass
 import ru.vo1d.web.exposed.utils.tables.StringIdTable
 
-object GraduationLevels : StringIdTable(idColLength = 16) {
+object GraduationLevels : StringIdTable(idColumnLength = 16) {
     val title = varchar("title", 64)
 }
 
