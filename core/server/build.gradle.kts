@@ -27,7 +27,7 @@ dependencies {
 
     implementation(libs.logback.classic)
 
-    api(libs.kodein.ktor.server.jvm)
+    api(project(":kodein-ktor"))
 
     testImplementation(kotlin("test"))
 

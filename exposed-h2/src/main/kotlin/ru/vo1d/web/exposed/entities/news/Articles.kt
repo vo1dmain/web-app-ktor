@@ -7,11 +7,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
-import ru.vo1d.web.entities.news.article.ArticleView
-import ru.vo1d.web.exposed.entities.HasModel
-import ru.vo1d.web.entities.news.article.Article as ArticleModel
 
-object Articles : IntIdTable() {
+internal object Articles : IntIdTable() {
     val title = varchar("title", 64)
     val body = varchar("body", 1024)
     val preview = varchar("preview", 128).nullable()
@@ -20,7 +17,7 @@ object Articles : IntIdTable() {
     val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)
 }
 
-class ArticleEntity(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel> {
+internal class ArticleEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<ArticleEntity>(Articles)
 
     val title by Articles.title
@@ -30,20 +27,9 @@ class ArticleEntity(id: EntityID<Int>) : IntEntity(id), HasModel<ArticleModel> {
     val dateTime by Articles.dateTime
     val timeZone by Articles.timeZone
     val categories by CategoryEntity via ArticleCategories
-
-    override fun toModel() = ArticleModel(
-        id.value,
-        title,
-        body,
-        preview,
-        gallery?.split(","),
-        dateTime,
-        TimeZone.of(timeZone),
-        categories.map { it.id.value }.toList()
-    )
 }
 
-class ArticleViewEntity(id: EntityID<Int>): IntEntity(id), HasModel<ArticleView> {
+internal class ArticleViewEntity(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<ArticleViewEntity>(Articles)
 
     val title by Articles.title
@@ -51,13 +37,4 @@ class ArticleViewEntity(id: EntityID<Int>): IntEntity(id), HasModel<ArticleView>
     val dateTime by Articles.dateTime
     val timeZone by Articles.timeZone
     val categories by CategoryEntity via ArticleCategories
-
-    override fun toModel() = ArticleView(
-        id.value,
-        title,
-        preview,
-        dateTime,
-        TimeZone.of(timeZone),
-        categories.map { it.id.value }.toList()
-    )
 }

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TimetableSession(
-    val timetableId: Int? = null,
+    val timetableId: Int,
     val sessionId: Int
 )

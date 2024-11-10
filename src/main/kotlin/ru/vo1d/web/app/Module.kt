@@ -11,15 +11,15 @@ import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.data.repos.QnaRepo
 import ru.vo1d.web.exposed.context.DbContext
 import ru.vo1d.web.exposed.context.H2Context
-import ru.vo1d.web.exposed.repos.DaybookRepoXp
-import ru.vo1d.web.exposed.repos.NewsRepoXp
-import ru.vo1d.web.exposed.repos.QnaRepoXp
+import ru.vo1d.web.exposed.exposedDaoModule
 
 fun Application.mainModule() {
     di {
-        bind<NewsRepo>() with singleton { NewsRepoXp(H2Context) }
-        bind<QnaRepo>() with singleton { QnaRepoXp(H2Context) }
-        bind<DaybookRepo>() with singleton { DaybookRepoXp(H2Context) }
+        import(exposedDaoModule)
+
+        bind<NewsRepo>() with singleton { NewsRepo(di) }
+        bind<QnaRepo>() with singleton { QnaRepo(di) }
+        bind<DaybookRepo>() with singleton { DaybookRepo(di) }
         bind<DbContext>() with singleton { H2Context }
     }
 

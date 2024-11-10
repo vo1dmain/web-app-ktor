@@ -3,7 +3,7 @@ package ru.vo1d.web.exposed.entities.news
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.Table
 
-object ArticleCategories : Table() {
+internal object ArticleCategories : Table() {
     val articleId = reference("articleId", Articles, CASCADE, CASCADE)
     val categoryId = reference("categoryId", Categories, CASCADE, CASCADE)
 

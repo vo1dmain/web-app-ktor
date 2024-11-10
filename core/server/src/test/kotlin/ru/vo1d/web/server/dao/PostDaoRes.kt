@@ -5,18 +5,18 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
+import ru.vo1d.web.data.dao.AllDao
 import ru.vo1d.web.data.dao.PostDao
 import ru.vo1d.web.data.extensions.open
 import ru.vo1d.web.data.extensions.resource
 import ru.vo1d.web.entities.qna.answer.Answer
 import ru.vo1d.web.entities.qna.post.Post
 import ru.vo1d.web.entities.qna.post.PostView
-import ru.vo1d.web.entities.qna.post.PostWithData
 import ru.vo1d.web.entities.qna.question.Question
 import ru.vo1d.web.server.clampedSubList
 
 @OptIn(ExperimentalSerializationApi::class)
-class PostDaoRes : PostDao, JsonDao, AllDaoTest<Post> {
+class PostDaoRes : PostDao, JsonDao, AllDao<Post> {
     private val posts = resource("/data/posts.json")
     private val questions = resource("/data/questions.json")
     private val answers = resource("/data/answers.json")
@@ -37,23 +37,20 @@ class PostDaoRes : PostDao, JsonDao, AllDaoTest<Post> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun read(id: Int) = all()
-        .map { post ->
-            val question = allQuestions().first { it.id == post.questionId }
-            val answer = allAnswers().first { it.id == post.answerId }
-            PostWithData(post.id!!, question, answer)
-        }.firstOrNull { it.id == id }
+    override suspend fun read(id: Int): Post? {
+        return all().firstOrNull { it.id == id }
+    }
 
 
     override suspend fun update(item: Post): Int {
         TODO("Not yet implemented")
     }
 
-    override suspend fun delete(id: Int): Int {
+    override suspend fun delete(vararg items: Post): Int {
         TODO("Not yet implemented")
     }
 
-    override suspend fun list(offset: Long, limit: Int) = all()
+    suspend fun page(offset: Long, limit: Int) = all()
         .clampedSubList(offset.toInt(), limit)
         .map { post ->
             val question = allQuestions().first { it.id == post.questionId }

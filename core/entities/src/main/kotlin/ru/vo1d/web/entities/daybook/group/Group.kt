@@ -8,4 +8,5 @@ data class Group(
     val levelId: String,
     val degreeId: String?,
     val formId: String,
+    val tableTypes: List<String>? = null
 )

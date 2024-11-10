@@ -97,7 +97,7 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
         val input = call.receive<TimetableSession>()
 
         val parentId = it.parent.id
-        val finalId = input.timetableId ?: parentId
+        val finalId = input.timetableId
 
         if (finalId != parentId) throw UnprocessableEntityException(
             TimetableSession::timetableId.name,

@@ -12,6 +12,6 @@ kotlin {
 dependencies {
     api(project(":core:entities"))
 
-    implementation(kotlin("reflect"))
+    implementation(project(":kodein-ktor"))
     implementation(libs.kotlinx.coroutines.core)
 }

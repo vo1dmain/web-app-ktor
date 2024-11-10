@@ -1,20 +1,16 @@
 package ru.vo1d.web.exposed.entities.daybook.group
 
 import org.jetbrains.exposed.dao.id.EntityID
-import ru.vo1d.web.entities.daybook.group.type.TableType
-import ru.vo1d.web.exposed.entities.HasModel
-import ru.vo1d.web.exposed.utils.tables.StringEntity
-import ru.vo1d.web.exposed.utils.tables.StringEntityClass
-import ru.vo1d.web.exposed.utils.tables.StringIdTable
+import ru.vo1d.web.exposed.tables.StringEntity
+import ru.vo1d.web.exposed.tables.StringEntityClass
+import ru.vo1d.web.exposed.tables.StringIdTable
 
-object TableTypes : StringIdTable(idColumnLength = 8) {
+internal object TableTypes : StringIdTable(idColumnLength = 8) {
     val title = varchar("title", 32)
 }
 
-class TableTypeEntity(id: EntityID<String>) : StringEntity(id), HasModel<TableType> {
+internal class TableTypeEntity(id: EntityID<String>) : StringEntity(id) {
     companion object : StringEntityClass<TableTypeEntity>(TableTypes)
 
     val title by TableTypes.title
-
-    override fun toModel() = TableType(id.value, title)
 }

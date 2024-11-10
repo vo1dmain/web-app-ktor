@@ -11,6 +11,7 @@ kotlin {
 
 dependencies {
     implementation(project(":core:data"))
+    implementation(project(":kodein-ktor"))
 
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)

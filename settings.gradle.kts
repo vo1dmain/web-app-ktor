@@ -21,4 +21,4 @@ include(":core:data")
 include(":core:entities")
 include(":core:server")
 include(":exposed-h2")
-
+include(":kodein-ktor")

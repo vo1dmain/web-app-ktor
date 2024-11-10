@@ -11,11 +11,10 @@ import org.junit.Test
 import org.kodein.di.bind
 import org.kodein.di.ktor.di
 import org.kodein.di.singleton
-import ru.vo1d.web.data.repos.base.QnaRepoBase
+import ru.vo1d.web.data.repos.QnaRepo
 import ru.vo1d.web.entities.qna.post.PostView
 import ru.vo1d.web.entities.qna.post.PostWithData
 import ru.vo1d.web.entities.qna.question.Question
-import ru.vo1d.web.server.repos.QnaRepoTest
 import ru.vo1d.web.server.routing.qnaRouting
 import kotlin.test.assertEquals
 
@@ -80,7 +79,8 @@ class QnaTest {
 
     private fun Application.qnaTest() {
         di {
-            bind<QnaRepoBase> { singleton { QnaRepoTest() } }
+            import(testDaoModule)
+            bind<QnaRepo>() with singleton { QnaRepo(di) }
         }
 
         routing {
