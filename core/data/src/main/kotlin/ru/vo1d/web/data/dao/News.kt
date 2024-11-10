@@ -6,18 +6,8 @@ import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.Category
 
-interface ArticleDao :
-    CreateDao<Int, Article>,
-    ReadDao<Int, Article>,
-    UpdateDao<Article>,
-    DeleteDao<Int>,
-    ListDao<ArticleView>,
-    FilterDao<ArticleView, ArticleFilters>
+interface ArticleDao : Dao<Int, Article>
 
-interface CategoryDao :
-    CreateDao<Int, Category>,
-    ReadDao<Int, Category>,
-    UpdateDao<Category>,
-    DeleteDao<Int>,
-    ListDao<Category>,
-    FilterDao<Category, CategoryFilters>
+interface CategoryDao : Dao<Int, Category>, Pageable<Category>, Filterable<CategoryFilters, Category>
+
+interface ArticleViewDao : Pageable<ArticleView>, Filterable<ArticleFilters, ArticleView>

@@ -14,7 +14,6 @@ import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
 import ru.vo1d.web.entities.news.category.Category
-import ru.vo1d.web.server.repos.NewsRepoTest
 import ru.vo1d.web.server.routing.newsRouting
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -101,7 +100,8 @@ class NewsTest {
 
     private fun Application.newsTest() {
         di {
-            bind<NewsRepo> { singleton { NewsRepoTest() } }
+            import(testDaoModule)
+            bind<NewsRepo>() with singleton { NewsRepo(di) }
         }
 
         routing {

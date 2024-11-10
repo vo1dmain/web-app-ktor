@@ -4,40 +4,39 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.AnswerDao
 import ru.vo1d.web.entities.qna.answer.Answer
-import ru.vo1d.web.exposed.dao.XpDao
 import ru.vo1d.web.exposed.entities.qna.AnswerEntity
 import ru.vo1d.web.exposed.entities.qna.Answers
+import ru.vo1d.web.exposed.mappers.mapItem
+import ru.vo1d.web.exposed.mappers.toDomain
 
-class AnswerDaoXp : AnswerDao, XpDao<Answer> {
-    override suspend fun create(item: Answer) =
-        Answers.insertAndGetId { it.mapItem(item) }.value
+class AnswerDaoXp : AnswerDao {
+    override suspend fun create(item: Answer): Int {
+        return Answers.insertAndGetId { it.mapItem(item) }.value
+    }
 
-    override suspend fun create(vararg items: Answer) =
-        Answers.batchInsert(items.asIterable()) { mapItem(it) }.count()
+    override suspend fun create(vararg items: Answer): Int {
+        return Answers.batchInsert(items.asIterable()) { mapItem(it) }.count()
+    }
 
-    override suspend fun read(id: Int) =
-        AnswerEntity.findById(id)?.toModel()
+    override suspend fun read(id: Int): Answer? {
+        return AnswerEntity.findById(id)?.toDomain()
+    }
 
-    override suspend fun update(item: Answer) =
-        Answers.update({ Answers.id eq item.id }) { it.mapItem(item) }
+    override suspend fun update(item: Answer): Int {
+        return Answers.update({ Answers.id eq item.id }) { it.mapItem(item) }
+    }
 
-    override suspend fun delete(id: Int) =
-        Answers.deleteWhere { Answers.id eq id }
+    override suspend fun delete(items: Array<out Answer>): Int {
+        return Answers.deleteWhere { Answers.id eq id }
+    }
 
-    override suspend fun list(offset: Long, limit: Int) =
-        AnswerEntity.all()
+    override suspend fun page(offset: Long, limit: Int): List<Answer> {
+        return AnswerEntity.all()
             .limit(limit)
             .offset(offset)
-            .map(AnswerEntity::toModel)
-
-    override fun UpdateBuilder<*>.mapItem(item: Answer) {
-        this[Answers.questionId] = item.questionId
-        this[Answers.body] = item.body
-        item.dateTime?.let { this[Answers.dateTime] = it }
-        item.timeZone?.let { this[Answers.timeZone] = it.id }
+            .map(AnswerEntity::toDomain)
     }
 }

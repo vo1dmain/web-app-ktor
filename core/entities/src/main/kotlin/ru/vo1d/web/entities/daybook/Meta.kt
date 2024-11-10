@@ -1,7 +1,7 @@
 package ru.vo1d.web.entities.daybook
 
 import kotlinx.serialization.Serializable
-import ru.vo1d.web.entities.daybook.group.GroupWithTypes
+import ru.vo1d.web.entities.daybook.group.Group
 import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
 import ru.vo1d.web.entities.daybook.group.form.EducationForm
 import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
@@ -17,7 +17,7 @@ data class Meta(
     val degrees: List<GraduationDegree>,
     val forms: List<EducationForm>,
     val tableTypes: List<TableType>,
-    val groups: List<GroupWithTypes>,
+    val groups: List<Group>,
     val startTimes: List<StartTime>,
     val sessionTypes: List<SessionType>
 )

@@ -1,38 +1,39 @@
 package ru.vo1d.web.exposed.dao.daybook.group
 
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertIgnoreAndGetId
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.update
 import ru.vo1d.web.data.dao.TableTypeDao
 import ru.vo1d.web.entities.daybook.group.type.TableType
-import ru.vo1d.web.exposed.dao.XpDao
 import ru.vo1d.web.exposed.entities.daybook.group.TableTypeEntity
 import ru.vo1d.web.exposed.entities.daybook.group.TableTypes
+import ru.vo1d.web.exposed.mappers.mapItem
+import ru.vo1d.web.exposed.mappers.toDomain
 
-class TableTypeDaoXp : TableTypeDao, XpDao<TableType> {
-    override suspend fun create(item: TableType) =
-        TableTypes.insertIgnoreAndGetId { it.mapItem(item) }?.value
+class TableTypeDaoXp : TableTypeDao {
+    override suspend fun create(item: TableType): String? {
+        return TableTypes.insertIgnoreAndGetId { it.mapItem(item) }?.value
+    }
 
-    override suspend fun create(vararg items: TableType) =
-        TableTypes.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
+    override suspend fun create(vararg items: TableType): Int {
+        return TableTypes.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
+    }
 
-    override suspend fun read(id: String) =
-        TableTypeEntity.findById(id)?.toModel()
+    override suspend fun read(id: String): TableType? {
+        return TableTypeEntity.findById(id)?.toDomain()
+    }
 
-    override suspend fun update(item: TableType) =
-        TableTypes.update({ TableTypes.id eq item.id }) { it[title] = item.title }
+    override suspend fun update(item: TableType): Int {
+        return TableTypes.update({ TableTypes.id eq item.id }) { it[title] = item.title }
+    }
 
-    override suspend fun delete(id: String) =
-        TableTypes.deleteWhere { TableTypes.id eq id }
+    override suspend fun delete(vararg items: TableType): Int {
+        return TableTypes.deleteWhere { TableTypes.id inList items.map { it.id } }
+    }
 
-    override suspend fun all() =
-        TableTypeEntity.all().map(TableTypeEntity::toModel)
-
-    override fun UpdateBuilder<*>.mapItem(item: TableType) {
-        this[TableTypes.id] = item.id
-        this[TableTypes.title] = item.title
+    override suspend fun all(): List<TableType> {
+        return TableTypeEntity.all().map(TableTypeEntity::toDomain)
     }
 }
