@@ -2,16 +2,16 @@
 gradleVersions = "0.51.0"
 h2 = "2.3.232"
 
-jetbrainsExposed = "0.55.0"
+jetbrainsExposed = "0.61.0"
 jvm = "17"
 
-kodein = "7.22.0"
-kotlin = "2.0.21"
-kotlinxSerialization = "1.7.3"
-kotlinxCoroutines = "1.9.0"
-kotlinxDatetime = "0.6.1"
-ktor = "3.0.0"
-logback = "1.5.11"
+kodein = "7.25.0"
+kotlin = "2.1.20"
+kotlinxSerialization = "1.8.1"
+kotlinxCoroutines = "1.10.2"
+kotlinxDatetime = "0.6.2"
+ktor = "3.1.2"
+logback = "1.5.18"
 
 [libraries]
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }
@@ -22,7 +22,6 @@ exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datet
 h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
 
 kodein-ktor = { module = "org.kodein.di:kodein-di-framework-ktor-server-jvm", version.ref = "kodein" }
-kodein-di = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
