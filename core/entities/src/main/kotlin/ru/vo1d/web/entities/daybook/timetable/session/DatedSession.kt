@@ -15,6 +15,6 @@ data class DatedSession(
     override val place: String,
     override val typeId: Int,
     override val duration: DateTimePeriod? = null,
-    val datetime: LocalDateTime,
+    val dateTime: LocalDateTime,
     val timeZone: TimeZone? = null
 ) : Session

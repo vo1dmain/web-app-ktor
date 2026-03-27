@@ -1,11 +1,11 @@
 package ru.vo1d.web.exposed.entities.daybook.timetable
 
 import kotlinx.datetime.TimeZone
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.kotlin.datetime.time
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.datetime.time
 
 internal object SessionStartTimes : IntIdTable() {
     val time = time("time").uniqueIndex()

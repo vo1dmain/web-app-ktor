@@ -2,7 +2,7 @@ package ru.vo1d.web.exposed.mappers
 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toDateTimePeriod
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
+import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.session.SessionType
@@ -16,7 +16,7 @@ internal fun UpdateBuilder<*>.mapItem(item: DatedSession) {
     this[DatedSessions.place] = item.place
     this[DatedSessions.typeId] = item.typeId
     item.duration?.let { this[DatedSessions.duration] = it.toDuration() }
-    this[DatedSessions.datetime] = item.datetime
+    this[DatedSessions.dateTime] = item.dateTime
     item.timeZone?.let { this[DatedSessions.timeZone] = it.id }
 }
 
@@ -47,7 +47,7 @@ internal fun DatedSessionEntity.toDomain() = DatedSession(
     place,
     typeId.value,
     duration.toDateTimePeriod(),
-    datetime,
+    dateTime,
     TimeZone.of(timeZone)
 )
 

@@ -1,17 +1,17 @@
 [versions]
-gradleVersions = "0.51.0"
-h2 = "2.3.232"
+gradleVersions = "0.53.0"
+h2 = "2.4.240"
 
-jetbrainsExposed = "0.61.0"
-jvm = "17"
+jetbrainsExposed = "1.1.1"
+jvm = "21"
 
-kodein = "7.25.0"
-kotlin = "2.1.20"
-kotlinxSerialization = "1.8.1"
+kodein = "7.31.0"
+kotlin = "2.3.20"
+kotlinxSerialization = "1.10.0"
 kotlinxCoroutines = "1.10.2"
-kotlinxDatetime = "0.6.2"
-ktor = "3.1.2"
-logback = "1.5.18"
+kotlinxDatetime = "0.7.1-0.6.x-compat"
+ktor = "3.4.2"
+logback = "1.5.32"
 
 [libraries]
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }

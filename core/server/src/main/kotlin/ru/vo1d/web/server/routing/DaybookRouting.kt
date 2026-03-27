@@ -150,7 +150,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
                 instructor = it.instructor,
                 place = it.place,
                 typeId = it.type,
-                datetime = it.datetime
+                dateTime = it.dateTime
             )
         )
         call.respond(list.failIfEmpty())

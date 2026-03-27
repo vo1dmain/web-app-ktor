@@ -1,12 +1,12 @@
 package ru.vo1d.web.exposed.entities.news
 
 import kotlinx.datetime.TimeZone
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.datetime.CurrentDateTime
+import org.jetbrains.exposed.v1.datetime.datetime
 
 internal object Articles : IntIdTable() {
     val title = varchar("title", 64)

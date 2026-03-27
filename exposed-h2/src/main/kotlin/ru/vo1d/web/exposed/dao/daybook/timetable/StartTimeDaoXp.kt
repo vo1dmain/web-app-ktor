@@ -1,10 +1,11 @@
 package ru.vo1d.web.exposed.dao.daybook.timetable
 
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertIgnoreAndGetId
-import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.deleteWhere
+import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
+import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.StartTimeDao
 import ru.vo1d.web.entities.daybook.timetable.time.StartTime
 import ru.vo1d.web.exposed.entities.daybook.timetable.SessionStartTimes

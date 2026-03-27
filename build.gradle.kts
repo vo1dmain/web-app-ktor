@@ -21,4 +21,5 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:server"))
     implementation(project(":exposed-h2"))
+    implementation(libs.kodein.ktor)
 }

@@ -1,10 +1,11 @@
 package ru.vo1d.web.exposed.dao.qna
 
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.deleteWhere
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.PostDao
 import ru.vo1d.web.entities.qna.post.Post
 import ru.vo1d.web.exposed.entities.qna.PostEntity

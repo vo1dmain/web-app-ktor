@@ -1,7 +1,8 @@
 package ru.vo1d.web.exposed.dao.daybook.timetable.dated
 
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
+import org.jetbrains.exposed.v1.jdbc.*
 import ru.vo1d.web.data.dao.DatedSessionDao
 import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
@@ -36,7 +37,7 @@ class DatedSessionDaoXp : DatedSessionDao {
         return DatedSessionEntity.all()
             .limit(limit)
             .offset(offset)
-            .sortedBy { it.datetime }
+            .sortedBy { it.dateTime }
             .map(DatedSessionEntity::toDomain)
     }
 
@@ -61,8 +62,8 @@ class DatedSessionDaoXp : DatedSessionDao {
             filters.typeId?.let {
                 andWhere { DatedSessions.typeId eq it }
             }
-            filters.datetime?.let {
-                andWhere { DatedSessions.datetime eq it }
+            filters.dateTime?.let {
+                andWhere { DatedSessions.dateTime eq it }
             }
             limit(limit)
             offset(offset)

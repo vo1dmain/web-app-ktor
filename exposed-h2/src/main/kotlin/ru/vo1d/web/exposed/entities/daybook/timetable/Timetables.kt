@@ -1,12 +1,12 @@
 package ru.vo1d.web.exposed.entities.daybook.timetable
 
-import org.jetbrains.exposed.dao.Entity
-import org.jetbrains.exposed.dao.InnerTableLink
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
+import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.Entity
+import org.jetbrains.exposed.v1.dao.InnerTableLink
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
 import ru.vo1d.web.entities.daybook.timetable.TimetableFormat
 import ru.vo1d.web.exposed.entities.daybook.group.Groups
 import ru.vo1d.web.exposed.entities.daybook.group.TableTypes

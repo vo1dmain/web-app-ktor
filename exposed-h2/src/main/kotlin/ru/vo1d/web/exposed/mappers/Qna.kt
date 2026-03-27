@@ -1,7 +1,7 @@
 package ru.vo1d.web.exposed.mappers
 
 import kotlinx.datetime.TimeZone
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
+import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.entities.qna.answer.Answer
 import ru.vo1d.web.entities.qna.post.Post
 import ru.vo1d.web.entities.qna.post.PostView

@@ -1,7 +1,7 @@
 package ru.vo1d.web.exposed.dao.daybook.timetable.regular
 
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.jdbc.*
 import ru.vo1d.web.data.dao.RegularSessionDao
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
@@ -36,7 +36,7 @@ class RegularSessionDaoXp : RegularSessionDao {
         return RegularSessionEntity.all()
             .limit(limit)
             .offset(offset)
-            .sortedWith(compareBy({ it.dayOfWeek }, { it.timeId }))
+            .sortedWith(compareBy({ it.dayOfWeek }, { it.timeId.value }))
             .map(RegularSessionEntity::toDomain)
     }
 

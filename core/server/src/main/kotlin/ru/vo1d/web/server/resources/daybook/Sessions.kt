@@ -5,9 +5,9 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 import ru.vo1d.web.server.extensions.failIfNegative
 import ru.vo1d.web.server.resources.ListResource
-import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 
 @Serializable
 @Resource("/sessions/regular")
@@ -39,7 +39,7 @@ data class DatedSessions(
     val instructor: String? = null,
     val place: String? = null,
     val type: Int? = null,
-    val datetime: LocalDateTime? = null
+    val dateTime: LocalDateTime? = null
 ) : ListResource {
     init {
         page?.failIfNegative()

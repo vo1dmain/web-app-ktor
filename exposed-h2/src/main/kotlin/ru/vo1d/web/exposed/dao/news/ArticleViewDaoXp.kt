@@ -1,6 +1,7 @@
 package ru.vo1d.web.exposed.dao.news
 
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.v1.core.inList
+import org.jetbrains.exposed.v1.jdbc.select
 import ru.vo1d.web.data.dao.ArticleViewDao
 import ru.vo1d.web.data.filters.news.ArticleFilters
 import ru.vo1d.web.entities.news.article.ArticleView

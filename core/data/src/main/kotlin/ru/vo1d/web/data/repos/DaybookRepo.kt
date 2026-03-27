@@ -20,7 +20,9 @@ import ru.vo1d.web.entities.daybook.timetable.session.SessionType
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.entities.daybook.timetable.time.StartTime
 import ru.vo1d.web.entities.daybook.timetable.week.Week
+import java.time.DayOfWeek
 import java.time.temporal.TemporalAdjusters
+import kotlin.time.Clock
 
 class DaybookRepo(di: DI) : ListRepo {
     private val timetableDao: TimetableDao by di.instance()
@@ -128,7 +130,7 @@ class DaybookRepo(di: DI) : ListRepo {
         val weeksBetween = lastYearFirstWeekStart.until(today, DateTimeUnit.WEEK)
 
         return when (weeksBetween % 2) {
-            0 -> Week.FIRST
+            0L -> Week.FIRST
             else -> Week.SECOND
         }
     }

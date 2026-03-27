@@ -1,12 +1,12 @@
 package ru.vo1d.web.exposed.entities.daybook.timetable
 
 import kotlinx.datetime.DayOfWeek
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.kotlin.datetime.duration
+import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.datetime.duration
 import ru.vo1d.web.entities.DEFAULT_DURATION
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption

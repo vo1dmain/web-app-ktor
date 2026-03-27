@@ -1,6 +1,6 @@
 package ru.vo1d.web.exposed.mappers
 
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
+import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.entities.daybook.group.Group
 import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
 import ru.vo1d.web.entities.daybook.group.form.EducationForm

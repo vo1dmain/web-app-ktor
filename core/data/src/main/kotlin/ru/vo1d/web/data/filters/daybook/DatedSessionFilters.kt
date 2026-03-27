@@ -8,7 +8,7 @@ data class DatedSessionFilters(
     val instructor: String? = null,
     val place: String? = null,
     val typeId: Int? = null,
-    val datetime: LocalDateTime? = null
+    val dateTime: LocalDateTime? = null
 ) {
     companion object {
         val Empty = DatedSessionFilters()
