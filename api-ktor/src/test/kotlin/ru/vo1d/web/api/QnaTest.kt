@@ -8,9 +8,9 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import org.junit.Test
-import ru.vo1d.web.domain.qna.post.PostView
-import ru.vo1d.web.domain.qna.post.PostWithData
-import ru.vo1d.web.domain.qna.question.Question
+import ru.vo1d.web.api.dto.qna.PostResponse
+import ru.vo1d.web.api.dto.qna.PostSummaryResponse
+import ru.vo1d.web.api.dto.qna.QuestionResponse
 import ru.vo1d.web.api.fakes.FakePostRepository
 import ru.vo1d.web.api.fakes.FakeQuestionRepository
 import ru.vo1d.web.api.routing.qnaRouting
@@ -27,7 +27,7 @@ class QnaTest {
 
         client.get("/qna/posts").apply {
             println(bodyAsText())
-            val list = body<List<PostView>>()
+            val list = body<List<PostSummaryResponse>>()
             assertEquals(0, list[0].id)
         }
 
@@ -46,8 +46,10 @@ class QnaTest {
 
         client.get("/qna/posts/0").apply {
             println(bodyAsText())
-            val item = body<PostWithData>()
+            val item = body<PostResponse>()
             assertEquals(0, item.id)
+            assertEquals(0, item.question.id)
+            assertEquals(item.question.id, item.answer.questionId)
         }
 
         client.get("/qna/posts/a").apply {
@@ -65,7 +67,7 @@ class QnaTest {
 
         client.get("/qna/questions").apply {
             println(bodyAsText())
-            val list = body<List<Question>>()
+            val list = body<List<QuestionResponse>>()
             assertEquals(0, list[0].id)
         }
 

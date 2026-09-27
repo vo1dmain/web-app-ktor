@@ -1,4 +1,4 @@
-package ru.vo1d.web.domain.errors
+package ru.vo1d.web.api.errors
 
 import kotlinx.serialization.Serializable
 

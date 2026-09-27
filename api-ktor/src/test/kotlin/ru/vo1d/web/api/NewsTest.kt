@@ -7,9 +7,9 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import ru.vo1d.web.domain.news.article.Article
-import ru.vo1d.web.domain.news.article.ArticleView
-import ru.vo1d.web.domain.news.category.Category
+import ru.vo1d.web.api.dto.news.ArticleResponse
+import ru.vo1d.web.api.dto.news.ArticleSummaryResponse
+import ru.vo1d.web.api.dto.news.CategoryResponse
 import ru.vo1d.web.api.fakes.FakeArticleRepository
 import ru.vo1d.web.api.fakes.FakeCategoryRepository
 import ru.vo1d.web.api.routing.newsRouting
@@ -27,7 +27,7 @@ class NewsTest {
 
         client.get("/news/articles").apply {
             println(bodyAsText())
-            val list = body<List<ArticleView>>()
+            val list = body<List<ArticleSummaryResponse>>()
             assertEquals(0, list[0].id)
         }
 
@@ -48,7 +48,7 @@ class NewsTest {
 
         client.get("/news/articles/0").apply {
             println(bodyAsText())
-            val item = body<Article>()
+            val item = body<ArticleResponse>()
             assertEquals(0, item.id)
         }
 
@@ -67,7 +67,7 @@ class NewsTest {
 
         client.get("/news/categories").apply {
             println(bodyAsText())
-            val categories = body<List<Category>>()
+            val categories = body<List<CategoryResponse>>()
             assertEquals(0, categories[0].id)
         }
 
@@ -86,7 +86,7 @@ class NewsTest {
 
         client.get("/news/categories/0").apply {
             println(bodyAsText())
-            val item = body<Category>()
+            val item = body<CategoryResponse>()
             assertEquals(0, item.id)
         }
 

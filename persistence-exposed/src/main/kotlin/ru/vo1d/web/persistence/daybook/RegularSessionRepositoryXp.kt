@@ -8,6 +8,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.daybook.RegularSessionFilters
 import ru.vo1d.web.domain.daybook.RegularSessionRepository
+import ru.vo1d.web.domain.daybook.timetable.session.NewRegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.persistence.XpRepository
@@ -43,7 +44,7 @@ class RegularSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Re
             .map(RegularSessionEntity::toDomain)
     }
 
-    override suspend fun add(session: RegularSession): Int? = query {
+    override suspend fun add(session: NewRegularSession): Int? = query {
         RegularSessions.insertIgnoreAndGetId { it.mapItem(session) }?.value
     }
 

@@ -3,6 +3,7 @@ package ru.vo1d.web.persistence.qna
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.qna.QuestionRepository
+import ru.vo1d.web.domain.qna.question.NewQuestion
 import ru.vo1d.web.domain.qna.question.Question
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
@@ -23,7 +24,7 @@ class QuestionRepositoryXp(ctx: DbContext) : XpRepository(ctx.qna), QuestionRepo
         QuestionEntity.findById(id)?.toDomain()
     }
 
-    override suspend fun add(question: Question): Int = query {
+    override suspend fun add(question: NewQuestion): Int = query {
         Questions.insertAndGetId { it.mapItem(question) }.value
     }
 }

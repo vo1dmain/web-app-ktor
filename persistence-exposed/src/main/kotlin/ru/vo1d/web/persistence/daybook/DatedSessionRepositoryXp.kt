@@ -9,6 +9,7 @@ import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.daybook.DatedSessionFilters
 import ru.vo1d.web.domain.daybook.DatedSessionRepository
 import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
+import ru.vo1d.web.domain.daybook.timetable.session.NewDatedSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
@@ -38,7 +39,7 @@ class DatedSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Date
         DatedSessionEntity.wrapRows(query).map(DatedSessionEntity::toDomain)
     }
 
-    override suspend fun add(session: DatedSession): Int? = query {
+    override suspend fun add(session: NewDatedSession): Int? = query {
         DatedSessions.insertIgnoreAndGetId { it.mapItem(session) }?.value
     }
 

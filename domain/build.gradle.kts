@@ -1,10 +1,9 @@
 plugins {
-    id("web.kotlin-serialization")
+    id("web.kotlin-jvm")
 }
 
 dependencies {
     api(libs.kotlinx.datetime)
 
-    implementation(libs.kotlinx.serialization.core)
-    implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.core)
 }

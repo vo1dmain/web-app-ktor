@@ -1,10 +1,13 @@
 package ru.vo1d.web.domain.daybook.timetable
 
-import kotlinx.serialization.Serializable
+data class Timetable(
+    val id: Int,
+    val groupCode: String,
+    val typeId: String,
+    val format: TimetableFormat
+)
 
-@Serializable
-class Timetable(
-    val id: Int? = null,
+data class NewTimetable(
     val groupCode: String,
     val typeId: String,
     val format: TimetableFormat

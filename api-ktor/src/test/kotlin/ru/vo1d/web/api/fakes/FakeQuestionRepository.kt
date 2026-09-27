@@ -2,14 +2,14 @@ package ru.vo1d.web.api.fakes
 
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.qna.QuestionRepository
-import ru.vo1d.web.domain.qna.question.Question
+import ru.vo1d.web.domain.qna.question.NewQuestion
 
 class FakeQuestionRepository : QuestionRepository {
-    override suspend fun find(page: PageRequest) = all().page(page)
+    private val questions = TestData.questions
 
-    override suspend fun get(id: Int) = all().firstOrNull { it.id == id }
+    override suspend fun find(page: PageRequest) = questions.page(page)
 
-    override suspend fun add(question: Question): Int = throw UnsupportedOperationException("Fixtures are read-only")
+    override suspend fun get(id: Int) = questions.firstOrNull { it.id == id }
 
-    private suspend fun all() = Fixtures.list("/data/questions.json", Question.serializer())
+    override suspend fun add(question: NewQuestion): Int = throw UnsupportedOperationException("Test data is read-only")
 }

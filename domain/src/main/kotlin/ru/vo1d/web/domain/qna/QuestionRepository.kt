@@ -1,6 +1,7 @@
 package ru.vo1d.web.domain.qna
 
 import ru.vo1d.web.domain.PageRequest
+import ru.vo1d.web.domain.qna.question.NewQuestion
 import ru.vo1d.web.domain.qna.question.Question
 
 interface QuestionRepository {
@@ -9,5 +10,5 @@ interface QuestionRepository {
     suspend fun get(id: Int): Question?
 
     /** @return id of the stored question */
-    suspend fun add(question: Question): Int
+    suspend fun add(question: NewQuestion): Int
 }

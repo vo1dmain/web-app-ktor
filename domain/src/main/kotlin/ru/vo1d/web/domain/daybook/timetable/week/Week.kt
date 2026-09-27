@@ -1,8 +1,5 @@
 package ru.vo1d.web.domain.daybook.timetable.week
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Week(
     val number: Int,
     val title: String

@@ -1,24 +1,9 @@
 package ru.vo1d.web.persistence.mappers
 
-import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.domain.news.article.Article
 import ru.vo1d.web.domain.news.article.ArticleView
 import ru.vo1d.web.domain.news.category.Category
 import ru.vo1d.web.persistence.entities.news.*
-
-internal fun UpdateBuilder<*>.mapItem(item: Article) {
-    this[Articles.title] = item.title
-    this[Articles.body] = item.body
-    this[Articles.preview] = item.previewImage
-    this[Articles.gallery] = item.gallery?.joinToString(",")
-    item.dateTime?.let { this[Articles.dateTime] = it }
-}
-
-internal fun UpdateBuilder<*>.mapItem(item: Category) {
-    this[Categories.title] = item.title
-    this[Categories.parentId] = item.parentId
-}
-
 
 internal fun ArticleEntity.toDomain() = Article(
     id.value,

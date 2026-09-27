@@ -1,18 +1,29 @@
 package ru.vo1d.web.domain.daybook.timetable.session
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlin.time.Duration
 import kotlin.time.Instant
 
-@Serializable
-@SerialName("Dated")
+/**
+ * A one-off session at [dateTime].
+ */
 data class DatedSession(
-    val id: Int? = null,
+    override val id: Int,
     override val subject: String,
     override val instructor: String,
     override val place: String,
     override val typeId: Int,
-    override val duration: Duration? = null,
+    override val duration: Duration,
     val dateTime: Instant
 ) : Session
+
+/**
+ * @param duration null for the default session length
+ */
+data class NewDatedSession(
+    val subject: String,
+    val instructor: String,
+    val place: String,
+    val typeId: Int,
+    val duration: Duration?,
+    val dateTime: Instant
+)

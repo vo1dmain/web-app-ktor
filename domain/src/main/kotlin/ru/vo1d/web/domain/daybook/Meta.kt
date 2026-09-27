@@ -1,11 +1,9 @@
 package ru.vo1d.web.domain.daybook
 
-import kotlinx.serialization.Serializable
 import ru.vo1d.web.domain.daybook.group.*
 import ru.vo1d.web.domain.daybook.timetable.session.SessionType
 import ru.vo1d.web.domain.daybook.timetable.week.Week
 
-@Serializable
 data class Meta(
     val week: Week,
     val levels: List<GraduationLevel>,

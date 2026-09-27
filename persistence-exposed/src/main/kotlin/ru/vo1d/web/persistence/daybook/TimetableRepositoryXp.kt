@@ -8,6 +8,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.daybook.TimetableFilters
 import ru.vo1d.web.domain.daybook.TimetableRepository
+import ru.vo1d.web.domain.daybook.timetable.NewTimetable
 import ru.vo1d.web.domain.daybook.timetable.Timetable
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
@@ -34,7 +35,7 @@ class TimetableRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Timetab
         TimetableEntity.findById(id)?.toDomain()
     }
 
-    override suspend fun add(timetable: Timetable): Int? = query {
+    override suspend fun add(timetable: NewTimetable): Int? = query {
         Timetables.insertIgnoreAndGetId { it.mapItem(timetable) }?.value
     }
 }

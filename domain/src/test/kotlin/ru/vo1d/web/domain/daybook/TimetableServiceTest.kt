@@ -2,9 +2,12 @@ package ru.vo1d.web.domain.daybook
 
 import kotlinx.coroutines.runBlocking
 import ru.vo1d.web.domain.PageRequest
+import ru.vo1d.web.domain.daybook.timetable.NewTimetable
 import ru.vo1d.web.domain.daybook.timetable.Timetable
 import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
 import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
+import ru.vo1d.web.domain.daybook.timetable.session.NewDatedSession
+import ru.vo1d.web.domain.daybook.timetable.session.NewRegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import kotlin.test.Test
@@ -23,7 +26,7 @@ class TimetableServiceTest {
 
         override suspend fun get(id: Int) = stored.firstOrNull { it.id == id }
 
-        override suspend fun add(timetable: Timetable): Int? = error("not used")
+        override suspend fun add(timetable: NewTimetable): Int? = error("not used")
     }
 
     private val regular = object : RegularSessionRepository {
@@ -31,7 +34,7 @@ class TimetableServiceTest {
 
         override suspend fun find(filters: RegularSessionFilters, page: PageRequest) = emptyList<RegularSession>()
 
-        override suspend fun add(session: RegularSession): Int? = error("not used")
+        override suspend fun add(session: NewRegularSession): Int? = error("not used")
 
         override suspend fun attach(link: TimetableSession) {
             attached += link
@@ -43,7 +46,7 @@ class TimetableServiceTest {
 
         override suspend fun find(filters: DatedSessionFilters, page: PageRequest) = emptyList<DatedSession>()
 
-        override suspend fun add(session: DatedSession): Int? = error("not used")
+        override suspend fun add(session: NewDatedSession): Int? = error("not used")
 
         override suspend fun attach(link: TimetableSession) {
             attached += link
