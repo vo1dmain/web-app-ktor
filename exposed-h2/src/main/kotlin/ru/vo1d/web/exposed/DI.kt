@@ -2,8 +2,11 @@ package ru.vo1d.web.exposed
 
 import org.kodein.di.DI
 import org.kodein.di.bind
+import org.kodein.di.instance
 import org.kodein.di.singleton
 import ru.vo1d.web.data.dao.*
+import ru.vo1d.web.exposed.context.DbContext
+import ru.vo1d.web.exposed.context.H2Context
 import ru.vo1d.web.exposed.dao.daybook.group.*
 import ru.vo1d.web.exposed.dao.daybook.timetable.SessionTypeDaoXp
 import ru.vo1d.web.exposed.dao.daybook.timetable.TimetableDaoXp
@@ -19,27 +22,29 @@ import ru.vo1d.web.exposed.dao.qna.PostDaoXp
 import ru.vo1d.web.exposed.dao.qna.PostViewDaoXp
 import ru.vo1d.web.exposed.dao.qna.QuestionDaoXp
 
-val exposedDaoModule =  DI.Module("exposed-dao") {
-    bind<ArticleDao>() with singleton { ArticleDaoXp() }
-    bind<ArticleViewDao>() with singleton { ArticleViewDaoXp() }
-    bind<CategoryDao>() with singleton { CategoryDaoXp() }
+val exposedDaoModule = DI.Module("exposed-dao") {
+    bind<DbContext>() with singleton { H2Context }
 
-    bind<AnswerDao>() with singleton { AnswerDaoXp() }
-    bind<PostDao>() with singleton { PostDaoXp() }
-    bind<PostViewDao>() with singleton { PostViewDaoXp() }
-    bind<QuestionDao>() with singleton { QuestionDaoXp() }
+    bind<ArticleDao>() with singleton { ArticleDaoXp(instance()) }
+    bind<ArticleViewDao>() with singleton { ArticleViewDaoXp(instance()) }
+    bind<CategoryDao>() with singleton { CategoryDaoXp(instance()) }
 
-    bind<EduFormDao>() with singleton { EduFormDaoXp() }
-    bind<GradDegreeDao>() with singleton { GradDegreeDaoXp() }
-    bind<GradLevelDao>() with singleton { GradLevelDaoXp() }
-    bind<GroupDao>() with singleton { GroupDaoXp() }
+    bind<AnswerDao>() with singleton { AnswerDaoXp(instance()) }
+    bind<PostDao>() with singleton { PostDaoXp(instance()) }
+    bind<PostViewDao>() with singleton { PostViewDaoXp(instance()) }
+    bind<QuestionDao>() with singleton { QuestionDaoXp(instance()) }
 
-    bind<DatedSessionDao>() with singleton { DatedSessionDaoXp() }
-    bind<RegularSessionDao>() with singleton { RegularSessionDaoXp() }
-    bind<SessionTypeDao>() with singleton { SessionTypeDaoXp() }
+    bind<EduFormDao>() with singleton { EduFormDaoXp(instance()) }
+    bind<GradDegreeDao>() with singleton { GradDegreeDaoXp(instance()) }
+    bind<GradLevelDao>() with singleton { GradLevelDaoXp(instance()) }
+    bind<GroupDao>() with singleton { GroupDaoXp(instance()) }
 
-    bind<TableTypeDao>() with singleton { TableTypeDaoXp() }
-    bind<TimetableDao>() with singleton { TimetableDaoXp() }
-    bind<TimetableDatedSessionDao>() with singleton { TimetableDatedSessionDaoXp() }
-    bind<TimetableRegularSessionDao>() with singleton { TimetableRegularSessionDaoXp() }
+    bind<DatedSessionDao>() with singleton { DatedSessionDaoXp(instance()) }
+    bind<RegularSessionDao>() with singleton { RegularSessionDaoXp(instance()) }
+    bind<SessionTypeDao>() with singleton { SessionTypeDaoXp(instance()) }
+
+    bind<TableTypeDao>() with singleton { TableTypeDaoXp(instance()) }
+    bind<TimetableDao>() with singleton { TimetableDaoXp(instance()) }
+    bind<TimetableDatedSessionDao>() with singleton { TimetableDatedSessionDaoXp(instance()) }
+    bind<TimetableRegularSessionDao>() with singleton { TimetableRegularSessionDaoXp(instance()) }
 }

@@ -13,24 +13,20 @@ import ru.vo1d.web.exposed.entities.qna.Posts
 
 
 object H2Context : DbContext() {
-    private lateinit var newsDatabase: Database
-    private lateinit var qnaDatabase: Database
-    private lateinit var daybookDatabase: Database
+    override val news = Database.connect("jdbc:h2:mem:newsDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
+    override val qna = Database.connect("jdbc:h2:mem:qnaDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
+    override val daybook = Database.connect("jdbc:h2:file:./build/daybook;MODE=MYSQL", "org.h2.Driver")
 
     override fun init() {
-        newsDatabase = Database.connect("jdbc:h2:mem:newsDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
-        qnaDatabase = Database.connect("jdbc:h2:mem:qnaDb;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
-        daybookDatabase = Database.connect("jdbc:h2:file:./build/daybook;MODE=MYSQL", "org.h2.Driver")
-
-        transaction(newsDatabase) {
+        transaction(news) {
             SchemaUtils.create(ArticleCategories)
         }
 
-        transaction(qnaDatabase) {
+        transaction(qna) {
             SchemaUtils.create(Posts)
         }
 
-        transaction(daybookDatabase) {
+        transaction(daybook) {
             SchemaUtils.create(
                 Groups,
                 RegularSessions,

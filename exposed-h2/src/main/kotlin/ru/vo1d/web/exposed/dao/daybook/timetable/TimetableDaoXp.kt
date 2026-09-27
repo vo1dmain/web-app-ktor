@@ -7,34 +7,36 @@ import org.jetbrains.exposed.v1.jdbc.*
 import ru.vo1d.web.data.dao.TimetableDao
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.entities.daybook.timetable.Timetable
+import ru.vo1d.web.exposed.context.DbContext
+import ru.vo1d.web.exposed.dao.XpDao
 import ru.vo1d.web.exposed.entities.daybook.timetable.TimetableEntity
 import ru.vo1d.web.exposed.entities.daybook.timetable.Timetables
 import ru.vo1d.web.exposed.mappers.mapItem
 import ru.vo1d.web.exposed.mappers.toDomain
 
-class TimetableDaoXp : TimetableDao {
-    override suspend fun create(item: Timetable): Int? {
-        return Timetables.insertIgnoreAndGetId { it.mapItem(item) }?.value
+class TimetableDaoXp(ctx: DbContext) : XpDao(ctx.daybook), TimetableDao {
+    override suspend fun create(item: Timetable): Int? = query {
+        Timetables.insertIgnoreAndGetId { it.mapItem(item) }?.value
     }
 
-    override suspend fun create(vararg items: Timetable): Int {
-        return Timetables.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
+    override suspend fun create(vararg items: Timetable): Int = query {
+        Timetables.batchInsert(items.asIterable(), ignore = true) { mapItem(it) }.count()
     }
 
-    override suspend fun read(id: Int): Timetable? {
-        return TimetableEntity.findById(id)?.toDomain()
+    override suspend fun read(id: Int): Timetable? = query {
+        TimetableEntity.findById(id)?.toDomain()
     }
 
-    override suspend fun update(item: Timetable): Int {
-        return Timetables.update({ Timetables.id eq item.id }) { it.mapItem(item) }
+    override suspend fun update(item: Timetable): Int = query {
+        Timetables.update({ Timetables.id eq item.id }) { it.mapItem(item) }
     }
 
-    override suspend fun delete(vararg items: Timetable): Int {
-        return Timetables.deleteWhere { Timetables.id inList items.mapNotNull { it.id } }
+    override suspend fun delete(vararg items: Timetable): Int = query {
+        Timetables.deleteWhere { Timetables.id inList items.mapNotNull { it.id } }
     }
 
-    override suspend fun page(offset: Long, limit: Int): List<Timetable> {
-        return TimetableEntity.all()
+    override suspend fun page(offset: Long, limit: Int): List<Timetable> = query {
+        TimetableEntity.all()
             .limit(limit)
             .offset(offset)
             .map(TimetableEntity::toDomain)
@@ -44,16 +46,18 @@ class TimetableDaoXp : TimetableDao {
         if (filters == TimetableFilters.Empty)
             return page(offset, limit)
 
-        val query = Timetables.selectAll().apply {
-            filters.typeId?.let { andWhere { Timetables.typeId eq it } }
-            filters.groupCode?.let { andWhere { Timetables.groupCode like it } }
-            filters.format?.let { andWhere { Timetables.format eq it } }
-            orderBy(Timetables.id)
-            limit(limit)
-            offset(offset)
-        }
+        return query {
+            val query = Timetables.selectAll().apply {
+                filters.typeId?.let { andWhere { Timetables.typeId eq it } }
+                filters.groupCode?.let { andWhere { Timetables.groupCode like it } }
+                filters.format?.let { andWhere { Timetables.format eq it } }
+                orderBy(Timetables.id)
+                limit(limit)
+                offset(offset)
+            }
 
-        return TimetableEntity.wrapRows(query)
-            .map(TimetableEntity::toDomain)
+            TimetableEntity.wrapRows(query)
+                .map(TimetableEntity::toDomain)
+        }
     }
 }

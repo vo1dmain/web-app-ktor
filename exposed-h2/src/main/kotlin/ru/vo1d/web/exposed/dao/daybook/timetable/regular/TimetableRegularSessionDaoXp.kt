@@ -8,15 +8,18 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnore
 import ru.vo1d.web.data.dao.TimetableRegularSessionDao
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
+import ru.vo1d.web.exposed.context.DbContext
+import ru.vo1d.web.exposed.dao.XpDao
 import ru.vo1d.web.exposed.entities.daybook.timetable.TimetableRegularSessions
 
-class TimetableRegularSessionDaoXp : TimetableRegularSessionDao {
-    override suspend fun create(item: TimetableSession) {
+class TimetableRegularSessionDaoXp(ctx: DbContext) : XpDao(ctx.daybook), TimetableRegularSessionDao {
+    override suspend fun create(item: TimetableSession) = query {
         TimetableRegularSessions.insertIgnore { it.mapItem(item) }
+        Unit
     }
 
-    override suspend fun create(vararg items: TimetableSession): Int {
-        return TimetableRegularSessions.batchInsert(items.asIterable(), ignore = true) {
+    override suspend fun create(vararg items: TimetableSession): Int = query {
+        TimetableRegularSessions.batchInsert(items.asIterable(), ignore = true) {
             mapItem(it)
         }.count()
     }
@@ -29,8 +32,8 @@ class TimetableRegularSessionDaoXp : TimetableRegularSessionDao {
         TODO("Not yet implemented")
     }
 
-    override suspend fun delete(vararg items: TimetableSession): Int {
-        return TimetableRegularSessions.deleteWhere {
+    override suspend fun delete(vararg items: TimetableSession): Int = query {
+        TimetableRegularSessions.deleteWhere {
             (sessionId inList items.map { it.sessionId }) and (timetableId inList items.map { it.timetableId })
         }
     }

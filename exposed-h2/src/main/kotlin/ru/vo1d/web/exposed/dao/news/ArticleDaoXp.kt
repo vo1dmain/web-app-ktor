@@ -8,14 +8,37 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.ArticleDao
 import ru.vo1d.web.entities.news.article.Article
+import ru.vo1d.web.exposed.context.DbContext
+import ru.vo1d.web.exposed.dao.XpDao
 import ru.vo1d.web.exposed.entities.news.ArticleCategories
 import ru.vo1d.web.exposed.entities.news.ArticleEntity
 import ru.vo1d.web.exposed.entities.news.Articles
 import ru.vo1d.web.exposed.mappers.mapItem
 import ru.vo1d.web.exposed.mappers.toDomain
 
-class ArticleDaoXp : ArticleDao {
-    override suspend fun create(item: Article): Int {
+class ArticleDaoXp(ctx: DbContext) : XpDao(ctx.news), ArticleDao {
+    override suspend fun create(item: Article): Int = query {
+        insert(item)
+    }
+
+    override suspend fun create(vararg items: Article): Int = query {
+        items.forEach { insert(it) }
+        items.size
+    }
+
+    override suspend fun read(id: Int): Article? = query {
+        ArticleEntity.findById(id)?.toDomain()
+    }
+
+    override suspend fun update(item: Article): Int = query {
+        Articles.update({ Articles.id eq item.id }) { it.mapItem(item) }
+    }
+
+    override suspend fun delete(vararg items: Article): Int = query {
+        Articles.deleteWhere { Articles.id inList items.mapNotNull { it.id } }
+    }
+
+    private fun insert(item: Article): Int {
         val articleId = Articles.insertAndGetId { it.mapItem(item) }.value
 
         ArticleCategories.batchInsert(item.categories, shouldReturnGeneratedValues = false) {
@@ -24,28 +47,5 @@ class ArticleDaoXp : ArticleDao {
         }
 
         return articleId
-    }
-
-    override suspend fun create(vararg items: Article): Int {
-        var inserted = 0
-
-        items.forEach {
-            create(it)
-            ++inserted
-        }
-
-        return inserted
-    }
-
-    override suspend fun read(id: Int): Article? {
-        return ArticleEntity.findById(id)?.toDomain()
-    }
-
-    override suspend fun update(item: Article): Int {
-        return Articles.update({ Articles.id eq item.id }) { it.mapItem(item) }
-    }
-
-    override suspend fun delete(vararg items: Article): Int {
-        return Articles.deleteWhere { Articles.id inList items.mapNotNull { it.id } }
     }
 }

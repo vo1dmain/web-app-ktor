@@ -11,7 +11,6 @@ import ru.vo1d.web.data.repos.DaybookRepo
 import ru.vo1d.web.data.repos.NewsRepo
 import ru.vo1d.web.data.repos.QnaRepo
 import ru.vo1d.web.exposed.context.DbContext
-import ru.vo1d.web.exposed.context.H2Context
 import ru.vo1d.web.exposed.exposedDaoModule
 
 fun Application.mainModule() {
@@ -23,7 +22,6 @@ fun Application.mainModule() {
         bind<NewsRepo>() with singleton { NewsRepo(di) }
         bind<QnaRepo>() with singleton { QnaRepo(di) }
         bind<DaybookRepo>() with singleton { DaybookRepo(di, timeZone) }
-        bind<DbContext>() with singleton { H2Context }
     }
 
     val dbContext by closestDI().instance<DbContext>()
