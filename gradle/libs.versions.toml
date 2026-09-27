@@ -1,17 +1,17 @@
 [versions]
-gradleVersions = "0.53.0"
-h2 = "2.4.240"
+gradleVersions = "0.64.0"
+h2 = "2.5.252"
 
-jetbrainsExposed = "1.1.1"
+jetbrainsExposed = "1.5.0"
 jvm = "21"
 
-kodein = "7.31.0"
-kotlin = "2.3.20"
-kotlinxSerialization = "1.10.0"
-kotlinxCoroutines = "1.10.2"
-kotlinxDatetime = "0.7.1-0.6.x-compat"
-ktor = "3.4.2"
-logback = "1.5.32"
+kodein = "7.33.0"
+kotlin = "2.4.20"
+kotlinxSerialization = "1.11.0"
+kotlinxCoroutines = "1.11.0"
+kotlinxDatetime = "0.8.0"
+ktor = "3.6.0"
+logback = "1.6.4"
 
 [libraries]
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }
@@ -48,6 +48,6 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 [plugins]
-gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }
+gradle-versions = { id = "io.github.ben-manes.versions", version.ref = "gradleVersions" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
