@@ -9,6 +9,10 @@ interface TimetableRepository {
 
     suspend fun get(id: Int): Timetable?
 
-    /** @return id of the stored timetable, or null if the same one already exists */
-    suspend fun add(timetable: NewTimetable): Int?
+    /**
+     * @return id of the stored timetable
+     * @throws ru.vo1d.web.domain.errors.AlreadyExistsException if the group already has such a timetable
+     * @throws ru.vo1d.web.domain.errors.MissingReferenceException if there is no such group or table type
+     */
+    suspend fun add(timetable: NewTimetable): Int
 }

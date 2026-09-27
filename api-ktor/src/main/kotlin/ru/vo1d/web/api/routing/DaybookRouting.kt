@@ -79,7 +79,7 @@ private fun Route.timetablesRouting(timetables: TimetableRepository, timetableSe
 
     postRes<Timetables> {
         val timetable = call.receive<TimetableRequest>().toDomain()
-        val id = timetables.add(timetable) ?: throw Exception()
+        val id = timetables.add(timetable)
         call.respond(HttpStatusCode.Created, id)
     }
 
@@ -122,7 +122,7 @@ private fun Route.sessionsRouting(regularSessions: RegularSessionRepository, dat
 
     postRes<RegularSessions> {
         val session = call.receive<RegularSessionRequest>().toDomain()
-        val id = regularSessions.add(session) ?: throw Exception()
+        val id = regularSessions.add(session)
         call.respond(HttpStatusCode.Created, id)
     }
 
@@ -143,7 +143,7 @@ private fun Route.sessionsRouting(regularSessions: RegularSessionRepository, dat
 
     postRes<DatedSessions> {
         val session = call.receive<DatedSessionRequest>().toDomain()
-        val id = datedSessions.add(session) ?: throw Exception()
+        val id = datedSessions.add(session)
         call.respond(HttpStatusCode.Created, id)
     }
 }

@@ -10,9 +10,11 @@ import io.ktor.server.request.uri
 import ru.vo1d.web.api.errors.InvalidRequestException
 import ru.vo1d.web.api.errors.UnprocessableEntityException
 import ru.vo1d.web.api.extensions.respondError
+import ru.vo1d.web.domain.errors.AlreadyExistsException
+import ru.vo1d.web.domain.errors.MissingReferenceException
 
 /**
- * Maps exceptions to [ru.vo1d.web.api.errors.ErrorResponse]. Only messages of our own exceptions reach the
+ * Maps exceptions to [ru.vo1d.web.api.errors.ErrorResponse]. Only messages of our own and domain exceptions reach the
  * client; anything else gets a fixed reason, and unexpected errors are logged in full.
  */
 internal fun Application.statusPages() {
@@ -24,6 +26,14 @@ internal fun Application.statusPages() {
         }
 
         exception<UnprocessableEntityException> { call, cause ->
+            call.respondError(HttpStatusCode.UnprocessableEntity, cause.message.orEmpty())
+        }
+
+        exception<AlreadyExistsException> { call, cause ->
+            call.respondError(HttpStatusCode.Conflict, cause.message.orEmpty())
+        }
+
+        exception<MissingReferenceException> { call, cause ->
             call.respondError(HttpStatusCode.UnprocessableEntity, cause.message.orEmpty())
         }
 

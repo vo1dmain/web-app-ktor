@@ -26,7 +26,7 @@ class TimetableServiceTest {
 
         override suspend fun get(id: Int) = stored.firstOrNull { it.id == id }
 
-        override suspend fun add(timetable: NewTimetable): Int? = error("not used")
+        override suspend fun add(timetable: NewTimetable): Int = error("not used")
     }
 
     private val regular = object : RegularSessionRepository {
@@ -34,7 +34,7 @@ class TimetableServiceTest {
 
         override suspend fun find(filters: RegularSessionFilters, page: PageRequest) = emptyList<RegularSession>()
 
-        override suspend fun add(session: NewRegularSession): Int? = error("not used")
+        override suspend fun add(session: NewRegularSession): Int = error("not used")
 
         override suspend fun attach(link: TimetableSession) {
             attached += link
@@ -46,7 +46,7 @@ class TimetableServiceTest {
 
         override suspend fun find(filters: DatedSessionFilters, page: PageRequest) = emptyList<DatedSession>()
 
-        override suspend fun add(session: NewDatedSession): Int? = error("not used")
+        override suspend fun add(session: NewDatedSession): Int = error("not used")
 
         override suspend fun attach(link: TimetableSession) {
             attached += link

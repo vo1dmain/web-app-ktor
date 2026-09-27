@@ -3,7 +3,7 @@ package ru.vo1d.web.persistence.daybook
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnore
-import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.daybook.DatedSessionFilters
@@ -34,8 +34,8 @@ class DatedSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Date
         DatedSessionEntity.wrapRows(query).map(DatedSessionEntity::toDomain)
     }
 
-    override suspend fun add(session: NewDatedSession): Int? = query {
-        DatedSessions.insertIgnoreAndGetId { it.mapItem(session) }?.value
+    override suspend fun add(session: NewDatedSession): Int = query {
+        DatedSessions.insertAndGetId { it.mapItem(session) }.value
     }
 
     override suspend fun attach(link: TimetableSession) = query {

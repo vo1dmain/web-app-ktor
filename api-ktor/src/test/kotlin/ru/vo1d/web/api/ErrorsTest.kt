@@ -14,6 +14,8 @@ import ru.vo1d.web.api.fakes.FakePostRepository
 import ru.vo1d.web.api.fakes.FakeQuestionRepository
 import ru.vo1d.web.api.routing.newsRouting
 import ru.vo1d.web.api.routing.qnaRouting
+import ru.vo1d.web.domain.errors.AlreadyExistsException
+import ru.vo1d.web.domain.errors.MissingReferenceException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -58,6 +60,25 @@ class ErrorsTest {
         assertEquals("Request parameter is less than one", error.reason)
     }
 
+    @Test
+    fun domainErrorsMapToClientErrors() = testApplication {
+        application {
+            errorsTest()
+        }
+
+        val client = jsonClient()
+
+        client.get("/conflict").body<ErrorResponse>().apply {
+            assertEquals(409, code)
+            assertEquals("Timetable already exists", reason)
+        }
+
+        client.get("/missing").body<ErrorResponse>().apply {
+            assertEquals(422, code)
+            assertEquals("Referenced entity does not exist", reason)
+        }
+    }
+
     private fun Application.errorsTest() {
         testPlugins()
 
@@ -65,6 +86,8 @@ class ErrorsTest {
             newsRouting(FakeArticleRepository(), FakeCategoryRepository())
             qnaRouting(FakePostRepository(), FakeQuestionRepository())
             get("/boom") { error("secret connection string") }
+            get("/conflict") { throw AlreadyExistsException("Timetable already exists") }
+            get("/missing") { throw MissingReferenceException() }
         }
     }
 }
