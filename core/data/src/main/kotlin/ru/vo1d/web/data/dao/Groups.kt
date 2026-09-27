@@ -1,9 +1,9 @@
 package ru.vo1d.web.data.dao
 
+import ru.vo1d.web.entities.daybook.group.EducationForm
+import ru.vo1d.web.entities.daybook.group.GraduationDegree
+import ru.vo1d.web.entities.daybook.group.GraduationLevel
 import ru.vo1d.web.entities.daybook.group.Group
-import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
-import ru.vo1d.web.entities.daybook.group.form.EducationForm
-import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
 
 interface GroupDao : Dao<String, Group>, AllDao<Group>
 

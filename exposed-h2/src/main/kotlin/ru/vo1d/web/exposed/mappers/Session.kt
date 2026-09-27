@@ -1,13 +1,9 @@
 package ru.vo1d.web.exposed.mappers
 
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toDateTimePeriod
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.session.SessionType
-import ru.vo1d.web.entities.daybook.timetable.time.StartTime
-import ru.vo1d.web.entities.extensions.toDuration
 import ru.vo1d.web.exposed.entities.daybook.timetable.*
 
 internal fun UpdateBuilder<*>.mapItem(item: DatedSession) {
@@ -15,9 +11,8 @@ internal fun UpdateBuilder<*>.mapItem(item: DatedSession) {
     this[DatedSessions.instructor] = item.instructor
     this[DatedSessions.place] = item.place
     this[DatedSessions.typeId] = item.typeId
-    item.duration?.let { this[DatedSessions.duration] = it.toDuration() }
+    item.duration?.let { this[DatedSessions.duration] = it }
     this[DatedSessions.dateTime] = item.dateTime
-    item.timeZone?.let { this[DatedSessions.timeZone] = it.id }
 }
 
 internal fun UpdateBuilder<*>.mapItem(item: RegularSession) {
@@ -25,19 +20,14 @@ internal fun UpdateBuilder<*>.mapItem(item: RegularSession) {
     this[RegularSessions.instructor] = item.instructor
     this[RegularSessions.place] = item.place
     this[RegularSessions.typeId] = item.typeId
-    item.duration?.let { this[RegularSessions.duration] = it.toDuration() }
+    item.duration?.let { this[RegularSessions.duration] = it }
     this[RegularSessions.dayOfWeek] = item.dayOfWeek
-    this[RegularSessions.timeId] = item.timeId
+    this[RegularSessions.time] = item.time
     this[RegularSessions.weekOption] = item.weekOption
 }
 
 internal fun UpdateBuilder<*>.mapItem(item: SessionType) {
     this[SessionTypes.title] = item.title
-}
-
-internal fun UpdateBuilder<*>.mapItem(item: StartTime) {
-    this[SessionStartTimes.time] = item.time
-    item.timeZone?.let { this[SessionStartTimes.timeZone] = it.id }
 }
 
 internal fun DatedSessionEntity.toDomain() = DatedSession(
@@ -46,9 +36,8 @@ internal fun DatedSessionEntity.toDomain() = DatedSession(
     instructor,
     place,
     typeId.value,
-    duration.toDateTimePeriod(),
-    dateTime,
-    TimeZone.of(timeZone)
+    duration,
+    dateTime
 )
 
 internal fun RegularSessionEntity.toDomain() = RegularSession(
@@ -57,12 +46,10 @@ internal fun RegularSessionEntity.toDomain() = RegularSession(
     instructor,
     place,
     typeId.value,
-    duration.toDateTimePeriod(),
+    duration,
     dayOfWeek,
-    timeId.value,
+    time,
     weekOption
 )
 
 internal fun SessionTypeEntity.toDomain() = SessionType(id.value, title)
-
-internal fun StartTimeEntity.toDomain() = StartTime(id.value, time, TimeZone.of(timeZone))

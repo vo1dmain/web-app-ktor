@@ -7,7 +7,7 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
 import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.TableTypeDao
-import ru.vo1d.web.entities.daybook.group.type.TableType
+import ru.vo1d.web.entities.daybook.group.TableType
 import ru.vo1d.web.exposed.entities.daybook.group.TableTypeEntity
 import ru.vo1d.web.exposed.entities.daybook.group.TableTypes
 import ru.vo1d.web.exposed.mappers.mapItem

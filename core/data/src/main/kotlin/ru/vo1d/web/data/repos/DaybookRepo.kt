@@ -8,11 +8,7 @@ import ru.vo1d.web.data.filters.daybook.DatedSessionFilters
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
 import ru.vo1d.web.entities.daybook.Meta
-import ru.vo1d.web.entities.daybook.group.Group
-import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
-import ru.vo1d.web.entities.daybook.group.form.EducationForm
-import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
-import ru.vo1d.web.entities.daybook.group.type.TableType
+import ru.vo1d.web.entities.daybook.group.*
 import ru.vo1d.web.entities.daybook.timetable.Timetable
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession

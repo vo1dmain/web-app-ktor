@@ -1,4 +1,4 @@
-package ru.vo1d.web.entities.daybook.group.form
+package ru.vo1d.web.entities.daybook.group
 
 import kotlinx.serialization.Serializable
 

@@ -1,9 +1,9 @@
-package ru.vo1d.web.entities.daybook.group.level
+package ru.vo1d.web.entities.daybook.group
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GraduationLevel(
+data class TableType(
     val id: String,
     val title: String
 )

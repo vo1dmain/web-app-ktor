@@ -7,7 +7,7 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
 import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.EduFormDao
-import ru.vo1d.web.entities.daybook.group.form.EducationForm
+import ru.vo1d.web.entities.daybook.group.EducationForm
 import ru.vo1d.web.exposed.entities.daybook.group.EducationFormEntity
 import ru.vo1d.web.exposed.entities.daybook.group.EducationForms
 import ru.vo1d.web.exposed.mappers.mapItem

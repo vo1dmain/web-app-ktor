@@ -1,8 +1,7 @@
 package ru.vo1d.web.entities.news.article
 
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 data class Article(
@@ -11,7 +10,6 @@ data class Article(
     val body: String,
     val previewImage: String? = null,
     val gallery: List<String>? = null,
-    val dateTime: LocalDateTime? = null,
-    val timeZone: TimeZone? = null,
+    val dateTime: Instant? = null,
     val categories: List<Int>
 )

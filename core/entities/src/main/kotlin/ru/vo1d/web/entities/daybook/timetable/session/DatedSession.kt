@@ -1,10 +1,9 @@
 package ru.vo1d.web.entities.daybook.timetable.session
 
-import kotlinx.datetime.DateTimePeriod
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Duration
+import kotlin.time.Instant
 
 @Serializable
 @SerialName("Dated")
@@ -14,7 +13,6 @@ data class DatedSession(
     override val instructor: String,
     override val place: String,
     override val typeId: Int,
-    override val duration: DateTimePeriod? = null,
-    val dateTime: LocalDateTime,
-    val timeZone: TimeZone? = null
+    override val duration: Duration? = null,
+    val dateTime: Instant
 ) : Session

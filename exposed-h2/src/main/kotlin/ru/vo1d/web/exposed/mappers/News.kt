@@ -1,6 +1,5 @@
 package ru.vo1d.web.exposed.mappers
 
-import kotlinx.datetime.TimeZone
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.entities.news.article.Article
 import ru.vo1d.web.entities.news.article.ArticleView
@@ -13,7 +12,6 @@ internal fun UpdateBuilder<*>.mapItem(item: Article) {
     this[Articles.preview] = item.previewImage
     this[Articles.gallery] = item.gallery?.joinToString(",")
     item.dateTime?.let { this[Articles.dateTime] = it }
-    item.timeZone?.let { this[Articles.timeZone] = it.id }
 }
 
 internal fun UpdateBuilder<*>.mapItem(item: Category) {
@@ -29,7 +27,6 @@ internal fun ArticleEntity.toDomain() = Article(
     preview,
     gallery?.split(","),
     dateTime,
-    TimeZone.of(timeZone),
     categories.map { it.id.value }.toList()
 )
 
@@ -40,6 +37,5 @@ internal fun ArticleViewEntity.toDomain() = ArticleView(
     title,
     preview,
     dateTime,
-    TimeZone.of(timeZone),
     categories.map { it.id.value }.toList()
 )

@@ -1,11 +1,7 @@
 package ru.vo1d.web.exposed.mappers
 
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
-import ru.vo1d.web.entities.daybook.group.Group
-import ru.vo1d.web.entities.daybook.group.degree.GraduationDegree
-import ru.vo1d.web.entities.daybook.group.form.EducationForm
-import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
-import ru.vo1d.web.entities.daybook.group.type.TableType
+import ru.vo1d.web.entities.daybook.group.*
 import ru.vo1d.web.exposed.entities.daybook.group.*
 
 internal fun UpdateBuilder<*>.mapItem(item: EducationForm) {

@@ -1,7 +1,7 @@
 package ru.vo1d.web.data.dao
 
 import ru.vo1d.web.data.filters.daybook.TimetableFilters
-import ru.vo1d.web.entities.daybook.group.type.TableType
+import ru.vo1d.web.entities.daybook.group.TableType
 import ru.vo1d.web.entities.daybook.timetable.Timetable
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
 

@@ -1,13 +1,12 @@
 package ru.vo1d.web.exposed.entities.daybook.timetable
 
-import kotlinx.datetime.TimeZone
 import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntityClass
-import org.jetbrains.exposed.v1.datetime.datetime
 import org.jetbrains.exposed.v1.datetime.duration
+import org.jetbrains.exposed.v1.datetime.timestamp
 import ru.vo1d.web.entities.DEFAULT_DURATION
 import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 
@@ -16,8 +15,7 @@ internal object DatedSessions : IntIdTable() {
     val instructor = varchar("instructor", 64)
     val place = varchar("place", 32)
     val typeId = reference("typeId", SessionTypes, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
-    val dateTime = datetime("datetime")
-    val timeZone = varchar("timeZone", 32).default(TimeZone.currentSystemDefault().id)
+    val dateTime = timestamp("datetime")
     val duration = duration("duration").default(DEFAULT_DURATION)
 }
 
@@ -37,5 +35,4 @@ internal class DatedSessionEntity(id: EntityID<Int>) : SessionEntity<DatedSessio
     val typeId by DatedSessions.typeId
     val duration by DatedSessions.duration
     val dateTime by DatedSessions.dateTime
-    val timeZone by DatedSessions.timeZone
 }

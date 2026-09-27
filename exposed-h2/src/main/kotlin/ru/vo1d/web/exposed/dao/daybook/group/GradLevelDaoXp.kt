@@ -7,7 +7,7 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
 import org.jetbrains.exposed.v1.jdbc.update
 import ru.vo1d.web.data.dao.GradLevelDao
-import ru.vo1d.web.entities.daybook.group.level.GraduationLevel
+import ru.vo1d.web.entities.daybook.group.GraduationLevel
 import ru.vo1d.web.exposed.entities.daybook.group.GraduationLevelEntity
 import ru.vo1d.web.exposed.entities.daybook.group.GraduationLevels
 import ru.vo1d.web.exposed.mappers.mapItem
