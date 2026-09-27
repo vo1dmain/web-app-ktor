@@ -1,8 +1,6 @@
 package ru.vo1d.web.server.dao
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.data.dao.ArticleViewDao
@@ -24,8 +22,7 @@ class ArticleViewDaoRes : ArticleViewDao, JsonDao {
                 it.id!!,
                 it.title,
                 it.previewImage,
-                it.dateTime ?: Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-                it.timeZone ?: TimeZone.currentSystemDefault(),
+                it.dateTime ?: Clock.System.now(),
                 it.categories
             )
         }

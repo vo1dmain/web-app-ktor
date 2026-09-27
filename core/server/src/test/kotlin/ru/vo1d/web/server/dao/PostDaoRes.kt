@@ -1,8 +1,6 @@
 package ru.vo1d.web.server.dao
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
 import ru.vo1d.web.data.dao.AllDao
@@ -58,11 +56,9 @@ class PostDaoRes : PostDao, JsonDao, AllDao<Post> {
             PostView(
                 post.id!!,
                 question.id!!,
-                question.dateTime ?: Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-                question.timeZone ?: TimeZone.currentSystemDefault(),
+                question.dateTime ?: Clock.System.now(),
                 question.theme,
-                answer.dateTime ?: Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-                answer.timeZone ?: TimeZone.currentSystemDefault()
+                answer.dateTime ?: Clock.System.now(),
             )
         }
 
