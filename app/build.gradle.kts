@@ -16,8 +16,11 @@ dependencies {
     implementation(project(":api-ktor"))
     implementation(project(":persistence-exposed"))
 
+    implementation(libs.ktor.server.netty)
+
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
 
     runtimeOnly(libs.h2database.h2)
+    runtimeOnly(libs.logback.classic)
 }
