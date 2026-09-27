@@ -1,0 +1,46 @@
+package ru.vo1d.web.persistence.entities.daybook.timetable
+
+import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.Entity
+import org.jetbrains.exposed.v1.dao.InnerTableLink
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
+import ru.vo1d.web.persistence.entities.daybook.group.Groups
+import ru.vo1d.web.persistence.entities.daybook.group.TableTypes
+
+internal object Timetables : IntIdTable() {
+    val groupCode = reference("groupCode", Groups, CASCADE, CASCADE)
+    val typeId = reference("typeId", TableTypes, CASCADE, CASCADE)
+    val format = enumerationByName("format", 10, TimetableFormat::class)
+
+    init {
+        uniqueIndex(groupCode, typeId, format)
+    }
+}
+
+internal class TimetableEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TimetableEntity>(Timetables)
+
+    val groupCode by Timetables.groupCode
+    val typeId by Timetables.typeId
+    val format by Timetables.format
+}
+
+internal class TimetableWithSessionsEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TimetableWithSessionsEntity>(Timetables)
+
+    val groupCode by Timetables.groupCode
+    val typeId by Timetables.typeId
+    val format by Timetables.format
+    val sessions by loadSessions(format)
+
+    private fun loadSessions(format: TimetableFormat): InnerTableLink<Int, Entity<Int>, Int, SessionEntity<*>> {
+        return when (format) {
+            TimetableFormat.Regular -> RegularSessionEntity via TimetableRegularSessions
+            TimetableFormat.Dated -> DatedSessionEntity via TimetableDatedSessions
+        }
+    }
+}

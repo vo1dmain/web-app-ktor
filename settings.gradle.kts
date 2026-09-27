@@ -19,7 +19,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "web-app"
 
-include(":core:data")
-include(":core:entities")
-include(":core:server")
-include(":exposed-h2")
+include(":domain")
+include(":persistence-exposed")
+include(":api-ktor")
+include(":app")
