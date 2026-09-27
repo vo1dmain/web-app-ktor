@@ -1,6 +1,7 @@
 package ru.vo1d.web.exposed.dao.daybook.group
 
 import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
@@ -30,7 +31,7 @@ class GradDegreeDaoXp : GradDegreeDao {
     }
 
     override suspend fun delete(vararg items: GraduationDegree): Int {
-        return GraduationDegrees.deleteWhere { GraduationDegrees.id eq id }
+        return GraduationDegrees.deleteWhere { GraduationDegrees.id inList items.map { it.id } }
     }
 
     override suspend fun all(): List<GraduationDegree> {

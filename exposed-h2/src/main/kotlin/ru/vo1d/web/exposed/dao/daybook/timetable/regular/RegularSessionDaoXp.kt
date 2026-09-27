@@ -1,6 +1,7 @@
 package ru.vo1d.web.exposed.dao.daybook.timetable.regular
 
 import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.jdbc.*
 import ru.vo1d.web.data.dao.RegularSessionDao
 import ru.vo1d.web.data.filters.daybook.RegularSessionFilters
@@ -29,7 +30,7 @@ class RegularSessionDaoXp : RegularSessionDao {
     }
 
     override suspend fun delete(vararg items: RegularSession): Int {
-        return RegularSessions.deleteWhere { RegularSessions.id eq id }
+        return RegularSessions.deleteWhere { RegularSessions.id inList items.mapNotNull { it.id } }
     }
 
     override suspend fun page(offset: Long, limit: Int): List<RegularSession> {

@@ -1,6 +1,7 @@
 package ru.vo1d.web.exposed.dao.qna
 
 import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -29,8 +30,8 @@ class AnswerDaoXp : AnswerDao {
         return Answers.update({ Answers.id eq item.id }) { it.mapItem(item) }
     }
 
-    override suspend fun delete(items: Array<out Answer>): Int {
-        return Answers.deleteWhere { Answers.id eq id }
+    override suspend fun delete(vararg items: Answer): Int {
+        return Answers.deleteWhere { Answers.id inList items.mapNotNull { it.id } }
     }
 
     override suspend fun page(offset: Long, limit: Int): List<Answer> {
