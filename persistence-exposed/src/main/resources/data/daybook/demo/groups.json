@@ -1,0 +1,20 @@
+[
+  {
+    "code": "ИВТ-21",
+    "levelId": "high",
+    "degreeId": "bachelor",
+    "formId": "full-time"
+  },
+  {
+    "code": "ИВТ-М-24",
+    "levelId": "high",
+    "degreeId": "magistracy",
+    "formId": "full-time"
+  },
+  {
+    "code": "ПКС-23",
+    "levelId": "mid",
+    "degreeId": null,
+    "formId": "full-time"
+  }
+]

@@ -5,6 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.ContentTransformationException
+import io.ktor.server.request.contentType
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.uri
 import ru.vo1d.web.api.errors.InvalidRequestException
@@ -38,11 +39,12 @@ internal fun Application.statusPages() {
         }
 
         exception<ContentTransformationException> { call, cause ->
-            when (cause) {
-                is UnsupportedMediaTypeException ->
-                    call.respondError(HttpStatusCode.UnsupportedMediaType, "Unsupported media type")
-
-                else -> call.respondError(HttpStatusCode.BadRequest, "Malformed request body")
+            // for a body it has no converter for, ContentNegotiation fails like for a malformed one
+            val json = call.request.contentType().match(ContentType.Application.Json)
+            if (cause is UnsupportedMediaTypeException || !json) {
+                call.respondError(HttpStatusCode.UnsupportedMediaType, "Request body must be JSON")
+            } else {
+                call.respondError(HttpStatusCode.BadRequest, "Malformed request body")
             }
         }
 

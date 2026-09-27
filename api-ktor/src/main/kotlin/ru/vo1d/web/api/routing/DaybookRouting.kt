@@ -7,7 +7,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import ru.vo1d.web.api.dto.daybook.*
 import ru.vo1d.web.api.errors.UnprocessableEntityException
-import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
 import ru.vo1d.web.api.resources.daybook.DatedSessions
 import ru.vo1d.web.api.resources.daybook.Meta
@@ -40,27 +39,27 @@ private fun Route.metaRouting(service: DaybookService, reference: ReferenceRepos
     }
 
     get<Meta.Levels> {
-        call.respond(reference.levels().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.levels().map { it.toResponse() })
     }
 
     get<Meta.Degrees> {
-        call.respond(reference.degrees().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.degrees().map { it.toResponse() })
     }
 
     get<Meta.Forms> {
-        call.respond(reference.forms().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.forms().map { it.toResponse() })
     }
 
     get<Meta.TableTypes> {
-        call.respond(reference.tableTypes().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.tableTypes().map { it.toResponse() })
     }
 
     get<Meta.Groups> {
-        call.respond(reference.groups().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.groups().map { it.toResponse() })
     }
 
     get<Meta.SessionTypes> {
-        call.respond(reference.sessionTypes().failIfEmpty().map { it.toResponse() })
+        call.respond(reference.sessionTypes().map { it.toResponse() })
     }
 }
 
@@ -74,7 +73,7 @@ private fun Route.timetablesRouting(timetables: TimetableRepository, timetableSe
             ),
             it.pageRequest()
         )
-        call.respond(list.failIfEmpty().map { it.toResponse() })
+        call.respond(list.map { it.toResponse() })
     }
 
     postRes<Timetables> {
@@ -117,7 +116,7 @@ private fun Route.sessionsRouting(regularSessions: RegularSessionRepository, dat
             ),
             it.pageRequest()
         )
-        call.respond(list.failIfEmpty().map { it.toResponse() })
+        call.respond(list.map { it.toResponse() })
     }
 
     postRes<RegularSessions> {
@@ -138,7 +137,7 @@ private fun Route.sessionsRouting(regularSessions: RegularSessionRepository, dat
             ),
             it.pageRequest()
         )
-        call.respond(list.failIfEmpty().map { it.toResponse() })
+        call.respond(list.map { it.toResponse() })
     }
 
     postRes<DatedSessions> {

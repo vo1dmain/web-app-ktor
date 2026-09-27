@@ -1,7 +1,6 @@
 package ru.vo1d.web.persistence.daybook
 
 import org.jetbrains.exposed.v1.core.eq
-import org.jetbrains.exposed.v1.core.like
 import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnoreAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -18,7 +17,7 @@ class TimetableRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Timetab
     override suspend fun find(filters: TimetableFilters, page: PageRequest): List<Timetable> = query {
         val query = Timetables.selectAll().apply {
             filters.typeId?.let { andWhere { Timetables.typeId eq it } }
-            filters.groupCode?.let { andWhere { Timetables.groupCode like it } }
+            filters.groupCode?.let { andWhere { Timetables.groupCode eq it } }
             filters.format?.let { andWhere { Timetables.format eq it } }
             orderBy(Timetables.id)
             limit(page.size)

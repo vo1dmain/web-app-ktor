@@ -49,6 +49,20 @@ class ErrorsTest {
     }
 
     @Test
+    fun nonJsonBodyIsUnsupported() = testApplication {
+        application {
+            errorsTest()
+        }
+
+        val response = client.post("/qna/questions") {
+            contentType(ContentType.Text.Plain)
+            setBody("theme=no json")
+        }
+
+        assertEquals(HttpStatusCode.UnsupportedMediaType, response.status)
+    }
+
+    @Test
     fun ownValidationMessageIsShown() = testApplication {
         application {
             errorsTest()

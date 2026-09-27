@@ -8,7 +8,6 @@ import io.ktor.server.routing.*
 import ru.vo1d.web.api.dto.qna.QuestionRequest
 import ru.vo1d.web.api.dto.qna.toDomain
 import ru.vo1d.web.api.dto.qna.toResponse
-import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
 import ru.vo1d.web.api.resources.pageRequest
 import ru.vo1d.web.api.resources.qna.Posts
@@ -24,7 +23,7 @@ fun Route.qnaRouting(posts: PostRepository, questions: QuestionRepository) = rou
 
 private fun Route.postsRouting(posts: PostRepository) {
     get<Posts> {
-        call.respond(posts.find(it.pageRequest()).failIfEmpty().map { it.toResponse() })
+        call.respond(posts.find(it.pageRequest()).map { it.toResponse() })
     }
 
     get<Posts.Id> {
@@ -34,7 +33,7 @@ private fun Route.postsRouting(posts: PostRepository) {
 
 private fun Route.questionsRouting(questions: QuestionRepository) {
     get<Questions> {
-        call.respond(questions.find(it.pageRequest()).failIfEmpty().map { it.toResponse() })
+        call.respond(questions.find(it.pageRequest()).map { it.toResponse() })
     }
 
     get<Questions.Id> {

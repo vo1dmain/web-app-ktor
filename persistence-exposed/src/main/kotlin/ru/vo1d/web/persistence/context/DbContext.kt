@@ -9,6 +9,7 @@ import ru.vo1d.web.persistence.daybook.Groups
 import ru.vo1d.web.persistence.daybook.RegularSessions
 import ru.vo1d.web.persistence.daybook.TimetableDatedSessions
 import ru.vo1d.web.persistence.daybook.TimetableRegularSessions
+import ru.vo1d.web.persistence.daybook.seedDemoGroups
 import ru.vo1d.web.persistence.daybook.seedReferenceData
 import ru.vo1d.web.persistence.news.ArticleCategories
 import ru.vo1d.web.persistence.news.seedDemoNews
@@ -18,7 +19,7 @@ import ru.vo1d.web.persistence.qna.Posts
  * JDBC settings of the three databases.
  *
  * @param driver JDBC driver class, shared by all of them
- * @param demoData fill empty news tables with demo articles on start
+ * @param demoData insert demo data on start: news into empty tables, groups for the daybook
  */
 data class DatabaseConfig(
     val driver: String,
@@ -41,7 +42,7 @@ class DbContext(private val config: DatabaseConfig) {
 
     /**
      * Creates missing tables (referenced tables are created too; existing ones are left as they are) and
-     * inserts the daybook reference data, plus demo news if [DatabaseConfig.demoData] is set.
+     * inserts the daybook reference data, plus demo news and groups if [DatabaseConfig.demoData] is set.
      */
     fun init() {
         transaction(news) {
@@ -62,6 +63,7 @@ class DbContext(private val config: DatabaseConfig) {
                 TimetableDatedSessions
             )
             seedReferenceData()
+            if (config.demoData) seedDemoGroups()
         }
     }
 }
