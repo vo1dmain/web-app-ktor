@@ -10,23 +10,27 @@ import ru.vo1d.web.persistence.daybook.RegularSessions
 import ru.vo1d.web.persistence.daybook.TimetableDatedSessions
 import ru.vo1d.web.persistence.daybook.TimetableRegularSessions
 import ru.vo1d.web.persistence.daybook.seedDemoGroups
+import ru.vo1d.web.persistence.daybook.seedImportedTimetables
 import ru.vo1d.web.persistence.daybook.seedReferenceData
 import ru.vo1d.web.persistence.news.ArticleCategories
 import ru.vo1d.web.persistence.news.seedDemoNews
 import ru.vo1d.web.persistence.qna.Posts
+import java.nio.file.Path
 
 /**
  * JDBC settings of the three databases.
  *
  * @param driver JDBC driver class, shared by all of them
  * @param demoData insert demo data on start: news into empty tables, groups for the daybook
+ * @param importFile groups and timetables exported from elsewhere, loaded on start
  */
 data class DatabaseConfig(
     val driver: String,
     val newsUrl: String,
     val qnaUrl: String,
     val daybookUrl: String,
-    val demoData: Boolean = false
+    val demoData: Boolean = false,
+    val importFile: Path? = null
 )
 
 /**
@@ -42,7 +46,8 @@ class DbContext(private val config: DatabaseConfig) {
 
     /**
      * Creates missing tables (referenced tables are created too; existing ones are left as they are) and
-     * inserts the daybook reference data, plus demo news and groups if [DatabaseConfig.demoData] is set.
+     * inserts the daybook reference data, plus demo news and groups if [DatabaseConfig.demoData] is set and the
+     * timetables of [DatabaseConfig.importFile] if there is one.
      */
     fun init() {
         transaction(news) {
@@ -64,6 +69,7 @@ class DbContext(private val config: DatabaseConfig) {
             )
             seedReferenceData()
             if (config.demoData) seedDemoGroups()
+            config.importFile?.let(::seedImportedTimetables)
         }
     }
 }

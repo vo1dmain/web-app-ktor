@@ -1,0 +1,49 @@
+{
+  "groups": [
+    { "code": "ТСТ-01", "levelId": "high", "degreeId": "bachelor", "formId": "full-time" }
+  ],
+  "timetables": [
+    {
+      "groupCode": "ТСТ-01",
+      "typeId": "tt",
+      "format": "Regular",
+      "regular": [
+        {
+          "subject": "Программирование",
+          "instructor": "Петров П.П.",
+          "place": "7-101",
+          "typeId": 3,
+          "duration": "PT1H30M",
+          "dayOfWeek": "WEDNESDAY",
+          "time": "09:50",
+          "weekOption": "FirstOnly"
+        },
+        {
+          "subject": "Предмет с очень длинным названием, которое не помещается в колонку базы данных и должно быть обрезано до ста шестидесяти символов при загрузке выгрузки расписания из внешнего источника",
+          "instructor": "",
+          "place": "Аудитория с названием заметно длиннее тридцати двух символов",
+          "typeId": 1,
+          "duration": "PT45M",
+          "dayOfWeek": "MONDAY",
+          "time": "08:00",
+          "weekOption": "Both"
+        }
+      ]
+    },
+    {
+      "groupCode": "ТСТ-01",
+      "typeId": "att",
+      "format": "Dated",
+      "dated": [
+        {
+          "subject": "Программирование",
+          "instructor": "Петров П.П.",
+          "place": "7-101",
+          "typeId": 5,
+          "duration": "PT45M",
+          "dateTime": "2027-01-15T06:00:00Z"
+        }
+      ]
+    }
+  ]
+}
