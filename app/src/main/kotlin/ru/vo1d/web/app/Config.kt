@@ -11,7 +11,8 @@ internal fun ApplicationConfig.databaseConfig() = DatabaseConfig(
     driver = property("database.driver").getString(),
     newsUrl = property("database.news").getString(),
     qnaUrl = property("database.qna").getString(),
-    daybookUrl = property("database.daybook").getString()
+    daybookUrl = property("database.daybook").getString(),
+    demoData = propertyOrNull("database.demoData")?.getString().toBoolean()
 )
 
 internal fun ApplicationConfig.daybookTimeZone() = TimeZone.of(property("daybook.timeZone").getString())

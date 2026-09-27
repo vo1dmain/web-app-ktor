@@ -1,5 +1,5 @@
 plugins {
-    id("web.kotlin-jvm")
+    id("web.kotlin-serialization")
 }
 
 dependencies {
@@ -9,4 +9,6 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.kotlin.datetime)
+
+    implementation(libs.kotlinx.serialization.json)
 }
