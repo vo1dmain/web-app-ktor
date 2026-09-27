@@ -5,8 +5,6 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.kodein.di.instance
-import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.api.errors.UnprocessableEntityException
 import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
@@ -23,13 +21,13 @@ import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import io.ktor.server.resources.post as postRes
 
-fun Route.daybookRouting() = route("/daybook") {
-    val service by closestDI().instance<DaybookService>()
-    val reference by closestDI().instance<ReferenceRepository>()
-    val timetables by closestDI().instance<TimetableRepository>()
-    val regularSessions by closestDI().instance<RegularSessionRepository>()
-    val datedSessions by closestDI().instance<DatedSessionRepository>()
-
+fun Route.daybookRouting(
+    service: DaybookService,
+    reference: ReferenceRepository,
+    timetables: TimetableRepository,
+    regularSessions: RegularSessionRepository,
+    datedSessions: DatedSessionRepository
+) = route("/daybook") {
     metaRouting(service, reference)
     timetablesRouting(timetables, regularSessions, datedSessions)
     sessionsRouting(regularSessions, datedSessions)

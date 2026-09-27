@@ -7,20 +7,16 @@ import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.li
 import kotlinx.html.ul
-import ru.vo1d.web.api.routing.daybookRouting
-import ru.vo1d.web.api.routing.newsRouting
-import ru.vo1d.web.api.routing.qnaRouting
 
-fun Application.routing() {
+/**
+ * Installs routing with the route index at `/` and [api] under `/api/v1`.
+ */
+fun Application.apiRouting(api: Route.() -> Unit) {
     install(IgnoreTrailingSlash)
 
-    this@routing.routing {
+    routing {
         root()
-        route("/api/v1") {
-            newsRouting()
-            qnaRouting()
-            daybookRouting()
-        }
+        route("/api/v1", api)
     }
 }
 

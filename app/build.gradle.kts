@@ -1,6 +1,7 @@
 plugins {
     application
     id("web.kotlin-jvm")
+    id("web.koin")
 }
 
 application {
@@ -14,5 +15,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":api-ktor"))
     implementation(project(":persistence-exposed"))
-    implementation(libs.kodein.ktor)
+
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logger.slf4j)
 }

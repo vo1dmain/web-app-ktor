@@ -7,10 +7,11 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import org.kodein.di.ktor.di
 import ru.vo1d.web.domain.news.article.Article
 import ru.vo1d.web.domain.news.article.ArticleView
 import ru.vo1d.web.domain.news.category.Category
+import ru.vo1d.web.api.fakes.FakeArticleRepository
+import ru.vo1d.web.api.fakes.FakeCategoryRepository
 import ru.vo1d.web.api.routing.newsRouting
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -98,12 +99,8 @@ class NewsTest {
     private fun Application.newsTest() {
         testPlugins()
 
-        di {
-            import(testRepositoryModule)
-        }
-
         routing {
-            newsRouting()
+            newsRouting(FakeArticleRepository(), FakeCategoryRepository())
         }
     }
 }

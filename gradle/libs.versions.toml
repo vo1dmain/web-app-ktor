@@ -5,7 +5,8 @@ h2 = "2.5.252"
 jetbrainsExposed = "1.5.0"
 jvm = "21"
 
-kodein = "7.33.0"
+koin = "4.2.2"
+koinCompiler = "1.2.1"
 kotlin = "2.4.20"
 kotlinxSerialization = "1.11.0"
 kotlinxCoroutines = "1.11.0"
@@ -21,7 +22,9 @@ exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datet
 
 h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
 
-kodein-ktor = { module = "org.kodein.di:kodein-di-framework-ktor-server-jvm", version.ref = "kodein" }
+koin-compiler-gradle-plugin = { module = "io.insert-koin.compiler.plugin:io.insert-koin.compiler.plugin.gradle.plugin", version.ref = "koinCompiler" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
 
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }

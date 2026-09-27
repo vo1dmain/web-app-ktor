@@ -3,8 +3,6 @@ package ru.vo1d.web.api.routing
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.kodein.di.instance
-import org.kodein.di.ktor.closestDI
 import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
 import ru.vo1d.web.api.resources.news.Articles
@@ -15,10 +13,7 @@ import ru.vo1d.web.domain.news.ArticleRepository
 import ru.vo1d.web.domain.news.CategoryFilters
 import ru.vo1d.web.domain.news.CategoryRepository
 
-fun Route.newsRouting() = route("/news") {
-    val articles by closestDI().instance<ArticleRepository>()
-    val categories by closestDI().instance<CategoryRepository>()
-
+fun Route.newsRouting(articles: ArticleRepository, categories: CategoryRepository) = route("/news") {
     articlesRouting(articles)
     categoriesRouting(categories)
 }

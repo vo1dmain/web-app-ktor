@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(libs.kodein.ktor)
 
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)

@@ -8,10 +8,11 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import org.junit.Test
-import org.kodein.di.ktor.di
 import ru.vo1d.web.domain.qna.post.PostView
 import ru.vo1d.web.domain.qna.post.PostWithData
 import ru.vo1d.web.domain.qna.question.Question
+import ru.vo1d.web.api.fakes.FakePostRepository
+import ru.vo1d.web.api.fakes.FakeQuestionRepository
 import ru.vo1d.web.api.routing.qnaRouting
 import kotlin.test.assertEquals
 
@@ -77,12 +78,8 @@ class QnaTest {
     private fun Application.qnaTest() {
         testPlugins()
 
-        di {
-            import(testRepositoryModule)
-        }
-
         routing {
-            qnaRouting()
+            qnaRouting(FakePostRepository(), FakeQuestionRepository())
         }
     }
 }

@@ -19,8 +19,6 @@ dependencies {
 
     implementation(libs.logback.classic)
 
-    implementation(libs.kodein.ktor)
-
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.logging)
     testImplementation(libs.ktor.server.test.host)
