@@ -1,11 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-}
-
-group = "ru.vo1d.web"
-
-kotlin {
-    jvmToolchain(libs.versions.jvm.get().toInt())
+    id("web.kotlin-jvm")
 }
 
 dependencies {

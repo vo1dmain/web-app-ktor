@@ -1,12 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.serialization)
-}
-
-group = "ru.vo1d.web"
-
-kotlin {
-    jvmToolchain(libs.versions.jvm.get().toInt())
+    id("web.kotlin-serialization")
 }
 
 dependencies {
@@ -27,8 +20,6 @@ dependencies {
     implementation(libs.logback.classic)
 
     implementation(libs.kodein.ktor)
-
-    testImplementation(kotlin("test"))
 
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.logging)
