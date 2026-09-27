@@ -13,5 +13,6 @@ data class Meta(
     val forms: List<EducationForm>,
     val tableTypes: List<TableType>,
     val groups: List<Group>,
+    val timeZone: String,
     val sessionTypes: List<SessionType>
 )

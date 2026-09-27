@@ -1,6 +1,7 @@
 package ru.vo1d.web.app
 
 import io.ktor.server.application.*
+import kotlinx.datetime.TimeZone
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
@@ -14,12 +15,14 @@ import ru.vo1d.web.exposed.context.H2Context
 import ru.vo1d.web.exposed.exposedDaoModule
 
 fun Application.mainModule() {
+    val timeZone = TimeZone.of(environment.config.property("daybook.timeZone").getString())
+
     di {
         import(exposedDaoModule)
 
         bind<NewsRepo>() with singleton { NewsRepo(di) }
         bind<QnaRepo>() with singleton { QnaRepo(di) }
-        bind<DaybookRepo>() with singleton { DaybookRepo(di) }
+        bind<DaybookRepo>() with singleton { DaybookRepo(di, timeZone) }
         bind<DbContext>() with singleton { H2Context }
     }
 

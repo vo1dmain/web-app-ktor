@@ -19,7 +19,7 @@ import java.time.DayOfWeek
 import java.time.temporal.TemporalAdjusters
 import kotlin.time.Clock
 
-class DaybookRepo(di: DI) : ListRepo {
+class DaybookRepo(di: DI, private val timeZone: TimeZone) : ListRepo {
     private val timetableDao: TimetableDao by di.instance()
     private val regularSessionDao: RegularSessionDao by di.instance()
     private val datedSessionDao: DatedSessionDao by di.instance()
@@ -40,6 +40,7 @@ class DaybookRepo(di: DI) : ListRepo {
             forms(),
             tableTypes(),
             groups(),
+            timeZone.id,
             sessionTypes()
         )
     }
@@ -104,7 +105,7 @@ class DaybookRepo(di: DI) : ListRepo {
     }
 
     fun weekNumber(): Week {
-        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val today = Clock.System.todayIn(timeZone)
         val thisYearS1 = LocalDate(today.year, Month.SEPTEMBER, 1)
 
         if (today == thisYearS1) return Week.FIRST
