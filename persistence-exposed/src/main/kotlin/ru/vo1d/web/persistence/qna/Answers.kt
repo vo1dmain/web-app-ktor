@@ -1,4 +1,4 @@
-package ru.vo1d.web.persistence.entities.qna
+package ru.vo1d.web.persistence.qna
 
 import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
 import org.jetbrains.exposed.v1.core.dao.id.EntityID

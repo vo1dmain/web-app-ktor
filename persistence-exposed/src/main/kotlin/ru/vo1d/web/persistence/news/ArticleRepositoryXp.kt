@@ -10,11 +10,6 @@ import ru.vo1d.web.domain.news.article.Article
 import ru.vo1d.web.domain.news.article.ArticleView
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.news.ArticleCategories
-import ru.vo1d.web.persistence.entities.news.ArticleEntity
-import ru.vo1d.web.persistence.entities.news.ArticleViewEntity
-import ru.vo1d.web.persistence.entities.news.Articles
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class ArticleRepositoryXp(ctx: DbContext) : XpRepository(ctx.news), ArticleRepository {
     override suspend fun find(filters: ArticleFilters, page: PageRequest): List<ArticleView> = query {

@@ -9,9 +9,6 @@ import ru.vo1d.web.domain.news.CategoryRepository
 import ru.vo1d.web.domain.news.category.Category
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.news.Categories
-import ru.vo1d.web.persistence.entities.news.CategoryEntity
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class CategoryRepositoryXp(ctx: DbContext) : XpRepository(ctx.news), CategoryRepository {
     override suspend fun find(filters: CategoryFilters, page: PageRequest): List<Category> = query {

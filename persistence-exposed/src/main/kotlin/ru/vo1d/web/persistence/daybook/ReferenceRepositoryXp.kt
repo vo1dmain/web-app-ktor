@@ -5,9 +5,6 @@ import ru.vo1d.web.domain.daybook.group.*
 import ru.vo1d.web.domain.daybook.timetable.session.SessionType
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.daybook.group.*
-import ru.vo1d.web.persistence.entities.daybook.timetable.SessionTypeEntity
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class ReferenceRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), ReferenceRepository {
     override suspend fun levels(): List<GraduationLevel> = query {

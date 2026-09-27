@@ -12,10 +12,6 @@ import ru.vo1d.web.domain.daybook.timetable.NewTimetable
 import ru.vo1d.web.domain.daybook.timetable.Timetable
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.daybook.timetable.TimetableEntity
-import ru.vo1d.web.persistence.entities.daybook.timetable.Timetables
-import ru.vo1d.web.persistence.mappers.mapItem
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class TimetableRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), TimetableRepository {
     override suspend fun find(filters: TimetableFilters, page: PageRequest): List<Timetable> = query {

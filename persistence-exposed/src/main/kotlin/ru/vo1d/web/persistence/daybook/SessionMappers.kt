@@ -1,4 +1,4 @@
-package ru.vo1d.web.persistence.mappers
+package ru.vo1d.web.persistence.daybook
 
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
@@ -6,7 +6,6 @@ import ru.vo1d.web.domain.daybook.timetable.session.NewDatedSession
 import ru.vo1d.web.domain.daybook.timetable.session.NewRegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.SessionType
-import ru.vo1d.web.persistence.entities.daybook.timetable.*
 
 internal fun UpdateBuilder<*>.mapItem(item: NewDatedSession) {
     this[DatedSessions.subject] = item.subject

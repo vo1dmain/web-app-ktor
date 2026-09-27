@@ -1,4 +1,4 @@
-package ru.vo1d.web.persistence.entities.daybook.group
+package ru.vo1d.web.persistence.daybook
 
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import ru.vo1d.web.persistence.tables.StringEntity

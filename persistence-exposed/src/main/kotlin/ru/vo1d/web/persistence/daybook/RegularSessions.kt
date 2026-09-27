@@ -1,4 +1,4 @@
-package ru.vo1d.web.persistence.entities.daybook.timetable
+package ru.vo1d.web.persistence.daybook
 
 import kotlinx.datetime.DayOfWeek
 import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE

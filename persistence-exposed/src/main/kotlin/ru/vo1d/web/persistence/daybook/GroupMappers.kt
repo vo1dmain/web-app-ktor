@@ -1,8 +1,7 @@
-package ru.vo1d.web.persistence.mappers
+package ru.vo1d.web.persistence.daybook
 
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.domain.daybook.group.*
-import ru.vo1d.web.persistence.entities.daybook.group.*
 
 internal fun UpdateBuilder<*>.mapItem(item: EducationForm) {
     this[EducationForms.id] = item.id

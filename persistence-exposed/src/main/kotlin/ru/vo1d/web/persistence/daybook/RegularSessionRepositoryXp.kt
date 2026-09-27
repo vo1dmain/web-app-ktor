@@ -13,11 +13,6 @@ import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.daybook.timetable.RegularSessionEntity
-import ru.vo1d.web.persistence.entities.daybook.timetable.RegularSessions
-import ru.vo1d.web.persistence.entities.daybook.timetable.TimetableRegularSessions
-import ru.vo1d.web.persistence.mappers.mapItem
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class RegularSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), RegularSessionRepository {
     override suspend fun find(filters: RegularSessionFilters, page: PageRequest): List<RegularSession> = query {

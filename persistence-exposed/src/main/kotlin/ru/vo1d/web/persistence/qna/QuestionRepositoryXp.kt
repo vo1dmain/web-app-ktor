@@ -7,10 +7,6 @@ import ru.vo1d.web.domain.qna.question.NewQuestion
 import ru.vo1d.web.domain.qna.question.Question
 import ru.vo1d.web.persistence.XpRepository
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.entities.qna.QuestionEntity
-import ru.vo1d.web.persistence.entities.qna.Questions
-import ru.vo1d.web.persistence.mappers.mapItem
-import ru.vo1d.web.persistence.mappers.toDomain
 
 class QuestionRepositoryXp(ctx: DbContext) : XpRepository(ctx.qna), QuestionRepository {
     override suspend fun find(page: PageRequest): List<Question> = query {

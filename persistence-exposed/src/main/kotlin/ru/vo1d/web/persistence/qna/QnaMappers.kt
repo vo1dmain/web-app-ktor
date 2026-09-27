@@ -1,4 +1,4 @@
-package ru.vo1d.web.persistence.mappers
+package ru.vo1d.web.persistence.qna
 
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import ru.vo1d.web.domain.qna.answer.Answer
@@ -6,7 +6,6 @@ import ru.vo1d.web.domain.qna.post.Post
 import ru.vo1d.web.domain.qna.post.PostView
 import ru.vo1d.web.domain.qna.question.NewQuestion
 import ru.vo1d.web.domain.qna.question.Question
-import ru.vo1d.web.persistence.entities.qna.*
 
 internal fun UpdateBuilder<*>.mapItem(item: NewQuestion) {
     this[Questions.theme] = item.theme

@@ -1,9 +1,8 @@
-package ru.vo1d.web.persistence.mappers
+package ru.vo1d.web.persistence.news
 
 import ru.vo1d.web.domain.news.article.Article
 import ru.vo1d.web.domain.news.article.ArticleView
 import ru.vo1d.web.domain.news.category.Category
-import ru.vo1d.web.persistence.entities.news.*
 
 internal fun ArticleEntity.toDomain() = Article(
     id.value,
