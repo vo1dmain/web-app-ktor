@@ -15,7 +15,6 @@ import ru.vo1d.web.api.resources.daybook.Timetables
 import ru.vo1d.web.api.resources.pageRequest
 import ru.vo1d.web.domain.daybook.*
 import ru.vo1d.web.domain.daybook.timetable.Timetable
-import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
 import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
 import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
@@ -23,13 +22,14 @@ import io.ktor.server.resources.post as postRes
 
 fun Route.daybookRouting(
     service: DaybookService,
+    timetableService: TimetableService,
     reference: ReferenceRepository,
     timetables: TimetableRepository,
     regularSessions: RegularSessionRepository,
     datedSessions: DatedSessionRepository
 ) = route("/daybook") {
     metaRouting(service, reference)
-    timetablesRouting(timetables, regularSessions, datedSessions)
+    timetablesRouting(timetables, timetableService)
     sessionsRouting(regularSessions, datedSessions)
 }
 
@@ -67,11 +67,7 @@ private fun Route.metaRouting(service: DaybookService, reference: ReferenceRepos
     }
 }
 
-private fun Route.timetablesRouting(
-    timetables: TimetableRepository,
-    regularSessions: RegularSessionRepository,
-    datedSessions: DatedSessionRepository
-) {
+private fun Route.timetablesRouting(timetables: TimetableRepository, timetableService: TimetableService) {
     get<Timetables> {
         val list = timetables.find(
             TimetableFilters(
@@ -95,26 +91,17 @@ private fun Route.timetablesRouting(
     }
 
     postRes<Timetables.Id.Sessions> {
-        val input = call.receive<TimetableSession>()
-
+        val link = call.receive<TimetableSession>()
         val parentId = it.parent.id
-        val finalId = input.timetableId
 
-        if (finalId != parentId) throw UnprocessableEntityException(
+        if (link.timetableId != parentId) throw UnprocessableEntityException(
             TimetableSession::timetableId.name,
             parentId.toString(),
-            finalId.toString()
+            link.timetableId.toString()
         )
 
-        val itemFormat = timetables.get(finalId).orFail().format
-
-        val junction = input.copy(timetableId = finalId)
-        when (itemFormat) {
-            TimetableFormat.Dated -> datedSessions.attach(junction)
-            TimetableFormat.Regular -> regularSessions.attach(junction)
-        }
-
-        call.respond(HttpStatusCode.Created, junction)
+        timetableService.attachSession(link).orFail()
+        call.respond(HttpStatusCode.Created, link)
     }
 }
 

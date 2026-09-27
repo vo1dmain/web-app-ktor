@@ -29,6 +29,6 @@ fun Application.mainModule() {
     apiRouting {
         newsRouting(koin.get(), koin.get())
         qnaRouting(koin.get(), koin.get())
-        daybookRouting(koin.get(), koin.get(), koin.get(), koin.get(), koin.get())
+        daybookRouting(koin.get(), koin.get(), koin.get(), koin.get(), koin.get(), koin.get())
     }
 }

@@ -19,6 +19,7 @@ import ru.vo1d.web.persistence.news.ArticleRepositoryXp
 import ru.vo1d.web.persistence.news.CategoryRepositoryXp
 import ru.vo1d.web.persistence.qna.PostRepositoryXp
 import ru.vo1d.web.persistence.qna.QuestionRepositoryXp
+import kotlin.time.Clock
 
 val persistenceModule = module {
     single<DbContext> { H2Context }
@@ -40,5 +41,8 @@ val persistenceModule = module {
  */
 fun domainModule(timeZone: TimeZone) = module {
     single<TimeZone> { timeZone }
+    single<Clock> { Clock.System }
+
     single<DaybookService>()
+    single<TimetableService>()
 }
