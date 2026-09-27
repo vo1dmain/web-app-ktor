@@ -5,11 +5,11 @@ import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.datetime.duration
 import org.jetbrains.exposed.v1.datetime.time
 import ru.vo1d.web.domain.DEFAULT_DURATION
-import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
 import ru.vo1d.web.domain.daybook.timetable.week.WeekOption
 
 internal object RegularSessions : IntIdTable() {
@@ -30,7 +30,7 @@ internal object TimetableRegularSessions : Table() {
     override val primaryKey = PrimaryKey(timetableId, sessionId)
 }
 
-internal class RegularSessionEntity(id: EntityID<Int>) : SessionEntity<RegularSession>(id) {
+internal class RegularSessionEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<RegularSessionEntity>(RegularSessions)
 
     val subject by RegularSessions.subject

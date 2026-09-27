@@ -1,6 +1,7 @@
 package ru.vo1d.web.persistence.news
 
 import org.jetbrains.exposed.v1.core.inList
+import org.jetbrains.exposed.v1.dao.with
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import ru.vo1d.web.domain.PageRequest
@@ -26,7 +27,9 @@ class ArticleRepositoryXp(ctx: DbContext) : XpRepository(ctx.news), ArticleRepos
             .limit(page.size)
             .offset(page.offset)
 
-        ArticleViewEntity.wrapRows(paged).map(ArticleViewEntity::toDomain)
+        ArticleViewEntity.wrapRows(paged)
+            .with(ArticleViewEntity::categories)
+            .map(ArticleViewEntity::toDomain)
     }
 
     override suspend fun get(id: Int): Article? = query {

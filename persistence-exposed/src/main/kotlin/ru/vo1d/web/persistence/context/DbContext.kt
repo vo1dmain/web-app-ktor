@@ -1,5 +1,6 @@
 package ru.vo1d.web.persistence.context
 
+import org.jetbrains.exposed.v1.core.DatabaseConfig as ExposedConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -31,9 +32,12 @@ data class DatabaseConfig(
  * The databases of each area; connections are opened lazily, on the first transaction.
  */
 class DbContext(private val config: DatabaseConfig) {
-    val news = Database.connect(config.newsUrl, config.driver)
-    val qna = Database.connect(config.qnaUrl, config.driver)
-    val daybook = Database.connect(config.daybookUrl, config.driver)
+    // Exposed retries a transaction on any SQLException by default, but a constraint violation fails again
+    private val exposedConfig = ExposedConfig { defaultMaxAttempts = 1 }
+
+    val news = Database.connect(config.newsUrl, config.driver, databaseConfig = exposedConfig)
+    val qna = Database.connect(config.qnaUrl, config.driver, databaseConfig = exposedConfig)
+    val daybook = Database.connect(config.daybookUrl, config.driver, databaseConfig = exposedConfig)
 
     /**
      * Creates missing tables (referenced tables are created too; existing ones are left as they are) and

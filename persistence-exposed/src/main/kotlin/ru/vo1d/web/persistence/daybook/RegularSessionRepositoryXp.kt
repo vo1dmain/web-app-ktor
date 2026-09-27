@@ -1,6 +1,10 @@
 package ru.vo1d.web.persistence.daybook
 
+import kotlinx.datetime.DayOfWeek
+import org.jetbrains.exposed.v1.core.Case
+import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.intLiteral
 import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.insertIgnore
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -28,15 +32,12 @@ class RegularSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Re
             filters.time?.let { andWhere { RegularSessions.time eq it } }
             filters.typeId?.let { andWhere { RegularSessions.typeId eq it } }
             filters.weekOption?.let { andWhere { RegularSessions.weekOption eq it } }
-            orderBy(RegularSessions.id)
+            orderBy(dayOrder to SortOrder.ASC, RegularSessions.time to SortOrder.ASC, RegularSessions.id to SortOrder.ASC)
             limit(page.size)
             offset(page.offset)
         }
 
-        // dayOfWeek is stored by name, so SQL can't order by it; only the page itself is sorted
-        RegularSessionEntity.wrapRows(query)
-            .sortedWith(compareBy({ it.dayOfWeek }, { it.time }))
-            .map(RegularSessionEntity::toDomain)
+        RegularSessionEntity.wrapRows(query).map(RegularSessionEntity::toDomain)
     }
 
     override suspend fun add(session: NewRegularSession): Int = query {
@@ -51,3 +52,12 @@ class RegularSessionRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Re
         Unit
     }
 }
+
+/**
+ * Position of [RegularSessions.dayOfWeek] in the week: the column holds day names, which sort alphabetically.
+ */
+private val dayOrder = DayOfWeek.entries.drop(1)
+    .fold(Case().When(RegularSessions.dayOfWeek eq DayOfWeek.MONDAY, intLiteral(0))) { case, day ->
+        case.When(RegularSessions.dayOfWeek eq day, intLiteral(day.ordinal))
+    }
+    .Else(intLiteral(DayOfWeek.entries.size))

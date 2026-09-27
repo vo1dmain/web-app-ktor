@@ -36,6 +36,12 @@ class NewsTest {
         }.apply {
             assertEquals(HttpStatusCode.BadRequest, call.response.status)
         }
+
+        client.get("/news/articles") {
+            parameter("category", listOf(1, -5))
+        }.apply {
+            assertEquals(HttpStatusCode.BadRequest, call.response.status)
+        }
     }
 
     @Test

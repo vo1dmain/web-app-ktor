@@ -4,11 +4,11 @@ import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.datetime.duration
 import org.jetbrains.exposed.v1.datetime.timestamp
 import ru.vo1d.web.domain.DEFAULT_DURATION
-import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
 
 internal object DatedSessions : IntIdTable() {
     val subject = varchar("subject", 160)
@@ -26,7 +26,7 @@ internal object TimetableDatedSessions : Table() {
     override val primaryKey = PrimaryKey(timetableId, sessionId)
 }
 
-internal class DatedSessionEntity(id: EntityID<Int>) : SessionEntity<DatedSession>(id) {
+internal class DatedSessionEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<DatedSessionEntity>(DatedSessions)
 
     val subject by DatedSessions.subject

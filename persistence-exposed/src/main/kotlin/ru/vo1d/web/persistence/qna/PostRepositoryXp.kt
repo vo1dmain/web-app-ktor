@@ -1,5 +1,6 @@
 package ru.vo1d.web.persistence.qna
 
+import org.jetbrains.exposed.v1.dao.with
 import ru.vo1d.web.domain.PageRequest
 import ru.vo1d.web.domain.qna.PostRepository
 import ru.vo1d.web.domain.qna.post.Post
@@ -12,6 +13,7 @@ class PostRepositoryXp(ctx: DbContext) : XpRepository(ctx.qna), PostRepository {
         PostEntity.all()
             .limit(page.size)
             .offset(page.offset)
+            .with(PostEntity::question, PostEntity::answer)
             .map(PostEntity::toView)
     }
 

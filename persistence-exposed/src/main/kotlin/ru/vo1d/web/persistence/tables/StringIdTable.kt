@@ -11,7 +11,7 @@ abstract class StringIdTable(
     idColumnLength: Int,
     collate: String? = null
 ) : IdTable<String>(name) {
-    final override val id = varchar(idColumnName, idColumnLength, collate).uniqueIndex().entityId()
+    final override val id = varchar(idColumnName, idColumnLength, collate).entityId()
     final override val primaryKey = PrimaryKey(id)
 }
 

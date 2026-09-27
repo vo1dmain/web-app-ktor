@@ -1,5 +1,6 @@
 package ru.vo1d.web.persistence.daybook
 
+import org.jetbrains.exposed.v1.dao.with
 import ru.vo1d.web.domain.daybook.ReferenceRepository
 import ru.vo1d.web.domain.daybook.group.*
 import ru.vo1d.web.domain.daybook.timetable.session.SessionType
@@ -30,6 +31,8 @@ class ReferenceRepositoryXp(ctx: DbContext) : XpRepository(ctx.daybook), Referen
     }
 
     override suspend fun groups(): List<Group> = query {
-        GroupEntity.all().map(GroupEntity::toDomain)
+        GroupEntity.all()
+            .with(GroupEntity::types)
+            .map(GroupEntity::toDomain)
     }
 }
