@@ -9,8 +9,4 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.kotlin.datetime)
-
-    implementation(libs.h2database.h2)
-
-    implementation(libs.kotlinx.serialization.json)
 }

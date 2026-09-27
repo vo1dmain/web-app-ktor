@@ -18,4 +18,6 @@ dependencies {
 
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
+
+    runtimeOnly(libs.h2database.h2)
 }

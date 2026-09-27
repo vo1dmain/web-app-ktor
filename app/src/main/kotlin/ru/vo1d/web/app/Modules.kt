@@ -9,8 +9,8 @@ import ru.vo1d.web.domain.news.ArticleRepository
 import ru.vo1d.web.domain.news.CategoryRepository
 import ru.vo1d.web.domain.qna.PostRepository
 import ru.vo1d.web.domain.qna.QuestionRepository
+import ru.vo1d.web.persistence.context.DatabaseConfig
 import ru.vo1d.web.persistence.context.DbContext
-import ru.vo1d.web.persistence.context.H2Context
 import ru.vo1d.web.persistence.daybook.DatedSessionRepositoryXp
 import ru.vo1d.web.persistence.daybook.ReferenceRepositoryXp
 import ru.vo1d.web.persistence.daybook.RegularSessionRepositoryXp
@@ -21,8 +21,12 @@ import ru.vo1d.web.persistence.qna.PostRepositoryXp
 import ru.vo1d.web.persistence.qna.QuestionRepositoryXp
 import kotlin.time.Clock
 
-val persistenceModule = module {
-    single<DbContext> { H2Context }
+/**
+ * @param config database settings from the `database` section of the config
+ */
+fun persistenceModule(config: DatabaseConfig) = module {
+    single<DatabaseConfig> { config }
+    single<DbContext>()
 
     single<ArticleRepositoryXp>() bind ArticleRepository::class
     single<CategoryRepositoryXp>() bind CategoryRepository::class
