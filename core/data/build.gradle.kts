@@ -3,7 +3,6 @@ plugins {
 }
 
 group = "ru.vo1d.web"
-version = "0.9.0"
 
 kotlin {
     jvmToolchain(libs.versions.jvm.get().toInt())
