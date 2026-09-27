@@ -32,10 +32,6 @@ class Meta {
     data class Groups(val parent: Meta = Meta())
 
     @Serializable
-    @Resource("/start-times")
-    data class Times(val parent: Meta = Meta())
-
-    @Serializable
     @Resource("/session-types")
     data class SessionTypes(val parent: Meta = Meta())
 }

@@ -7,7 +7,7 @@ import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.datetime.duration
-import org.jetbrains.exposed.v1.datetime.timestamp
+import org.jetbrains.exposed.v1.datetime.time
 import ru.vo1d.web.entities.DEFAULT_DURATION
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
@@ -18,7 +18,7 @@ internal object RegularSessions : IntIdTable() {
     val place = varchar("place", 32)
     val typeId = reference("typeId", SessionTypes, CASCADE, CASCADE)
     val dayOfWeek = enumerationByName("dayOfWeek", 10, DayOfWeek::class)
-    val time = timestamp("time")
+    val time = time("time")
     val duration = duration("duration").default(DEFAULT_DURATION)
     val weekOption = enumerationByName("weekOption", 12, WeekOption::class)
 }

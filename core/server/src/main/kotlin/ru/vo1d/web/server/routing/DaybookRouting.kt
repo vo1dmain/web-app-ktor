@@ -62,10 +62,6 @@ private fun Route.metaRouting(repo: DaybookRepo) {
         call.respond(repo.groups().failIfEmpty())
     }
 
-    get<Meta.Times> {
-        call.respond(repo.startTimes().failIfEmpty())
-    }
-
     get<Meta.SessionTypes> {
         call.respond(repo.sessionTypes().failIfEmpty())
     }
@@ -128,7 +124,7 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
                 place = it.place,
                 typeId = it.type,
                 dayOfWeek = it.day,
-                timeId = it.time,
+                time = it.time,
                 weekOption = it.weekOption
             )
         )

@@ -1,6 +1,6 @@
 package ru.vo1d.web.data.filters.daybook
 
-import kotlinx.datetime.LocalDateTime
+import kotlin.time.Instant
 
 data class DatedSessionFilters(
     val timetableId: Int? = null,
@@ -8,7 +8,7 @@ data class DatedSessionFilters(
     val instructor: String? = null,
     val place: String? = null,
     val typeId: Int? = null,
-    val dateTime: LocalDateTime? = null
+    val dateTime: Instant? = null
 ) {
     companion object {
         val Empty = DatedSessionFilters()

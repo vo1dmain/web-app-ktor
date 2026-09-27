@@ -1,6 +1,7 @@
 package ru.vo1d.web.data.filters.daybook
 
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalTime
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 
 
@@ -11,7 +12,7 @@ data class RegularSessionFilters(
     val place: String? = null,
     val typeId: Int? = null,
     val dayOfWeek: DayOfWeek? = null,
-    val timeId: Int? = null,
+    val time: LocalTime? = null,
     val weekOption: WeekOption? = null
 ) {
     companion object {

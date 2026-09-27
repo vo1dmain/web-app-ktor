@@ -36,7 +36,7 @@ class RegularSessionDaoXp : RegularSessionDao {
         return RegularSessionEntity.all()
             .limit(limit)
             .offset(offset)
-            .sortedWith(compareBy({ it.dayOfWeek }, { it.timeId.value }))
+            .sortedWith(compareBy({ it.dayOfWeek }, { it.time }))
             .map(RegularSessionEntity::toDomain)
     }
 
@@ -61,8 +61,8 @@ class RegularSessionDaoXp : RegularSessionDao {
             filters.dayOfWeek?.let {
                 andWhere { RegularSessions.dayOfWeek eq it }
             }
-            filters.timeId?.let {
-                andWhere { RegularSessions.timeId eq it }
+            filters.time?.let {
+                andWhere { RegularSessions.time eq it }
             }
             filters.typeId?.let {
                 andWhere { RegularSessions.typeId eq it }

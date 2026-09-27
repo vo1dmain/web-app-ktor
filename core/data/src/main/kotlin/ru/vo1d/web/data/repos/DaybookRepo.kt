@@ -14,7 +14,6 @@ import ru.vo1d.web.entities.daybook.timetable.session.DatedSession
 import ru.vo1d.web.entities.daybook.timetable.session.RegularSession
 import ru.vo1d.web.entities.daybook.timetable.session.SessionType
 import ru.vo1d.web.entities.daybook.timetable.session.TimetableSession
-import ru.vo1d.web.entities.daybook.timetable.time.StartTime
 import ru.vo1d.web.entities.daybook.timetable.week.Week
 import java.time.DayOfWeek
 import java.time.temporal.TemporalAdjusters
@@ -31,7 +30,6 @@ class DaybookRepo(di: DI) : ListRepo {
     private val eduFormDao: EduFormDao by di.instance()
     private val groupDao: GroupDao by di.instance()
     private val sessionTypeDao: SessionTypeDao by di.instance()
-    private val startTimeDao: StartTimeDao by di.instance()
     private val tableTypeDao: TableTypeDao by di.instance()
 
     suspend fun meta(): Meta {
@@ -42,7 +40,6 @@ class DaybookRepo(di: DI) : ListRepo {
             forms(),
             tableTypes(),
             groups(),
-            startTimes(),
             sessionTypes()
         )
     }
@@ -69,10 +66,6 @@ class DaybookRepo(di: DI) : ListRepo {
 
     suspend fun addGroups(vararg groups: Group): Int {
         return groupDao.create(*groups)
-    }
-
-    suspend fun startTimes(): List<StartTime> {
-        return startTimeDao.all()
     }
 
     suspend fun sessionTypes(): List<SessionType> {

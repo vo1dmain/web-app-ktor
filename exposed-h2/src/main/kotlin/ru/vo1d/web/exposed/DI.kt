@@ -6,7 +6,6 @@ import org.kodein.di.singleton
 import ru.vo1d.web.data.dao.*
 import ru.vo1d.web.exposed.dao.daybook.group.*
 import ru.vo1d.web.exposed.dao.daybook.timetable.SessionTypeDaoXp
-import ru.vo1d.web.exposed.dao.daybook.timetable.StartTimeDaoXp
 import ru.vo1d.web.exposed.dao.daybook.timetable.TimetableDaoXp
 import ru.vo1d.web.exposed.dao.daybook.timetable.dated.DatedSessionDaoXp
 import ru.vo1d.web.exposed.dao.daybook.timetable.dated.TimetableDatedSessionDaoXp
@@ -38,7 +37,6 @@ val exposedDaoModule =  DI.Module("exposed-dao") {
     bind<DatedSessionDao>() with singleton { DatedSessionDaoXp() }
     bind<RegularSessionDao>() with singleton { RegularSessionDaoXp() }
     bind<SessionTypeDao>() with singleton { SessionTypeDaoXp() }
-    bind<StartTimeDao>() with singleton { StartTimeDaoXp() }
 
     bind<TableTypeDao>() with singleton { TableTypeDaoXp() }
     bind<TimetableDao>() with singleton { TimetableDaoXp() }

@@ -1,11 +1,11 @@
 package ru.vo1d.web.entities.daybook.timetable.session
 
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.entities.daybook.timetable.week.WeekOption
 import kotlin.time.Duration
-import kotlin.time.Instant
 
 @Serializable
 @SerialName("Regular")
@@ -17,6 +17,6 @@ data class RegularSession(
     override val typeId: Int,
     override val duration: Duration? = null,
     val dayOfWeek: DayOfWeek,
-    val time: Instant,
+    val time: LocalTime,
     val weekOption: WeekOption
 ) : Session
