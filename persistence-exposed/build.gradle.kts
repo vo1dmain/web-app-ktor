@@ -11,4 +11,7 @@ dependencies {
     implementation(libs.exposed.kotlin.datetime)
 
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.kotlinx.coroutines.core)
+    testRuntimeOnly(libs.h2database.h2)
 }
