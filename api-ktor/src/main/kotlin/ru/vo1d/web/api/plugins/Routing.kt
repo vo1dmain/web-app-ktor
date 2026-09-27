@@ -11,7 +11,7 @@ import kotlinx.html.ul
 /**
  * Installs routing with the route index at `/` and [api] under `/api/v1`.
  */
-fun Application.apiRouting(api: Route.() -> Unit) {
+internal fun Application.apiRouting(api: Route.() -> Unit) {
     install(IgnoreTrailingSlash)
 
     routing {

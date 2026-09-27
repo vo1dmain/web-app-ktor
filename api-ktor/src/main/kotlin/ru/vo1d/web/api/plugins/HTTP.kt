@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.defaultheaders.*
 
-fun Application.http() {
+internal fun Application.http() {
     install(DefaultHeaders)
     install(Compression) {
         gzip {
