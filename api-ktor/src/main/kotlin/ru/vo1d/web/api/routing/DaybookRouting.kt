@@ -7,15 +7,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.domain.filters.daybook.DatedSessionFilters
-import ru.vo1d.web.domain.filters.daybook.RegularSessionFilters
-import ru.vo1d.web.domain.filters.daybook.TimetableFilters
-import ru.vo1d.web.domain.repos.DaybookRepo
-import ru.vo1d.web.domain.daybook.timetable.Timetable
-import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
-import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
-import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
-import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import ru.vo1d.web.api.errors.UnprocessableEntityException
 import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
@@ -23,70 +14,86 @@ import ru.vo1d.web.api.resources.daybook.DatedSessions
 import ru.vo1d.web.api.resources.daybook.Meta
 import ru.vo1d.web.api.resources.daybook.RegularSessions
 import ru.vo1d.web.api.resources.daybook.Timetables
+import ru.vo1d.web.api.resources.pageRequest
+import ru.vo1d.web.domain.daybook.*
+import ru.vo1d.web.domain.daybook.timetable.Timetable
+import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
+import ru.vo1d.web.domain.daybook.timetable.session.DatedSession
+import ru.vo1d.web.domain.daybook.timetable.session.RegularSession
+import ru.vo1d.web.domain.daybook.timetable.session.TimetableSession
 import io.ktor.server.resources.post as postRes
 
 fun Route.daybookRouting() = route("/daybook") {
-    val repo by closestDI().instance<DaybookRepo>()
+    val service by closestDI().instance<DaybookService>()
+    val reference by closestDI().instance<ReferenceRepository>()
+    val timetables by closestDI().instance<TimetableRepository>()
+    val regularSessions by closestDI().instance<RegularSessionRepository>()
+    val datedSessions by closestDI().instance<DatedSessionRepository>()
 
-    metaRouting(repo)
-    timetablesRouting(repo)
-    sessionsRouting(repo)
+    metaRouting(service, reference)
+    timetablesRouting(timetables, regularSessions, datedSessions)
+    sessionsRouting(regularSessions, datedSessions)
 }
 
-private fun Route.metaRouting(repo: DaybookRepo) {
+private fun Route.metaRouting(service: DaybookService, reference: ReferenceRepository) {
     get<Meta> {
-        call.respond(repo.meta().orFail())
+        call.respond(service.meta())
     }
 
     get<Meta.Week> {
-        call.respond(repo.weekNumber())
+        call.respond(service.week())
     }
 
     get<Meta.Levels> {
-        call.respond(repo.levels().failIfEmpty())
+        call.respond(reference.levels().failIfEmpty())
     }
 
     get<Meta.Degrees> {
-        call.respond(repo.degrees().failIfEmpty())
+        call.respond(reference.degrees().failIfEmpty())
     }
 
     get<Meta.Forms> {
-        call.respond(repo.forms().failIfEmpty())
+        call.respond(reference.forms().failIfEmpty())
     }
 
     get<Meta.TableTypes> {
-        call.respond(repo.tableTypes().failIfEmpty())
+        call.respond(reference.tableTypes().failIfEmpty())
     }
 
     get<Meta.Groups> {
-        call.respond(repo.groups().failIfEmpty())
+        call.respond(reference.groups().failIfEmpty())
     }
 
     get<Meta.SessionTypes> {
-        call.respond(repo.sessionTypes().failIfEmpty())
+        call.respond(reference.sessionTypes().failIfEmpty())
     }
 }
 
-private fun Route.timetablesRouting(repo: DaybookRepo) {
+private fun Route.timetablesRouting(
+    timetables: TimetableRepository,
+    regularSessions: RegularSessionRepository,
+    datedSessions: DatedSessionRepository
+) {
     get<Timetables> {
-        val list = repo.timetables(
-            it.page,
+        val list = timetables.find(
             TimetableFilters(
                 groupCode = it.group,
-                typeId = it.type
-            )
+                typeId = it.type,
+                format = it.format
+            ),
+            it.pageRequest()
         )
         call.respond(list.failIfEmpty())
     }
 
     postRes<Timetables> {
         val timetable = call.receive<Timetable>()
-        val id = repo.addTimetable(timetable) ?: throw Exception()
+        val id = timetables.add(timetable) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 
     get<Timetables.Id> {
-        call.respond(repo.timetable(it.id).orFail())
+        call.respond(timetables.get(it.id).orFail())
     }
 
     postRes<Timetables.Id.Sessions> {
@@ -101,22 +108,21 @@ private fun Route.timetablesRouting(repo: DaybookRepo) {
             finalId.toString()
         )
 
-        val itemFormat = repo.timetableBase(finalId).orFail().format
+        val itemFormat = timetables.get(finalId).orFail().format
 
         val junction = input.copy(timetableId = finalId)
         when (itemFormat) {
-            TimetableFormat.Dated -> repo.addDatedJunction(junction)
-            TimetableFormat.Regular -> repo.addRegularJunction(junction)
+            TimetableFormat.Dated -> datedSessions.attach(junction)
+            TimetableFormat.Regular -> regularSessions.attach(junction)
         }
 
         call.respond(HttpStatusCode.Created, junction)
     }
 }
 
-private fun Route.sessionsRouting(repo: DaybookRepo) {
+private fun Route.sessionsRouting(regularSessions: RegularSessionRepository, datedSessions: DatedSessionRepository) {
     get<RegularSessions> {
-        val list = repo.regularSessions(
-            it.page,
+        val list = regularSessions.find(
             RegularSessionFilters(
                 timetableId = it.timetable,
                 subject = it.subject,
@@ -126,20 +132,20 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
                 dayOfWeek = it.day,
                 time = it.time,
                 weekOption = it.weekOption
-            )
+            ),
+            it.pageRequest()
         )
         call.respond(list.failIfEmpty())
     }
 
     postRes<RegularSessions> {
         val session = call.receive<RegularSession>()
-        val id = repo.addRegularSession(session) ?: throw Exception()
+        val id = regularSessions.add(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 
     get<DatedSessions> {
-        val list = repo.datedSessions(
-            it.page,
+        val list = datedSessions.find(
             DatedSessionFilters(
                 timetableId = it.timetable,
                 subject = it.subject,
@@ -147,15 +153,15 @@ private fun Route.sessionsRouting(repo: DaybookRepo) {
                 place = it.place,
                 typeId = it.type,
                 dateTime = it.dateTime
-            )
+            ),
+            it.pageRequest()
         )
         call.respond(list.failIfEmpty())
     }
 
     postRes<DatedSessions> {
         val session = call.receive<DatedSession>()
-        val id = repo.addDatedSession(session) ?: throw Exception()
+        val id = datedSessions.add(session) ?: throw Exception()
         call.respond(HttpStatusCode.Created, id)
     }
 }
-

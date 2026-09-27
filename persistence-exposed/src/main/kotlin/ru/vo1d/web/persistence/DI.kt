@@ -4,47 +4,36 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
-import ru.vo1d.web.domain.dao.*
+import ru.vo1d.web.domain.daybook.DatedSessionRepository
+import ru.vo1d.web.domain.daybook.ReferenceRepository
+import ru.vo1d.web.domain.daybook.RegularSessionRepository
+import ru.vo1d.web.domain.daybook.TimetableRepository
+import ru.vo1d.web.domain.news.ArticleRepository
+import ru.vo1d.web.domain.news.CategoryRepository
+import ru.vo1d.web.domain.qna.PostRepository
+import ru.vo1d.web.domain.qna.QuestionRepository
 import ru.vo1d.web.persistence.context.DbContext
 import ru.vo1d.web.persistence.context.H2Context
-import ru.vo1d.web.persistence.dao.daybook.group.*
-import ru.vo1d.web.persistence.dao.daybook.timetable.SessionTypeDaoXp
-import ru.vo1d.web.persistence.dao.daybook.timetable.TimetableDaoXp
-import ru.vo1d.web.persistence.dao.daybook.timetable.dated.DatedSessionDaoXp
-import ru.vo1d.web.persistence.dao.daybook.timetable.dated.TimetableDatedSessionDaoXp
-import ru.vo1d.web.persistence.dao.daybook.timetable.regular.RegularSessionDaoXp
-import ru.vo1d.web.persistence.dao.daybook.timetable.regular.TimetableRegularSessionDaoXp
-import ru.vo1d.web.persistence.dao.news.ArticleDaoXp
-import ru.vo1d.web.persistence.dao.news.ArticleViewDaoXp
-import ru.vo1d.web.persistence.dao.news.CategoryDaoXp
-import ru.vo1d.web.persistence.dao.qna.AnswerDaoXp
-import ru.vo1d.web.persistence.dao.qna.PostDaoXp
-import ru.vo1d.web.persistence.dao.qna.PostViewDaoXp
-import ru.vo1d.web.persistence.dao.qna.QuestionDaoXp
+import ru.vo1d.web.persistence.daybook.DatedSessionRepositoryXp
+import ru.vo1d.web.persistence.daybook.ReferenceRepositoryXp
+import ru.vo1d.web.persistence.daybook.RegularSessionRepositoryXp
+import ru.vo1d.web.persistence.daybook.TimetableRepositoryXp
+import ru.vo1d.web.persistence.news.ArticleRepositoryXp
+import ru.vo1d.web.persistence.news.CategoryRepositoryXp
+import ru.vo1d.web.persistence.qna.PostRepositoryXp
+import ru.vo1d.web.persistence.qna.QuestionRepositoryXp
 
-val exposedDaoModule = DI.Module("exposed-dao") {
+val persistenceModule = DI.Module("persistence") {
     bind<DbContext>() with singleton { H2Context }
 
-    bind<ArticleDao>() with singleton { ArticleDaoXp(instance()) }
-    bind<ArticleViewDao>() with singleton { ArticleViewDaoXp(instance()) }
-    bind<CategoryDao>() with singleton { CategoryDaoXp(instance()) }
+    bind<ArticleRepository>() with singleton { ArticleRepositoryXp(instance()) }
+    bind<CategoryRepository>() with singleton { CategoryRepositoryXp(instance()) }
 
-    bind<AnswerDao>() with singleton { AnswerDaoXp(instance()) }
-    bind<PostDao>() with singleton { PostDaoXp(instance()) }
-    bind<PostViewDao>() with singleton { PostViewDaoXp(instance()) }
-    bind<QuestionDao>() with singleton { QuestionDaoXp(instance()) }
+    bind<QuestionRepository>() with singleton { QuestionRepositoryXp(instance()) }
+    bind<PostRepository>() with singleton { PostRepositoryXp(instance()) }
 
-    bind<EduFormDao>() with singleton { EduFormDaoXp(instance()) }
-    bind<GradDegreeDao>() with singleton { GradDegreeDaoXp(instance()) }
-    bind<GradLevelDao>() with singleton { GradLevelDaoXp(instance()) }
-    bind<GroupDao>() with singleton { GroupDaoXp(instance()) }
-
-    bind<DatedSessionDao>() with singleton { DatedSessionDaoXp(instance()) }
-    bind<RegularSessionDao>() with singleton { RegularSessionDaoXp(instance()) }
-    bind<SessionTypeDao>() with singleton { SessionTypeDaoXp(instance()) }
-
-    bind<TableTypeDao>() with singleton { TableTypeDaoXp(instance()) }
-    bind<TimetableDao>() with singleton { TimetableDaoXp(instance()) }
-    bind<TimetableDatedSessionDao>() with singleton { TimetableDatedSessionDaoXp(instance()) }
-    bind<TimetableRegularSessionDao>() with singleton { TimetableRegularSessionDaoXp(instance()) }
+    bind<ReferenceRepository>() with singleton { ReferenceRepositoryXp(instance()) }
+    bind<TimetableRepository>() with singleton { TimetableRepositoryXp(instance()) }
+    bind<RegularSessionRepository>() with singleton { RegularSessionRepositoryXp(instance()) }
+    bind<DatedSessionRepository>() with singleton { DatedSessionRepositoryXp(instance()) }
 }

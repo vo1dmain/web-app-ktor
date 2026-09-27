@@ -3,6 +3,7 @@ package ru.vo1d.web.api.resources.daybook
 import io.ktor.resources.*
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.api.extensions.failIfNegative
+import ru.vo1d.web.api.extensions.failIfNotPositive
 import ru.vo1d.web.api.resources.ListResource
 import ru.vo1d.web.domain.daybook.timetable.TimetableFormat
 
@@ -15,7 +16,7 @@ data class Timetables(
     val format: TimetableFormat? = null
 ) : ListResource {
     init {
-        page?.failIfNegative()
+        page?.failIfNotPositive()
     }
 
     @Serializable

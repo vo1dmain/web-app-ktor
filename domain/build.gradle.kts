@@ -7,6 +7,4 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.coroutines.core)
-
-    implementation(libs.kodein.ktor)
 }

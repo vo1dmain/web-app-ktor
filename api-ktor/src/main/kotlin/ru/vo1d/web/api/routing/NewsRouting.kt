@@ -5,45 +5,42 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.domain.filters.news.ArticleFilters
-import ru.vo1d.web.domain.filters.news.CategoryFilters
-import ru.vo1d.web.domain.repos.NewsRepo
 import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
 import ru.vo1d.web.api.resources.news.Articles
 import ru.vo1d.web.api.resources.news.Categories
+import ru.vo1d.web.api.resources.pageRequest
+import ru.vo1d.web.domain.news.ArticleFilters
+import ru.vo1d.web.domain.news.ArticleRepository
+import ru.vo1d.web.domain.news.CategoryFilters
+import ru.vo1d.web.domain.news.CategoryRepository
 
 fun Route.newsRouting() = route("/news") {
-    val repo by closestDI().instance<NewsRepo>()
+    val articles by closestDI().instance<ArticleRepository>()
+    val categories by closestDI().instance<CategoryRepository>()
 
-    articlesRouting(repo)
-    categoriesRouting(repo)
+    articlesRouting(articles)
+    categoriesRouting(categories)
 }
 
-private fun Route.articlesRouting(repo: NewsRepo) {
+private fun Route.articlesRouting(articles: ArticleRepository) {
     get<Articles> {
-        val list = repo.articles(
-            it.page,
-            ArticleFilters(categories = it.categories)
-        )
+        val list = articles.find(ArticleFilters(categories = it.categories), it.pageRequest())
         call.respond(list.failIfEmpty())
     }
 
     get<Articles.Id> {
-        call.respond(repo.article(it.id).orFail())
+        call.respond(articles.get(it.id).orFail())
     }
 }
 
-private fun Route.categoriesRouting(repo: NewsRepo) {
+private fun Route.categoriesRouting(categories: CategoryRepository) {
     get<Categories> {
-        val list = repo.categories(
-            it.page,
-            CategoryFilters(parentId = it.parent)
-        )
+        val list = categories.find(CategoryFilters(parentId = it.parent), it.pageRequest())
         call.respond(list.failIfEmpty())
     }
 
     get<Categories.Id> {
-        call.respond(repo.category(it.id).orFail())
+        call.respond(categories.get(it.id).orFail())
     }
 }

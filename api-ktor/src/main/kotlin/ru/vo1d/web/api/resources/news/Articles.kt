@@ -5,6 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.api.extensions.failIf
 import ru.vo1d.web.api.extensions.failIfNegative
+import ru.vo1d.web.api.extensions.failIfNotPositive
 import ru.vo1d.web.api.resources.ListResource
 
 @Serializable
@@ -14,7 +15,7 @@ data class Articles(
     @SerialName("category") val categories: List<Int>? = null
 ) : ListResource {
     init {
-        page?.failIfNegative()
+        page?.failIfNotPositive()
         categories?.failIf { all { it < 0 } }
     }
 

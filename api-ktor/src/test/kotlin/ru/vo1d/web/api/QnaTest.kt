@@ -8,10 +8,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import org.junit.Test
-import org.kodein.di.bind
 import org.kodein.di.ktor.di
-import org.kodein.di.singleton
-import ru.vo1d.web.domain.repos.QnaRepo
 import ru.vo1d.web.domain.qna.post.PostView
 import ru.vo1d.web.domain.qna.post.PostWithData
 import ru.vo1d.web.domain.qna.question.Question
@@ -81,8 +78,7 @@ class QnaTest {
         testPlugins()
 
         di {
-            import(testDaoModule)
-            bind<QnaRepo>() with singleton { QnaRepo(di) }
+            import(testRepositoryModule)
         }
 
         routing {

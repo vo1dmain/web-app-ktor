@@ -7,10 +7,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import org.kodein.di.bind
 import org.kodein.di.ktor.di
-import org.kodein.di.singleton
-import ru.vo1d.web.domain.repos.NewsRepo
 import ru.vo1d.web.domain.news.article.Article
 import ru.vo1d.web.domain.news.article.ArticleView
 import ru.vo1d.web.domain.news.category.Category
@@ -102,8 +99,7 @@ class NewsTest {
         testPlugins()
 
         di {
-            import(testDaoModule)
-            bind<NewsRepo>() with singleton { NewsRepo(di) }
+            import(testRepositoryModule)
         }
 
         routing {

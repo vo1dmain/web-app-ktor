@@ -3,6 +3,7 @@ package ru.vo1d.web.api.resources.news
 import io.ktor.resources.*
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.api.extensions.failIfNegative
+import ru.vo1d.web.api.extensions.failIfNotPositive
 import ru.vo1d.web.api.resources.ListResource
 
 @Serializable
@@ -12,7 +13,7 @@ data class Categories(
     val parent: Int? = null
 ) : ListResource {
     init {
-        page?.failIfNegative()
+        page?.failIfNotPositive()
         parent?.failIfNegative()
     }
 

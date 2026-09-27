@@ -7,6 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.vo1d.web.domain.daybook.timetable.week.WeekOption
 import ru.vo1d.web.api.extensions.failIfNegative
+import ru.vo1d.web.api.extensions.failIfNotPositive
 import ru.vo1d.web.api.resources.ListResource
 import kotlin.time.Instant
 
@@ -24,7 +25,7 @@ data class RegularSessions(
     @SerialName("week_option") val weekOption: WeekOption? = null
 ) : ListResource {
     init {
-        page?.failIfNegative()
+        page?.failIfNotPositive()
         timetable?.failIfNegative()
         type?.failIfNegative()
     }
@@ -42,7 +43,7 @@ data class DatedSessions(
     val dateTime: Instant? = null
 ) : ListResource {
     init {
-        page?.failIfNegative()
+        page?.failIfNotPositive()
         timetable?.failIfNegative()
         type?.failIfNegative()
     }

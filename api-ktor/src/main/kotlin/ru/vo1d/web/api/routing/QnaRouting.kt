@@ -7,43 +7,46 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import ru.vo1d.web.domain.repos.QnaRepo
-import ru.vo1d.web.domain.qna.question.Question
 import ru.vo1d.web.api.extensions.failIfEmpty
 import ru.vo1d.web.api.extensions.orFail
+import ru.vo1d.web.api.resources.pageRequest
 import ru.vo1d.web.api.resources.qna.Posts
 import ru.vo1d.web.api.resources.qna.Questions
+import ru.vo1d.web.domain.qna.PostRepository
+import ru.vo1d.web.domain.qna.QuestionRepository
+import ru.vo1d.web.domain.qna.question.Question
 import io.ktor.server.resources.post as postRes
 
 fun Route.qnaRouting() = route("/qna") {
-    val repo by closestDI().instance<QnaRepo>()
+    val posts by closestDI().instance<PostRepository>()
+    val questions by closestDI().instance<QuestionRepository>()
 
-    postsRouting(repo)
-    questionsRouting(repo)
+    postsRouting(posts)
+    questionsRouting(questions)
 }
 
-private fun Route.postsRouting(repo: QnaRepo) {
+private fun Route.postsRouting(posts: PostRepository) {
     get<Posts> {
-        call.respond(repo.posts(it.page).failIfEmpty())
+        call.respond(posts.find(it.pageRequest()).failIfEmpty())
     }
 
     get<Posts.Id> {
-        call.respond(repo.post(it.id).orFail())
+        call.respond(posts.get(it.id).orFail())
     }
 }
 
-private fun Route.questionsRouting(repo: QnaRepo) {
+private fun Route.questionsRouting(questions: QuestionRepository) {
     get<Questions> {
-        call.respond(repo.questions(it.page).failIfEmpty())
+        call.respond(questions.find(it.pageRequest()).failIfEmpty())
     }
 
     get<Questions.Id> {
-        call.respond(repo.question(it.id).orFail())
+        call.respond(questions.get(it.id).orFail())
     }
 
     postRes<Questions> {
         val question = call.receive<Question>()
-        val id = repo.addQuestion(question) ?: throw Exception()
+        val id = questions.add(question)
         call.respond(HttpStatusCode.Created, id)
     }
 }
