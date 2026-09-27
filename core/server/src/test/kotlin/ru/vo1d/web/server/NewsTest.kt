@@ -99,6 +99,8 @@ class NewsTest {
 
 
     private fun Application.newsTest() {
+        testPlugins()
+
         di {
             import(testDaoModule)
             bind<NewsRepo>() with singleton { NewsRepo(di) }

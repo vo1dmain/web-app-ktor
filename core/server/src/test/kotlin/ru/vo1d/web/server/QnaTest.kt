@@ -78,6 +78,8 @@ class QnaTest {
 
 
     private fun Application.qnaTest() {
+        testPlugins()
+
         di {
             import(testDaoModule)
             bind<QnaRepo>() with singleton { QnaRepo(di) }
