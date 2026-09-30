@@ -1,14 +1,18 @@
 [versions]
-gradleVersions = "0.51.0"
-h2 = "2.2.224"
-jetbrainsExposed = "0.49.0"
-kodein = "7.21.2"
-kotlin = "1.9.23"
-kotlinxSerialization = "1.6.3"
-kotlinxCoroutines = "1.8.0"
-kotlinxDatetime = "0.5.0"
-ktor = "2.3.9"
-logback = "1.5.3"
+gradleVersions = "0.64.0"
+h2 = "2.5.252"
+
+jetbrainsExposed = "1.5.0"
+jvm = "21"
+
+koin = "4.2.2"
+koinCompiler = "1.2.1"
+kotlin = "2.4.20"
+kotlinxSerialization = "1.11.0"
+kotlinxCoroutines = "1.11.0"
+kotlinxDatetime = "0.8.0"
+ktor = "3.6.0"
+logback = "1.6.4"
 
 [libraries]
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrainsExposed" }
@@ -18,7 +22,12 @@ exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datet
 
 h2database-h2 = { module = "com.h2database:h2", version.ref = "h2" }
 
-kodein-ktor-server-jvm = { module = "org.kodein.di:kodein-di-framework-ktor-server-jvm", version.ref = "kodein" }
+koin-compiler-gradle-plugin = { module = "io.insert-koin.compiler.plugin:io.insert-koin.compiler.plugin.gradle.plugin", version.ref = "koinCompiler" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
+
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
@@ -38,12 +47,12 @@ ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", 
 ktor-server-html-builder = { module = "io.ktor:ktor-server-html-builder", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
+ktor-server-sessions = { module = "io.ktor:ktor-server-sessions", version.ref = "ktor" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 [plugins]
-gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+gradle-versions = { id = "io.github.ben-manes.versions", version.ref = "gradleVersions" }
+

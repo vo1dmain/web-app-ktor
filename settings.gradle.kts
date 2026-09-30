@@ -1,4 +1,6 @@
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         mavenCentral()
         gradlePluginPortal()
@@ -17,6 +19,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "web-app"
 
-includeBuild("core")
-include(":exposed-h2")
-
+include(":domain")
+include(":persistence-exposed")
+include(":api-ktor")
+include(":app")
